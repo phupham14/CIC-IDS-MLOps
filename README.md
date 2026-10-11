@@ -1,4 +1,4 @@
-# CyberMLOps — Hệ thống MLOps cho bài toán phát hiện tấn công mạng
+# CyberMLOps — CyberMLOps – MLOps Pipeline for Cybersecurity Intrusion Detection
 
 > Xây dựng một hệ thống MLOps hoàn chỉnh cho bài toán **phát hiện xâm nhập mạng (Intrusion Detection)** trên bộ dữ liệu **CSE-CIC-IDS2018**, quản lý toàn bộ vòng đời mô hình học máy: từ tiền xử lý dữ liệu, huấn luyện, đánh giá đến triển khai, giám sát và tái huấn luyện.
 
