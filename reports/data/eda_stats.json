@@ -1,0 +1,948 @@
+{
+ "files": {
+  "Friday-02-03-2018": {
+   "file": "Friday-02-03-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 352368373,
+   "rows": 1048575,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 5459,
+   "ts_min": "2018-03-02 01:00:00",
+   "ts_max": "2018-03-02 12:59:59",
+   "n_columns": 80
+  },
+  "Friday-16-02-2018": {
+   "file": "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 333723605,
+   "rows": 1048574,
+   "repeated_header_rows": 1,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 147539,
+   "ts_min": "2018-02-16 01:00:32",
+   "ts_max": "2018-02-16 12:58:24",
+   "n_columns": 80
+  },
+  "Friday-23-02-2018": {
+   "file": "Friday-23-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 382840456,
+   "rows": 1048575,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 2614,
+   "ts_min": "2018-02-23 01:00:00",
+   "ts_max": "2018-02-23 12:59:59",
+   "n_columns": 80
+  },
+  "Thuesday-20-02-2018": {
+   "file": "Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 4054925350,
+   "rows": 7948748,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 2,
+   "ts_min": "2018-02-20 01:00:00",
+   "ts_max": "2018-02-20 12:59:59",
+   "n_columns": 84
+  },
+  "Thursday-01-03-2018": {
+   "file": "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 107842858,
+   "rows": 331100,
+   "repeated_header_rows": 25,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 73,
+   "ts_min": "2018-03-01 01:00:00",
+   "ts_max": "2018-03-01 12:59:59",
+   "n_columns": 80
+  },
+  "Thursday-15-02-2018": {
+   "file": "Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 375945899,
+   "rows": 1048575,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 2421,
+   "ts_min": "2018-02-15 01:00:00",
+   "ts_max": "2018-02-15 12:59:59",
+   "n_columns": 80
+  },
+  "Thursday-22-02-2018": {
+   "file": "Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 382636202,
+   "rows": 1048575,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 3278,
+   "ts_min": "1970-01-10 03:04:26",
+   "ts_max": "2018-02-22 12:59:59",
+   "n_columns": 80
+  },
+  "Wednesday-14-02-2018": {
+   "file": "Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 358223333,
+   "rows": 1048575,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 225628,
+   "ts_min": "1970-01-05 03:01:17",
+   "ts_max": "2018-02-14 12:59:59",
+   "n_columns": 80
+  },
+  "Wednesday-21-02-2018": {
+   "file": "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 328893673,
+   "rows": 1048575,
+   "repeated_header_rows": 0,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 17557,
+   "ts_min": "2018-02-21 01:55:46",
+   "ts_max": "2018-02-21 10:43:21",
+   "n_columns": 80
+  },
+  "Wednesday-28-02-2018": {
+   "file": "Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv",
+   "bytes": 209249758,
+   "rows": 613071,
+   "repeated_header_rows": 33,
+   "bad_timestamps": 0,
+   "duplicate_rows_within_file": 6089,
+   "ts_min": "2018-02-28 01:00:00",
+   "ts_max": "2018-02-28 12:59:59",
+   "n_columns": 80
+  }
+ },
+ "n_columns_common": 80,
+ "extra_columns_by_file": {
+  "Thuesday-20-02-2018": [
+   "Dst IP",
+   "Flow ID",
+   "Src IP",
+   "Src Port"
+  ]
+ },
+ "label_by_file": {
+  "Friday-02-03-2018": {
+   "Bot": 286191,
+   "Benign": 762384
+  },
+  "Friday-16-02-2018": {
+   "DoS attacks-Hulk": 461912,
+   "Benign": 446772,
+   "DoS attacks-SlowHTTPTest": 139890
+  },
+  "Friday-23-02-2018": {
+   "Benign": 1048009,
+   "Brute Force -Web": 362,
+   "Brute Force -XSS": 151,
+   "SQL Injection": 53
+  },
+  "Thuesday-20-02-2018": {
+   "DDoS attacks-LOIC-HTTP": 576191,
+   "Benign": 7372557
+  },
+  "Thursday-01-03-2018": {
+   "Benign": 238037,
+   "Infilteration": 93063
+  },
+  "Thursday-15-02-2018": {
+   "Benign": 996077,
+   "DoS attacks-GoldenEye": 41508,
+   "DoS attacks-Slowloris": 10990
+  },
+  "Thursday-22-02-2018": {
+   "Benign": 1048213,
+   "Brute Force -Web": 249,
+   "Brute Force -XSS": 79,
+   "SQL Injection": 34
+  },
+  "Wednesday-14-02-2018": {
+   "FTP-BruteForce": 193360,
+   "SSH-Bruteforce": 187589,
+   "Benign": 667626
+  },
+  "Wednesday-21-02-2018": {
+   "DDOS attack-HOIC": 686012,
+   "Benign": 360833,
+   "DDOS attack-LOIC-UDP": 1730
+  },
+  "Wednesday-28-02-2018": {
+   "Benign": 544200,
+   "Infilteration": 68871
+  }
+ },
+ "label_by_hour": {
+  "Friday-02-03-2018|1|Benign": 79945,
+  "Friday-02-03-2018|1|Bot": 32146,
+  "Friday-02-03-2018|2|Benign": 75887,
+  "Friday-02-03-2018|2|Bot": 41585,
+  "Friday-02-03-2018|3|Benign": 83813,
+  "Friday-02-03-2018|3|Bot": 67560,
+  "Friday-02-03-2018|4|Benign": 75243,
+  "Friday-02-03-2018|5|Benign": 45799,
+  "Friday-02-03-2018|8|Benign": 36940,
+  "Friday-02-03-2018|9|Benign": 97953,
+  "Friday-02-03-2018|10|Benign": 92778,
+  "Friday-02-03-2018|10|Bot": 25648,
+  "Friday-02-03-2018|11|Benign": 96002,
+  "Friday-02-03-2018|11|Bot": 87412,
+  "Friday-02-03-2018|12|Benign": 78024,
+  "Friday-02-03-2018|12|Bot": 31840,
+  "Friday-16-02-2018|1|Benign": 446427,
+  "Friday-16-02-2018|1|DoS attacks-Hulk": 461912,
+  "Friday-16-02-2018|8|Benign": 50,
+  "Friday-16-02-2018|9|Benign": 111,
+  "Friday-16-02-2018|10|Benign": 94,
+  "Friday-16-02-2018|10|DoS attacks-SlowHTTPTest": 139890,
+  "Friday-16-02-2018|11|Benign": 37,
+  "Friday-16-02-2018|12|Benign": 53,
+  "Friday-23-02-2018|1|Benign": 104866,
+  "Friday-23-02-2018|1|Brute Force -XSS": 126,
+  "Friday-23-02-2018|2|Benign": 83629,
+  "Friday-23-02-2018|2|Brute Force -XSS": 25,
+  "Friday-23-02-2018|3|Benign": 103402,
+  "Friday-23-02-2018|3|SQL Injection": 50,
+  "Friday-23-02-2018|4|Benign": 94469,
+  "Friday-23-02-2018|5|Benign": 48883,
+  "Friday-23-02-2018|8|Benign": 107964,
+  "Friday-23-02-2018|9|Benign": 118001,
+  "Friday-23-02-2018|9|Brute Force -Web": 2,
+  "Friday-23-02-2018|10|Benign": 131041,
+  "Friday-23-02-2018|10|Brute Force -Web": 346,
+  "Friday-23-02-2018|10|SQL Injection": 3,
+  "Friday-23-02-2018|11|Benign": 140850,
+  "Friday-23-02-2018|11|Brute Force -Web": 14,
+  "Friday-23-02-2018|12|Benign": 114904,
+  "Thuesday-20-02-2018|1|Benign": 819698,
+  "Thuesday-20-02-2018|1|DDoS attacks-LOIC-HTTP": 797,
+  "Thuesday-20-02-2018|8|Benign": 470494,
+  "Thuesday-20-02-2018|9|Benign": 860914,
+  "Thuesday-20-02-2018|10|Benign": 881719,
+  "Thuesday-20-02-2018|10|DDoS attacks-LOIC-HTTP": 423621,
+  "Thuesday-20-02-2018|11|Benign": 902509,
+  "Thuesday-20-02-2018|11|DDoS attacks-LOIC-HTTP": 151773,
+  "Thuesday-20-02-2018|12|Benign": 660047,
+  "Thuesday-20-02-2018|2|Benign": 822773,
+  "Thuesday-20-02-2018|3|Benign": 831891,
+  "Thuesday-20-02-2018|4|Benign": 807980,
+  "Thuesday-20-02-2018|5|Benign": 305154,
+  "Thuesday-20-02-2018|6|Benign": 6278,
+  "Thuesday-20-02-2018|7|Benign": 3100,
+  "Thursday-01-03-2018|1|Benign": 32526,
+  "Thursday-01-03-2018|2|Benign": 14023,
+  "Thursday-01-03-2018|2|Infilteration": 33874,
+  "Thursday-01-03-2018|3|Benign": 21437,
+  "Thursday-01-03-2018|3|Infilteration": 20437,
+  "Thursday-01-03-2018|4|Benign": 31256,
+  "Thursday-01-03-2018|5|Benign": 11805,
+  "Thursday-01-03-2018|8|Benign": 27100,
+  "Thursday-01-03-2018|9|Benign": 35570,
+  "Thursday-01-03-2018|9|Infilteration": 1282,
+  "Thursday-01-03-2018|10|Benign": 16562,
+  "Thursday-01-03-2018|10|Infilteration": 37470,
+  "Thursday-01-03-2018|11|Benign": 29840,
+  "Thursday-01-03-2018|12|Benign": 17918,
+  "Thursday-15-02-2018|1|Benign": 106218,
+  "Thursday-15-02-2018|2|Benign": 91580,
+  "Thursday-15-02-2018|3|Benign": 73890,
+  "Thursday-15-02-2018|4|Benign": 76207,
+  "Thursday-15-02-2018|5|Benign": 41454,
+  "Thursday-15-02-2018|8|Benign": 87581,
+  "Thursday-15-02-2018|9|Benign": 144855,
+  "Thursday-15-02-2018|9|DoS attacks-GoldenEye": 41507,
+  "Thursday-15-02-2018|10|Benign": 128402,
+  "Thursday-15-02-2018|10|DoS attacks-GoldenEye": 1,
+  "Thursday-15-02-2018|11|Benign": 137711,
+  "Thursday-15-02-2018|11|DoS attacks-Slowloris": 10990,
+  "Thursday-15-02-2018|12|Benign": 108179,
+  "Thursday-22-02-2018|1|Benign": 110611,
+  "Thursday-22-02-2018|1|Brute Force -XSS": 20,
+  "Thursday-22-02-2018|1|SQL Injection": 2,
+  "Thursday-22-02-2018|2|Benign": 91606,
+  "Thursday-22-02-2018|2|Brute Force -XSS": 59,
+  "Thursday-22-02-2018|3|Benign": 81726,
+  "Thursday-22-02-2018|4|Benign": 97808,
+  "Thursday-22-02-2018|4|SQL Injection": 31,
+  "Thursday-22-02-2018|5|Benign": 49348,
+  "Thursday-22-02-2018|6|Benign": 1,
+  "Thursday-22-02-2018|8|Benign": 74421,
+  "Thursday-22-02-2018|9|Benign": 124324,
+  "Thursday-22-02-2018|10|Benign": 133093,
+  "Thursday-22-02-2018|10|Brute Force -Web": 161,
+  "Thursday-22-02-2018|11|Benign": 161459,
+  "Thursday-22-02-2018|11|Brute Force -Web": 88,
+  "Thursday-22-02-2018|11|SQL Injection": 1,
+  "Thursday-22-02-2018|12|Benign": 123816,
+  "Wednesday-14-02-2018|1|Benign": 65412,
+  "Wednesday-14-02-2018|2|Benign": 49804,
+  "Wednesday-14-02-2018|2|SSH-Bruteforce": 120348,
+  "Wednesday-14-02-2018|3|Benign": 35518,
+  "Wednesday-14-02-2018|3|SSH-Bruteforce": 67241,
+  "Wednesday-14-02-2018|4|Benign": 28426,
+  "Wednesday-14-02-2018|5|Benign": 11640,
+  "Wednesday-14-02-2018|7|Benign": 2,
+  "Wednesday-14-02-2018|8|Benign": 67293,
+  "Wednesday-14-02-2018|9|Benign": 105574,
+  "Wednesday-14-02-2018|10|Benign": 115169,
+  "Wednesday-14-02-2018|10|FTP-BruteForce": 52900,
+  "Wednesday-14-02-2018|11|Benign": 105863,
+  "Wednesday-14-02-2018|11|FTP-BruteForce": 119490,
+  "Wednesday-14-02-2018|12|Benign": 82925,
+  "Wednesday-14-02-2018|12|FTP-BruteForce": 20970,
+  "Wednesday-21-02-2018|1|Benign": 25,
+  "Wednesday-21-02-2018|2|Benign": 358668,
+  "Wednesday-21-02-2018|2|DDOS attack-HOIC": 686012,
+  "Wednesday-21-02-2018|8|Benign": 145,
+  "Wednesday-21-02-2018|9|Benign": 281,
+  "Wednesday-21-02-2018|10|Benign": 1714,
+  "Wednesday-21-02-2018|10|DDOS attack-LOIC-UDP": 1730,
+  "Wednesday-28-02-2018|1|Benign": 58427,
+  "Wednesday-28-02-2018|1|Infilteration": 8422,
+  "Wednesday-28-02-2018|2|Benign": 59602,
+  "Wednesday-28-02-2018|2|Infilteration": 17689,
+  "Wednesday-28-02-2018|3|Benign": 53004,
+  "Wednesday-28-02-2018|4|Benign": 57657,
+  "Wednesday-28-02-2018|5|Benign": 15651,
+  "Wednesday-28-02-2018|8|Benign": 44526,
+  "Wednesday-28-02-2018|9|Benign": 77229,
+  "Wednesday-28-02-2018|10|Benign": 65459,
+  "Wednesday-28-02-2018|10|Infilteration": 7040,
+  "Wednesday-28-02-2018|11|Benign": 68837,
+  "Wednesday-28-02-2018|11|Infilteration": 33552,
+  "Wednesday-28-02-2018|12|Benign": 43808,
+  "Wednesday-28-02-2018|12|Infilteration": 2168
+ },
+ "column_stats": {
+  "Dst Port": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 65535.0
+  },
+  "Protocol": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 17.0
+  },
+  "Flow Duration": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 14,
+   "n": 16232943,
+   "min": -919011000000.0,
+   "max": 120000000.0
+  },
+  "Tot Fwd Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 1.0,
+   "max": 309629.0
+  },
+  "Tot Bwd Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 123118.0
+  },
+  "TotLen Fwd Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 144391846.0
+  },
+  "TotLen Bwd Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 156360426.0
+  },
+  "Fwd Pkt Len Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 64440.0
+  },
+  "Fwd Pkt Len Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1460.0
+  },
+  "Fwd Pkt Len Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 16529.3138401559
+  },
+  "Fwd Pkt Len Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 18401.5827717299
+  },
+  "Bwd Pkt Len Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 65160.0
+  },
+  "Bwd Pkt Len Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1460.0
+  },
+  "Bwd Pkt Len Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 33879.28358
+  },
+  "Bwd Pkt Len Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 22448.413526582273
+  },
+  "Flow Byts/s": {
+   "nan": 59721,
+   "inf": 36039,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1806642857.14286
+  },
+  "Flow Pkts/s": {
+   "nan": 0,
+   "inf": 95760,
+   "neg": 14,
+   "n": 16232943,
+   "min": -0.0088953248,
+   "max": 6000000.0
+  },
+  "Flow IAT Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 14,
+   "n": 16232943,
+   "min": -828220000000.0,
+   "max": 120000000.0
+  },
+  "Flow IAT Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 474354474600.909
+  },
+  "Flow IAT Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 3,
+   "n": 16232943,
+   "min": -828220000000.0,
+   "max": 979781000000.0
+  },
+  "Flow IAT Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 15,
+   "n": 16232943,
+   "min": -947405000000.0,
+   "max": 120000000.0
+  },
+  "Fwd IAT Tot": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 14,
+   "n": 16232943,
+   "min": -919011000000.0,
+   "max": 120000000.0
+  },
+  "Fwd IAT Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 14,
+   "n": 16232943,
+   "min": -828220000000.0,
+   "max": 120000000.0
+  },
+  "Fwd IAT Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 474354474600.909
+  },
+  "Fwd IAT Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 3,
+   "n": 16232943,
+   "min": -828220000000.0,
+   "max": 979781000000.0
+  },
+  "Fwd IAT Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 15,
+   "n": 16232943,
+   "min": -947405000000.0,
+   "max": 120000000.0
+  },
+  "Bwd IAT Tot": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 120000000.0
+  },
+  "Bwd IAT Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 120000000.0
+  },
+  "Bwd IAT Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 84837189.5109486
+  },
+  "Bwd IAT Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 120000000.0
+  },
+  "Bwd IAT Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 120000000.0
+  },
+  "Fwd PSH Flags": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "Bwd PSH Flags": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Fwd URG Flags": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "Bwd URG Flags": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Fwd Header Len": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 2477032.0
+  },
+  "Bwd Header Len": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 2462372.0
+  },
+  "Fwd Pkts/s": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 6000000.0
+  },
+  "Bwd Pkts/s": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 2000000.0
+  },
+  "Pkt Len Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1460.0
+  },
+  "Pkt Len Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 65160.0
+  },
+  "Pkt Len Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 17344.98473
+  },
+  "Pkt Len Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 22788.28621
+  },
+  "Pkt Len Var": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 519000000.0
+  },
+  "FIN Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "SYN Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "RST Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "PSH Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "ACK Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "URG Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "CWE Flag Count": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "ECE Flag Cnt": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 1.0
+  },
+  "Down/Up Ratio": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 311.0
+  },
+  "Pkt Size Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 17478.40769
+  },
+  "Fwd Seg Size Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 16529.3138401559
+  },
+  "Bwd Seg Size Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 33879.28358
+  },
+  "Fwd Byts/b Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Fwd Pkts/b Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Fwd Blk Rate Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Bwd Byts/b Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Bwd Pkts/b Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Bwd Blk Rate Avg": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "Subflow Fwd Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 1.0,
+   "max": 309629.0
+  },
+  "Subflow Fwd Byts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 144391846.0
+  },
+  "Subflow Bwd Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 123118.0
+  },
+  "Subflow Bwd Byts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 156360426.0
+  },
+  "Init Fwd Win Byts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 4432608,
+   "n": 16232943,
+   "min": -1.0,
+   "max": 65535.0
+  },
+  "Init Bwd Win Byts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 8255549,
+   "n": 16232943,
+   "min": -1.0,
+   "max": 65535.0
+  },
+  "Fwd Act Data Pkts": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 309628.0
+  },
+  "Fwd Seg Size Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 56.0
+  },
+  "Active Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 114000000.0
+  },
+  "Active Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 75232413.85230836
+  },
+  "Active Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 114000000.0
+  },
+  "Active Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 114000000.0
+  },
+  "Idle Mean": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 395571421052.631
+  },
+  "Idle Std": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 262247866338.599
+  },
+  "Idle Max": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 979781000000.0
+  },
+  "Idle Min": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 16232943,
+   "min": 0.0,
+   "max": 239934000000.0
+  },
+  "Src Port": {
+   "nan": 0,
+   "inf": 0,
+   "neg": 0,
+   "n": 7948748,
+   "min": 0.0,
+   "max": 65535.0
+  }
+ }
+}

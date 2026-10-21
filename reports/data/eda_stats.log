@@ -1,0 +1,12 @@
+Friday-02-03-2018: 1,048,575 rows, dup=5,459, hdr=0, badTS=0, 12s
+Friday-16-02-2018: 1,048,574 rows, dup=147,539, hdr=1, badTS=0, 36s
+Friday-23-02-2018: 1,048,575 rows, dup=2,614, hdr=0, badTS=0, 12s
+Thuesday-20-02-2018: 7,948,748 rows, dup=2, hdr=0, badTS=0, 129s
+Thursday-01-03-2018: 331,100 rows, dup=73, hdr=25, badTS=0, 15s
+Thursday-15-02-2018: 1,048,575 rows, dup=2,421, hdr=0, badTS=0, 13s
+Thursday-22-02-2018: 1,048,575 rows, dup=3,278, hdr=0, badTS=0, 12s
+Wednesday-14-02-2018: 1,048,575 rows, dup=225,628, hdr=0, badTS=0, 11s
+Wednesday-21-02-2018: 1,048,575 rows, dup=17,557, hdr=0, badTS=0, 10s
+Wednesday-28-02-2018: 613,071 rows, dup=6,089, hdr=33, badTS=0, 23s
+sample: (224028, 82) -> data/interim/eda_sample.parquet
+stats -> reports/data/eda_stats.json

@@ -1,0 +1,478 @@
+{
+ "total_rows": 16232943,
+ "n_labels": 15,
+ "label_counts": {
+  "Benign": 13484708,
+  "DDOS attack-HOIC": 686012,
+  "DDoS attacks-LOIC-HTTP": 576191,
+  "DoS attacks-Hulk": 461912,
+  "Bot": 286191,
+  "FTP-BruteForce": 193360,
+  "SSH-Bruteforce": 187589,
+  "Infilteration": 161934,
+  "DoS attacks-SlowHTTPTest": 139890,
+  "DoS attacks-GoldenEye": 41508,
+  "DoS attacks-Slowloris": 10990,
+  "DDOS attack-LOIC-UDP": 1730,
+  "Brute Force -Web": 611,
+  "Brute Force -XSS": 230,
+  "SQL Injection": 87
+ },
+ "benign_share": 0.8307001386008687,
+ "label_by_day": {
+  "14-02": {
+   "Benign": 667626,
+   "FTP-BruteForce": 193360,
+   "SSH-Bruteforce": 187589
+  },
+  "15-02": {
+   "Benign": 996077,
+   "DoS attacks-GoldenEye": 41508,
+   "DoS attacks-Slowloris": 10990
+  },
+  "16-02": {
+   "Benign": 446772,
+   "DoS attacks-Hulk": 461912,
+   "DoS attacks-SlowHTTPTest": 139890
+  },
+  "20-02": {
+   "Benign": 7372557,
+   "DDoS attacks-LOIC-HTTP": 576191
+  },
+  "21-02": {
+   "Benign": 360833,
+   "DDOS attack-HOIC": 686012,
+   "DDOS attack-LOIC-UDP": 1730
+  },
+  "22-02": {
+   "Benign": 1048213,
+   "Brute Force -Web": 249,
+   "Brute Force -XSS": 79,
+   "SQL Injection": 34
+  },
+  "23-02": {
+   "Benign": 1048009,
+   "Brute Force -Web": 362,
+   "Brute Force -XSS": 151,
+   "SQL Injection": 53
+  },
+  "28-02": {
+   "Benign": 544200,
+   "Infilteration": 68871
+  },
+  "01-03": {
+   "Benign": 238037,
+   "Infilteration": 93063
+  },
+  "02-03": {
+   "Benign": 762384,
+   "Bot": 286191
+  }
+ },
+ "cols_with_nan": {
+  "Flow Byts/s": 59721
+ },
+ "cols_with_inf": {
+  "Flow Byts/s": 36039,
+  "Flow Pkts/s": 95760
+ },
+ "cols_with_negative": {
+  "Flow Duration": 14,
+  "Flow Pkts/s": 14,
+  "Flow IAT Mean": 14,
+  "Flow IAT Max": 3,
+  "Flow IAT Min": 15,
+  "Fwd IAT Tot": 14,
+  "Fwd IAT Mean": 14,
+  "Fwd IAT Max": 3,
+  "Fwd IAT Min": 15,
+  "Init Fwd Win Byts": 4432608,
+  "Init Bwd Win Byts": 8255549
+ },
+ "constant_columns": [
+  "Bwd PSH Flags",
+  "Bwd URG Flags",
+  "Fwd Byts/b Avg",
+  "Fwd Pkts/b Avg",
+  "Fwd Blk Rate Avg",
+  "Bwd Byts/b Avg",
+  "Bwd Pkts/b Avg",
+  "Bwd Blk Rate Avg"
+ ],
+ "rows_by_day": {
+  "14-02": 1048575,
+  "15-02": 1048575,
+  "16-02": 1048574,
+  "20-02": 7948748,
+  "21-02": 1048575,
+  "22-02": 1048575,
+  "23-02": 1048575,
+  "28-02": 613071,
+  "01-03": 331100,
+  "02-03": 1048575
+ },
+ "duplicates_by_day": {
+  "14-02": 225628,
+  "15-02": 2421,
+  "16-02": 147539,
+  "20-02": 2,
+  "21-02": 17557,
+  "22-02": 3278,
+  "23-02": 2614,
+  "28-02": 6089,
+  "01-03": 73,
+  "02-03": 5459
+ },
+ "total_duplicates": 410660,
+ "extra_columns_by_file": {
+  "Thuesday-20-02-2018": [
+   "Dst IP",
+   "Flow ID",
+   "Src IP",
+   "Src Port"
+  ]
+ },
+ "n_columns_common": 80,
+ "bad_timestamps": {
+  "14-02": 0,
+  "15-02": 0,
+  "16-02": 0,
+  "20-02": 0,
+  "21-02": 0,
+  "22-02": 0,
+  "23-02": 0,
+  "28-02": 0,
+  "01-03": 0,
+  "02-03": 0
+ },
+ "timestamp_check": {
+  "Friday-02-03-2018": {
+   "expected_date": "2018-03-02",
+   "rows": 1048575,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Friday-16-02-2018": {
+   "expected_date": "2018-02-16",
+   "rows": 1048574,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Friday-23-02-2018": {
+   "expected_date": "2018-02-23",
+   "rows": 1048575,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Thuesday-20-02-2018": {
+   "expected_date": "2018-02-20",
+   "rows": 7948748,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Thursday-01-03-2018": {
+   "expected_date": "2018-03-01",
+   "rows": 331100,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Thursday-15-02-2018": {
+   "expected_date": "2018-02-15",
+   "rows": 1048575,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Thursday-22-02-2018": {
+   "expected_date": "2018-02-22",
+   "rows": 1048575,
+   "rows_other_date": 9,
+   "other_dates": {
+    "1970-01-12": 5,
+    "1970-01-11": 3,
+    "1970-01-10": 1
+   },
+   "labels_of_other_date_rows": {
+    "Benign": 9
+   },
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Wednesday-14-02-2018": {
+   "expected_date": "2018-02-14",
+   "rows": 1048575,
+   "rows_other_date": 5,
+   "other_dates": {
+    "1970-01-12": 3,
+    "1970-01-05": 1,
+    "1970-01-08": 1
+   },
+   "labels_of_other_date_rows": {
+    "Benign": 5
+   },
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  },
+  "Wednesday-21-02-2018": {
+   "expected_date": "2018-02-21",
+   "rows": 1048575,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    8,
+    9,
+    10
+   ],
+   "monotonic_in_file": false
+  },
+  "Wednesday-28-02-2018": {
+   "expected_date": "2018-02-28",
+   "rows": 613071,
+   "rows_other_date": 0,
+   "other_dates": {},
+   "labels_of_other_date_rows": {},
+   "hours_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "monotonic_in_file": false
+  }
+ },
+ "n_features_in_corr": 70,
+ "n_pairs_abs_corr_ge_0.99": 34,
+ "top_corr_pairs": [
+  {
+   "a": "Fwd Pkt Len Mean",
+   "b": "Fwd Seg Size Avg",
+   "r": 1.0
+  },
+  {
+   "a": "Tot Bwd Pkts",
+   "b": "Subflow Bwd Pkts",
+   "r": 1.0
+  },
+  {
+   "a": "Fwd URG Flags",
+   "b": "CWE Flag Count",
+   "r": 1.0
+  },
+  {
+   "a": "Fwd PSH Flags",
+   "b": "SYN Flag Cnt",
+   "r": 1.0
+  },
+  {
+   "a": "Bwd Pkt Len Mean",
+   "b": "Bwd Seg Size Avg",
+   "r": 1.0
+  },
+  {
+   "a": "RST Flag Cnt",
+   "b": "ECE Flag Cnt",
+   "r": 1.0
+  },
+  {
+   "a": "TotLen Fwd Pkts",
+   "b": "Subflow Fwd Byts",
+   "r": 1.0
+  },
+  {
+   "a": "Tot Fwd Pkts",
+   "b": "Subflow Fwd Pkts",
+   "r": 1.0
+  },
+  {
+   "a": "TotLen Bwd Pkts",
+   "b": "Subflow Bwd Byts",
+   "r": 1.0
+  },
+  {
+   "a": "Tot Fwd Pkts",
+   "b": "Fwd Act Data Pkts",
+   "r": 1.0
+  },
+  {
+   "a": "Subflow Fwd Pkts",
+   "b": "Fwd Act Data Pkts",
+   "r": 1.0
+  },
+  {
+   "a": "Fwd Header Len",
+   "b": "Subflow Fwd Pkts",
+   "r": 1.0
+  },
+  {
+   "a": "Tot Fwd Pkts",
+   "b": "Fwd Header Len",
+   "r": 1.0
+  },
+  {
+   "a": "TotLen Fwd Pkts",
+   "b": "Fwd Act Data Pkts",
+   "r": 1.0
+  },
+  {
+   "a": "Subflow Fwd Byts",
+   "b": "Fwd Act Data Pkts",
+   "r": 1.0
+  }
+ ],
+ "attack_hours_by_day": {
+  "14-02": [
+   10,
+   15
+  ],
+  "15-02": [
+   9,
+   11
+  ],
+  "16-02": [
+   10,
+   13
+  ],
+  "20-02": [
+   10,
+   13
+  ],
+  "21-02": [
+   10,
+   14
+  ],
+  "22-02": [
+   10,
+   16
+  ],
+  "23-02": [
+   9,
+   15
+  ],
+  "28-02": [
+   10,
+   14
+  ],
+  "01-03": [
+   9,
+   15
+  ],
+  "02-03": [
+   10,
+   15
+  ]
+ }
+}
