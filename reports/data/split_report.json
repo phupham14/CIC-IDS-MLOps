@@ -1,0 +1,236 @@
+{
+ "seed": 42,
+ "train_last_day": "2018-02-21",
+ "ratio": [
+  0.8,
+  0.1,
+  0.1
+ ],
+ "time_assumption": "giờ 1 đến 7 được hiểu là buổi chiều (+12h)",
+ "splits": {
+  "train": {
+   "rows": 6979640,
+   "share_of_final": 0.5857215374791745,
+   "attack_share": 0.12225530256574835,
+   "label_counts": {
+    "Benign": 6126342,
+    "DDoS attacks-LOIC-HTTP": 460292,
+    "DDoS attack-HOIC": 159089,
+    "DoS attacks-Hulk": 116159,
+    "SSH-BruteForce": 75238,
+    "DoS attacks-GoldenEye": 33124,
+    "DoS attacks-Slowloris": 7926,
+    "DDoS attack-LOIC-UDP": 1384,
+    "FTP-BruteForce": 43,
+    "DoS attacks-SlowHTTPTest": 43
+   },
+   "day_counts": {
+    "2018-02-14": 536907,
+    "2018-02-15": 664994,
+    "2018-02-16": 473519,
+    "2018-02-20": 4855105,
+    "2018-02-21": 449115
+   },
+   "fwd_win_missing_share": 0.20030531660658715,
+   "bwd_win_missing_share": 0.36703382982503396,
+   "time_min": "2018-02-14 08:28:20",
+   "time_max": "2018-02-21 14:30:06",
+   "file_mb": 754.9
+  },
+  "val": {
+   "rows": 872456,
+   "share_of_final": 0.07321527610348538,
+   "attack_share": 0.12225602208019659,
+   "label_counts": {
+    "Benign": 765793,
+    "DDoS attacks-LOIC-HTTP": 57536,
+    "DDoS attack-HOIC": 19886,
+    "DoS attacks-Hulk": 14520,
+    "SSH-BruteForce": 9405,
+    "DoS attacks-GoldenEye": 4141,
+    "DoS attacks-Slowloris": 991,
+    "DDoS attack-LOIC-UDP": 173,
+    "DoS attacks-SlowHTTPTest": 6,
+    "FTP-BruteForce": 5
+   },
+   "day_counts": {
+    "2018-02-14": 67113,
+    "2018-02-15": 83125,
+    "2018-02-16": 59191,
+    "2018-02-20": 606888,
+    "2018-02-21": 56139
+   },
+   "fwd_win_missing_share": 0.17134503058033873,
+   "bwd_win_missing_share": 0.33495901225964403,
+   "time_min": "2018-02-14 10:42:51",
+   "time_max": "2018-02-21 14:31:47",
+   "file_mb": 98.5
+  },
+  "test": {
+   "rows": 872456,
+   "share_of_final": 0.07321527610348538,
+   "attack_share": 0.12225602208019659,
+   "label_counts": {
+    "Benign": 765793,
+    "DDoS attacks-LOIC-HTTP": 57536,
+    "DDoS attack-HOIC": 19886,
+    "DoS attacks-Hulk": 14520,
+    "SSH-BruteForce": 9405,
+    "DoS attacks-GoldenEye": 4141,
+    "DoS attacks-Slowloris": 991,
+    "DDoS attack-LOIC-UDP": 173,
+    "DoS attacks-SlowHTTPTest": 6,
+    "FTP-BruteForce": 5
+   },
+   "day_counts": {
+    "2018-02-14": 67113,
+    "2018-02-15": 83125,
+    "2018-02-16": 59191,
+    "2018-02-20": 606888,
+    "2018-02-21": 56139
+   },
+   "fwd_win_missing_share": 0.16681185068358748,
+   "bwd_win_missing_share": 0.3302653658178751,
+   "time_min": "2018-02-14 11:05:45",
+   "time_max": "2018-02-21 14:33:29",
+   "file_mb": 99.3
+  },
+  "production_sim": {
+   "rows": 3191759,
+   "share_of_final": 0.2678479103138547,
+   "attack_share": 0.08921005627304568,
+   "label_counts": {
+    "Benign": 2907022,
+    "Bot": 144535,
+    "Infiltration": 139341,
+    "Web Attack": 861
+   },
+   "day_counts": {
+    "2018-02-22": 831991,
+    "2018-02-23": 821272,
+    "2018-02-28": 474419,
+    "2018-03-01": 269329,
+    "2018-03-02": 794748
+   },
+   "fwd_win_missing_share": 0.22326560370002874,
+   "bwd_win_missing_share": 0.40711187780781694,
+   "time_min": "2018-02-22 08:22:17",
+   "time_max": "2018-03-02 17:30:18",
+   "file_mb": 349.8
+  }
+ },
+ "groups": [
+  {
+   "day": "2018-02-14",
+   "label": "Benign",
+   "rows": 577032,
+   "train": 461626,
+   "val": 57703,
+   "test": 57703
+  },
+  {
+   "day": "2018-02-14",
+   "label": "FTP-BruteForce",
+   "rows": 53,
+   "train": 43,
+   "val": 5,
+   "test": 5
+  },
+  {
+   "day": "2018-02-14",
+   "label": "SSH-BruteForce",
+   "rows": 94048,
+   "train": 75238,
+   "val": 9405,
+   "test": 9405
+  },
+  {
+   "day": "2018-02-15",
+   "label": "Benign",
+   "rows": 779930,
+   "train": 623944,
+   "val": 77993,
+   "test": 77993
+  },
+  {
+   "day": "2018-02-15",
+   "label": "DoS attacks-GoldenEye",
+   "rows": 41406,
+   "train": 33124,
+   "val": 4141,
+   "test": 4141
+  },
+  {
+   "day": "2018-02-15",
+   "label": "DoS attacks-Slowloris",
+   "rows": 9908,
+   "train": 7926,
+   "val": 991,
+   "test": 991
+  },
+  {
+   "day": "2018-02-16",
+   "label": "Benign",
+   "rows": 446647,
+   "train": 357317,
+   "val": 44665,
+   "test": 44665
+  },
+  {
+   "day": "2018-02-16",
+   "label": "DoS attacks-Hulk",
+   "rows": 145199,
+   "train": 116159,
+   "val": 14520,
+   "test": 14520
+  },
+  {
+   "day": "2018-02-16",
+   "label": "DoS attacks-SlowHTTPTest",
+   "rows": 55,
+   "train": 43,
+   "val": 6,
+   "test": 6
+  },
+  {
+   "day": "2018-02-20",
+   "label": "Benign",
+   "rows": 5493517,
+   "train": 4394813,
+   "val": 549352,
+   "test": 549352
+  },
+  {
+   "day": "2018-02-20",
+   "label": "DDoS attacks-LOIC-HTTP",
+   "rows": 575364,
+   "train": 460292,
+   "val": 57536,
+   "test": 57536
+  },
+  {
+   "day": "2018-02-21",
+   "label": "Benign",
+   "rows": 360802,
+   "train": 288642,
+   "val": 36080,
+   "test": 36080
+  },
+  {
+   "day": "2018-02-21",
+   "label": "DDoS attack-HOIC",
+   "rows": 198861,
+   "train": 159089,
+   "val": 19886,
+   "test": 19886
+  },
+  {
+   "day": "2018-02-21",
+   "label": "DDoS attack-LOIC-UDP",
+   "rows": 1730,
+   "train": 1384,
+   "val": 173,
+   "test": 173
+  }
+ ]
+}

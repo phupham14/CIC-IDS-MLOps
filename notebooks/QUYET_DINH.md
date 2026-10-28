@@ -6,6 +6,31 @@
 
 ---
 
+## Cập nhật 28/10: code đã làm theo các kết luận như thế nào
+
+> Bảng này **chỉ mô tả code**, không sửa các ô kết luận của nhóm bên dưới. Mọi lựa chọn đổi được trong `params.yaml`, rồi chạy lại `python src/data/preprocess.py` (khoảng 5 phút). Số liệu chi tiết ở `DATA.md`, mục 3, 4.1 và 5.
+
+| # | Kết luận của nhóm | Code hiện tại | Tham số |
+|---|---|---|---|
+| 1 | Loại trùng trước khi chia, so trên đặc trưng, bỏ qua `Timestamp` | **Đã làm**: loại 4.220.857 dòng (26,2%). **Hệ quả cần xem lại:** FTP-BruteForce còn 53 dòng, SlowHTTPTest còn 55 dòng | `clean.dedup: features` (đổi sang `exact` thì FTP còn 39.346, SlowHTTPTest còn 19.462) |
+| 2 | Train: 14/02 đến 21/02; `production_sim`: 22/02 đến 02/03 | **Đã làm**: `production_sim.parquet` có 3.191.759 dòng | `split.train_last_day` |
+| 3 | Chia theo thời gian 80/10/10 trong từng nhóm (ngày, nhãn) | **Đã làm**: train 6.979.640 / val 872.456 / test 872.456 | `split.train`, `split.val`, `split.test` |
+| 4 | Chấp nhận giả định AM/PM để sắp thứ tự | **Đã làm**: giờ 1 đến 7 cộng 12; dòng cùng `Timestamp` giữ thứ tự gốc | `time.pm_hours` |
+| 5 | Loại dòng `NaN`/`inf` | **Đã làm**: 95.760 dòng | `clean.drop_missing` |
+| 6 | Giữ −1, thêm cờ `fwd_win_missing`, `bwd_win_missing` | **Đã làm**: giữ nguyên giá trị, thêm 2 cột cờ | `clean.allow_negative_cols`, `clean.add_window_flags` |
+| 7 | Lấy mẫu Benign 20/02, tỉ lệ chưa chốt | **Chưa làm**, giữ toàn bộ | |
+| 8 | Nhị phân trước, đa lớp là mở rộng | Xuất sẵn cả `y_binary` và `y_multi` (13 lớp) | |
+| 9 | Gộp lớp Web | **Đã làm**: thành `Web Attack` (861 dòng, chỉ có trong `production_sim`); nhãn gốc ở `Label_raw` | `label.merge` |
+| 10 | Chuẩn hóa tên nhãn | **Đã làm**: 4 nhãn đổi tên; `label_map.json` | `label.rename` |
+| 11 | Bỏ 8 cột hằng số; ngưỡng tương quan chưa chốt | Đã bỏ 8 cột; **chưa bỏ** đặc trưng tương quan (đang tắt) | `clean.drop_constant_cols`, `features.drop_correlated` |
+| 12 | `Dst Port`, `Protocol`: TV2 thử cả hai | Đang giữ cả hai cột | |
+| 13 | Trọng số lớp, không SMOTE | Thuộc bước huấn luyện; `scale_pos_weight` trên train ≈ 7,18 | |
+| 14 | `RobustScaler` chỉ cho SVM, trong `Pipeline` | Thuộc bước huấn luyện, không làm trong pipeline dữ liệu | |
+| 19 | (Phần C, chưa chốt) Định dạng và đường dẫn dữ liệu đã xử lý | Tạm thời: Parquet trong `data/processed/`; `features.json`, `label_map.json` trong `data/preprocessing/` | `data.processed_dir`, `data.artifacts_dir` |
+| 20 | (Phần C, chưa chốt) Commit lên Git | `data/processed/` và `data/interim/` bị `.gitignore` chặn; `data/preprocessing/` và `reports/` không bị chặn | `.gitignore` |
+
+---
+
 ## A. Cần chốt trước khi viết code pipeline
 
 | # | Điểm cần thống nhất | Xem ở DATA.md | Phương án | Đề xuất | Kết luận của nhóm | Người quyết / Ngày |

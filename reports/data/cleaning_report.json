@@ -1,0 +1,196 @@
+{
+ "per_file": {
+  "Wednesday-14-02-2018": {
+   "rows_in": 1048575,
+   "header_rows": 0,
+   "bad_timestamp_rows": 5,
+   "nan_inf_rows": 3824,
+   "negative_rows": 0,
+   "rows_after_clean": 1044746
+  },
+  "Thursday-15-02-2018": {
+   "rows_in": 1048575,
+   "header_rows": 0,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 8027,
+   "negative_rows": 0,
+   "rows_after_clean": 1040548
+  },
+  "Friday-16-02-2018": {
+   "rows_in": 1048575,
+   "header_rows": 1,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 0,
+   "negative_rows": 0,
+   "rows_after_clean": 1048574
+  },
+  "Thuesday-20-02-2018": {
+   "rows_in": 7948748,
+   "header_rows": 0,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 59453,
+   "negative_rows": 0,
+   "rows_after_clean": 7889295
+  },
+  "Wednesday-21-02-2018": {
+   "rows_in": 1048575,
+   "header_rows": 0,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 0,
+   "negative_rows": 0,
+   "rows_after_clean": 1048575
+  },
+  "Thursday-22-02-2018": {
+   "rows_in": 1048575,
+   "header_rows": 0,
+   "bad_timestamp_rows": 9,
+   "nan_inf_rows": 5610,
+   "negative_rows": 0,
+   "rows_after_clean": 1042956
+  },
+  "Friday-23-02-2018": {
+   "rows_in": 1048575,
+   "header_rows": 0,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 5708,
+   "negative_rows": 1,
+   "rows_after_clean": 1042866
+  },
+  "Wednesday-28-02-2018": {
+   "rows_in": 613104,
+   "header_rows": 33,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 6169,
+   "negative_rows": 0,
+   "rows_after_clean": 606902
+  },
+  "Thursday-01-03-2018": {
+   "rows_in": 331125,
+   "header_rows": 25,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 2919,
+   "negative_rows": 0,
+   "rows_after_clean": 328181
+  },
+  "Friday-02-03-2018": {
+   "rows_in": 1048575,
+   "header_rows": 0,
+   "bad_timestamp_rows": 0,
+   "nan_inf_rows": 4050,
+   "negative_rows": 0,
+   "rows_after_clean": 1044525
+  }
+ },
+ "total": {
+  "rows_in": 16233002,
+  "header_rows": 59,
+  "bad_timestamp_rows": 14,
+  "nan_inf_rows": 95760,
+  "negative_rows": 1,
+  "rows_after_clean": 16137168
+ },
+ "rows_after_clean": 16137168,
+ "dedup": {
+  "mode": "features",
+  "duplicates_exact_row": 431731,
+  "duplicates_features_and_label": 4220857
+ },
+ "duplicates_removed": 4220857,
+ "rows_final": 11916311,
+ "dedup_by_label": {
+  "Benign": {
+   "before": 13390234,
+   "after": 10564950,
+   "removed": 2825284,
+   "unique_feature_vectors": 10564950
+  },
+  "Bot": {
+   "before": 286191,
+   "after": 144535,
+   "removed": 141656,
+   "unique_feature_vectors": 144535
+  },
+  "DDoS attack-HOIC": {
+   "before": 686012,
+   "after": 198861,
+   "removed": 487151,
+   "unique_feature_vectors": 198861
+  },
+  "DDoS attack-LOIC-UDP": {
+   "before": 1730,
+   "after": 1730,
+   "removed": 0,
+   "unique_feature_vectors": 1730
+  },
+  "DDoS attacks-LOIC-HTTP": {
+   "before": 576191,
+   "after": 575364,
+   "removed": 827,
+   "unique_feature_vectors": 575364
+  },
+  "DoS attacks-GoldenEye": {
+   "before": 41508,
+   "after": 41406,
+   "removed": 102,
+   "unique_feature_vectors": 41406
+  },
+  "DoS attacks-Hulk": {
+   "before": 461912,
+   "after": 145199,
+   "removed": 316713,
+   "unique_feature_vectors": 145199
+  },
+  "DoS attacks-SlowHTTPTest": {
+   "before": 139890,
+   "after": 55,
+   "removed": 139835,
+   "unique_feature_vectors": 55
+  },
+  "DoS attacks-Slowloris": {
+   "before": 10990,
+   "after": 9908,
+   "removed": 1082,
+   "unique_feature_vectors": 9908
+  },
+  "FTP-BruteForce": {
+   "before": 193354,
+   "after": 53,
+   "removed": 193301,
+   "unique_feature_vectors": 53
+  },
+  "Infiltration": {
+   "before": 160639,
+   "after": 139341,
+   "removed": 21298,
+   "unique_feature_vectors": 139341
+  },
+  "SSH-BruteForce": {
+   "before": 187589,
+   "after": 94048,
+   "removed": 93541,
+   "unique_feature_vectors": 94048
+  },
+  "Web Attack": {
+   "before": 928,
+   "after": 861,
+   "removed": 67,
+   "unique_feature_vectors": 861
+  }
+ },
+ "ambiguous_feature_vectors": {
+  "feature_vectors_with_multiple_labels": 21748,
+  "rows_affected": 43501
+ },
+ "dropped_columns": {
+  "Timestamp": "Timestamp (chỉ dùng để sắp thứ tự khi chia, không làm đặc trưng)",
+  "Bwd PSH Flags": "cột hằng số (phương sai 0)",
+  "Bwd URG Flags": "cột hằng số (phương sai 0)",
+  "Fwd Byts/b Avg": "cột hằng số (phương sai 0)",
+  "Fwd Pkts/b Avg": "cột hằng số (phương sai 0)",
+  "Fwd Blk Rate Avg": "cột hằng số (phương sai 0)",
+  "Bwd Byts/b Avg": "cột hằng số (phương sai 0)",
+  "Bwd Pkts/b Avg": "cột hằng số (phương sai 0)",
+  "Bwd Blk Rate Avg": "cột hằng số (phương sai 0)"
+ },
+ "n_features_final": 72
+}

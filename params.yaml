@@ -1,0 +1,65 @@
+# Tham số của pipeline dữ liệu (src/data/preprocess.py).
+# Các lựa chọn bên dưới theo kết luận của nhóm trong notebooks/QUYET_DINH.md (ghi số # tương ứng).
+# Chạy lại: python src/data/preprocess.py
+
+data:
+  raw_dir: data/raw               # có thể ghi đè bằng biến môi trường CIC_RAW_DIR
+  interim_dir: data/interim
+  processed_dir: data/processed
+  artifacts_dir: data/preprocessing      # features.json, label_map.json, dropped_features.json
+  reports_dir: reports/data
+  file_glob: "*_TrafficForML_CICFlowMeter.csv"   # bỏ qua cic.csv (bản trùng của file ngày 14/02)
+  label_col: Label
+  time_col: Timestamp
+  benign_label: Benign
+  chunksize: 500000
+  seed: 42
+
+clean:
+  min_year: 2018                  # loại dòng có Timestamp sai năm (ví dụ 1970)
+  drop_id_cols: [Flow ID, Src IP, Dst IP, Src Port]   # định danh, chỉ có ở file 20/02; gây rò rỉ nếu giữ
+  drop_time_col: true             # Timestamp không làm đặc trưng; chỉ dùng để sắp thứ tự khi chia (#3, #4)
+  drop_constant_cols:             # phương sai 0 trên toàn bộ dữ liệu (từ EDA, mục 2.4) (#11)
+    - Bwd PSH Flags
+    - Bwd URG Flags
+    - Fwd Byts/b Avg
+    - Fwd Pkts/b Avg
+    - Fwd Blk Rate Avg
+    - Bwd Byts/b Avg
+    - Bwd Pkts/b Avg
+    - Bwd Blk Rate Avg
+  allow_negative_cols:            # -1 là "không có cửa sổ TCP": giữ nguyên giá trị, không xóa dòng (#6)
+    - Init Fwd Win Byts
+    - Init Bwd Win Byts
+  add_window_flags: true          # thêm cột cờ fwd_win_missing, bwd_win_missing (#6)
+  drop_missing: true              # loại dòng có NaN hoặc inf (do luồng thời lượng 0 chia cho 0) (#5)
+  drop_negative: true             # loại dòng có giá trị âm ở các cột còn lại (thời lượng, IAT, ...)
+  dedup: features                 # features: loại dòng trùng trên các cột đặc trưng + nhãn, BỎ QUA Timestamp (#1)
+                                  # exact: chỉ loại dòng trùng cả thời điểm (ít dòng bị loại hơn nhiều)
+                                  # none: không loại trùng
+                                  # Giữ lại dòng xuất hiện sớm nhất (theo thời gian)
+
+time:
+  pm_hours: [1, 7]                # Timestamp mất AM/PM: giờ 1 đến 7 được hiểu là buổi chiều (+12h) (#4)
+
+label:
+  rename:                         # chuẩn hóa tên nhãn (#10)
+    "DDOS attack-HOIC": "DDoS attack-HOIC"
+    "DDOS attack-LOIC-UDP": "DDoS attack-LOIC-UDP"
+    "Infilteration": "Infiltration"
+    "SSH-Bruteforce": "SSH-BruteForce"
+  merge:                          # gộp lớp Web thành một lớp khi làm đa lớp (#9); nhãn gốc giữ ở cột Label_raw
+    "Brute Force -Web": "Web Attack"
+    "Brute Force -XSS": "Web Attack"
+    "SQL Injection": "Web Attack"
+
+split:
+  train_last_day: "2018-02-21"    # các ngày đến hết 21/02 dùng để chia train/val/test; các ngày sau là production_sim (#2)
+  train: 0.8                      # chia theo thời gian trong từng nhóm (ngày, nhãn): 80% đầu, 10% kế, 10% cuối (#3)
+  val: 0.1
+  test: 0.1
+
+features:
+  drop_correlated: false          # ngưỡng tương quan CHƯA được nhóm chốt (#11) nên mặc định không bỏ
+  corr_threshold: 0.99
+  corr_sample_frac: 0.04
