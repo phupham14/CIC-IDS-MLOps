@@ -1,0 +1,11 @@
+{
+ "Timestamp": "Timestamp (chỉ dùng để sắp thứ tự khi chia, không làm đặc trưng)",
+ "Bwd PSH Flags": "cột hằng số (phương sai 0)",
+ "Bwd URG Flags": "cột hằng số (phương sai 0)",
+ "Fwd Byts/b Avg": "cột hằng số (phương sai 0)",
+ "Fwd Pkts/b Avg": "cột hằng số (phương sai 0)",
+ "Fwd Blk Rate Avg": "cột hằng số (phương sai 0)",
+ "Bwd Byts/b Avg": "cột hằng số (phương sai 0)",
+ "Bwd Pkts/b Avg": "cột hằng số (phương sai 0)",
+ "Bwd Blk Rate Avg": "cột hằng số (phương sai 0)"
+}

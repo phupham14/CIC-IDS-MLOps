@@ -5,6 +5,8 @@
 >
 > **Nguồn dữ liệu:** dùng bộ đầy đủ 10 file từ nguồn chính thức của CIC (xem Bước 2), **không dùng** bản Kaggle `primus11` vì nó chỉ có một ngày.
 >
+> **Cập nhật 28/10/2026:** các **bước 5 đến 13** đã được viết lại theo **cách làm thật của dự án** (`src/data/preprocess.py`, `params.yaml`) và theo các quyết định của nhóm trong `QUYET_DINH.md`. Mỗi bước có phần *"Áp dụng vào dự án này"* cho biết code làm gì, kèm bài học rút ra từ số liệu thật. Các bước 1 đến 4 và 14 không đổi.
+>
 > **Lưu ý:** tên cột và số liệu trong code là theo hiểu biết về CIC-IDS-2018 gốc. Bản Kaggle có thể khác, nên ở **Bước 3** luôn phải nhìn dữ liệu thật trước rồi mới sửa code cho khớp.
 
 ---
@@ -294,54 +296,53 @@ for c in feat:
 
 ---
 
-## Bước 5. Ghi quyết định vào `params.yaml`
+## Bước 5. Ghi quyết định vào `params.yaml` *(cập nhật 28/10)*
 
-**Vì sao:** các quyết định (cột nào bỏ, chia thế nào, seed bao nhiêu) phải nằm ở **một chỗ**, đọc được và thay đổi được mà không sửa code.
+**Vì sao:** các quyết định (cột nào bỏ, chia thế nào, seed bao nhiêu) phải nằm ở **một chỗ**, đọc được và thay đổi được mà không sửa code. Mẹo: mỗi tham số ghi kèm **số của quyết định nhóm** (`#1`, `#2`...) để truy vết lý do.
+
+**Áp dụng vào dự án này** (`params.yaml`, rút gọn):
 
 ```yaml
 data:
-  raw_dir: data/raw
-  interim_dir: data/interim
-  processed_dir: data/processed
-  label_col: Label
-  benign_label: Benign
-  time_col: Timestamp
-  drop_cols: [Flow ID, Src IP, Dst IP, Src Port, Timestamp]   # sửa theo EDA
+  raw_dir: data/raw                  # ghi đè được bằng biến môi trường CIC_RAW_DIR
+  processed_dir: data/processed      # train / val / test / production_sim (.parquet)
+  artifacts_dir: data/preprocessing  # features.json, label_map.json, dropped_features.json
   seed: 42
+clean:
+  drop_id_cols: [Flow ID, Src IP, Dst IP, Src Port]
+  drop_constant_cols: [Bwd PSH Flags, ...]        # 8 cột hằng số, từ EDA (#11)
+  allow_negative_cols: [Init Fwd Win Byts, Init Bwd Win Byts]   # giữ giá trị -1 (#6)
+  add_window_flags: true                          # thêm cột cờ (#6)
+  dedup: features                                 # loại trùng theo đặc trưng + nhãn, bỏ qua Timestamp (#1)
+time:
+  pm_hours: [1, 7]                                # giả định AM/PM (#4)
+label:
+  merge: {"Brute Force -Web": "Web Attack", ...}  # gộp lớp Web (#9)
 split:
-  strategy: by_day            # hoặc within_day_time
-  train_days: []              # điền sau EDA
-  val_days: []
-  test_days: []
-preprocess:
-  scaler: robust
-  imbalance: class_weight     # class_weight | undersample | smote
+  train_last_day: "2018-02-21"                    # ngày đến hết 21/02 -> train/val/test, sau đó -> production_sim (#2)
+  train: 0.8
+  val: 0.1
+  test: 0.1                                       # chia theo thời gian trong từng nhóm (ngày, nhãn) (#3)
+features:
+  drop_correlated: false                          # ngưỡng tương quan chưa chốt (#11) nên mặc định tắt
 ```
 
 ---
 
-## Bước 6. Ingest: gộp, chuẩn hóa, lưu Parquet
+## Bước 6. Đọc theo chunk và lưu Parquet trung gian *(cập nhật 28/10)*
 
-**Vì sao Parquet?** Nhỏ hơn CSV nhiều lần, đọc nhanh, **nhớ kiểu dữ liệu** (CSV thì mỗi lần đọc lại phải đoán).
+**Vì sao Parquet?** Nhỏ hơn CSV nhiều lần, đọc nhanh, **nhớ kiểu dữ liệu** (CSV thì mỗi lần đọc lại phải đoán). **Vì sao đọc theo chunk?** File ngày 20/02 nặng 4 GB (7,9 triệu dòng), không nên nạp một lần vào RAM.
 
 ```python
-# src/data/ingest.py
-import pandas as pd, yaml
-from pathlib import Path
-
-P = yaml.safe_load(open("params.yaml"))["data"]
-out = Path(P["interim_dir"]); out.mkdir(parents=True, exist_ok=True)
-
-for f in sorted(Path(P["raw_dir"]).glob("*.csv")):
-    df = load_one(f)                      # hàm ở Bước 4
-    # xử lý Timestamp
-    if P["time_col"] in df.columns:
-        df[P["time_col"]] = pd.to_datetime(df[P["time_col"]], errors="coerce")
-    df.to_parquet(out / f"{f.stem}.parquet", index=False)
-    print(f.name, df.shape)
+for i, chunk in enumerate(pd.read_csv(f, chunksize=500_000, low_memory=False)):
+    num, raw, merged, tsec = clean_chunk(chunk, feature_cols, cfg, stats)   # làm sạch ngay từng chunk
+    out = num.astype("float32")        # float32: nhỏ gần một nửa float64, đủ chính xác cho mô hình
+    out.to_parquet(parts_dir / f"{date:%Y%m%d}_{i:04d}.parquet", compression="zstd")
 ```
 
-> Nếu ở Bước 3 bạn thấy file thừa/thiếu cột: thống nhất bằng cách giữ **tập cột chung**, hoặc thêm cột còn thiếu bằng `NaN`. Ghi quyết định này vào báo cáo.
+**Áp dụng vào dự án này:** ingest và làm sạch nằm chung một lượt đọc (không có file `ingest.py` riêng). Các phần sạch lưu tạm ở `data/interim/clean_parts/` và tự xóa khi chạy xong. Khóa băm để so trùng được tính trên `float64` **trước khi** chuyển sang `float32`, để hai giá trị khác nhau nhẹ không bị coi nhầm là trùng.
+
+> Nếu ở Bước 3 bạn thấy file thừa/thiếu cột: giữ **tập cột chung**, hoặc thêm cột còn thiếu bằng `NaN`. Ở dự án này, 4 cột thừa của file 20/02 (`Flow ID`, `Src IP`, `Src Port`, `Dst IP`) đều là cột định danh nên bị bỏ, và hai bên khớp nhau.
 
 ---
 
@@ -377,111 +378,135 @@ Chạy validate **hai lần**: sau Ingest (để biết dữ liệu gốc lỗi 
 
 ---
 
-## Bước 8. Clean: làm sạch có thống kê
+> **Áp dụng vào dự án này:** chưa viết `validate.py`. Thay vào đó, kết quả sau xử lý được kiểm tra bằng bộ test ở Bước 13 (không `NaN`/`inf`, đúng schema, đúng cách chia). Nếu có thêm thời gian, nên bổ sung bước kiểm tra schema trên dữ liệu thô trước khi làm sạch.
+
+---
+
+## Bước 8. Làm sạch có thống kê *(cập nhật 28/10)*
 
 **Vì sao thống kê?** Mỗi lần xóa dòng là một quyết định ảnh hưởng đến mô hình, cần có số liệu trước và sau.
 
+**Áp dụng vào dự án này** (`clean_chunk` trong `src/data/preprocess.py`), theo thứ tự:
+
+| # | Quy tắc | Số dòng bị loại | Nguồn quyết định |
+|---|---|---:|---|
+| 1 | Dòng header bị lặp trong dữ liệu | 59 | EDA |
+| 2 | `Timestamp` không đọc được hoặc sai năm (1970) | 14 | EDA |
+| 3 | Có `NaN` hoặc `inf` (luồng thời lượng 0 nên chia cho 0) | 95.760 | #5 |
+| 4 | Có giá trị âm ở cột không cho phép (giữ −1 của `Init Win Byts`) | 1 | EDA, #6 |
+| 5 | Dòng trùng trên đặc trưng + nhãn, bỏ qua `Timestamp` | 4.220.857 | #1 |
+
 ```python
-# src/data/clean.py
-import numpy as np, json
-
-def clean(df, drop_cols, report):
-    report["rows_in"] = len(df)
-
-    df = df.drop(columns=[c for c in drop_cols if c in df.columns])
-
-    df = df.replace([np.inf, -np.inf], np.nan)
-    report["rows_with_nan_or_inf"] = int(df.isna().any(axis=1).sum())
-    df = df.dropna()
-
-    num_cols = df.select_dtypes("number").columns
-    neg_mask = (df[num_cols] < 0).any(axis=1)
-    report["rows_with_negative"] = int(neg_mask.sum())
-    # Quyết định (loại hay giữ) phụ thuộc EDA: cột nào âm là "lỗi", cột nào âm hợp lệ?
-
-    n = len(df)
-    df = df.drop_duplicates()
-    report["duplicates_removed"] = n - len(df)
-
-    const = [c for c in num_cols if df[c].nunique() <= 1]
-    df = df.drop(columns=const)
-    report["constant_cols_dropped"] = const
-
-    report["rows_out"] = len(df)
-    return df
+num = chunk[feature_cols].apply(pd.to_numeric, errors="coerce").astype("float64")
+num = num.replace([np.inf, -np.inf], np.nan)
+miss = num.isna().any(axis=1)                      # NaN hoặc inf
+neg = (num[neg_cols] < 0).any(axis=1)              # neg_cols = mọi cột trừ Init Fwd/Bwd Win Byts
 ```
 
-Ghi `report` ra `reports/data/cleaning_report.json`.
+Ngoài ra bỏ cột: 4 cột định danh, `Timestamp`, 8 cột hằng số. Kết quả ghi ở `reports/data/cleaning_report.json` (số dòng từng bước, từng ngày, từng nhãn).
 
-> **Cảnh báo về trùng lặp:** nếu bạn chia theo thời gian, nên loại trùng **trước khi chia** để cùng một bản ghi không rơi vào cả train lẫn test.
+### Loại dòng trùng: bài học quan trọng
+
+Câu hỏi "thế nào là dòng trùng" quyết định kết quả rất khác nhau. Trên 16,1 triệu dòng sau làm sạch:
+
+| Cách định nghĩa trùng | Số dòng bị loại | FTP-BruteForce còn | SlowHTTPTest còn |
+|---|---:|---:|---:|
+| Trùng **cả thời điểm** (`exact`) | 431.731 (2,7%) | 39.346 | 19.462 |
+| Trùng **đặc trưng + nhãn**, bỏ qua `Timestamp` (`features`, **đang dùng theo #1**) | 4.220.857 (26,2%) | **53** | **55** |
+
+Lý do: hai loại tấn công này được tạo bởi công cụ gửi **cùng một mẫu gói tin lặp đi lặp lại**, chỉ khác thời điểm. Vì `Timestamp` không được dùng làm đặc trưng, về mặt mô hình các dòng đó là **một**, nhưng cũng vì vậy hai lớp gần như biến mất. **Bài học:** sau mỗi bước xóa dòng, luôn in số dòng **từng nhãn** trước và sau. Nếu một lớp mất hơn 90%, dừng lại và hỏi lại quyết định.
+
+```python
+fkl = fkey * PRIME + codes                                   # hash(đặc trưng) kết hợp nhãn, KHÔNG có Timestamp
+dup = pd.Series(fkl[order]).duplicated(keep="first")         # order: sắp theo thời gian, nên giữ dòng sớm nhất
+```
+
+> **Cảnh báo:** loại trùng phải làm **trước khi chia** để cùng một bản ghi không rơi vào cả train lẫn test.
 
 ---
 
-## Bước 9. Gán nhãn
+## Bước 9. Gán nhãn *(cập nhật 28/10)*
+
+**Áp dụng vào dự án này:**
+1. **Chuẩn hóa tên** (#10): `DDOS attack-HOIC` thành `DDoS attack-HOIC`, `Infilteration` thành `Infiltration`, `SSH-Bruteforce` thành `SSH-BruteForce`.
+2. **Gộp lớp quá hiếm** (#9): `Brute Force -Web` (611), `Brute Force -XSS` (230), `SQL Injection` (87) thành một lớp `Web Attack`. Nhãn gốc vẫn giữ ở cột `Label_raw`.
+3. Tạo hai cột đích: `y_binary` (0 = Benign, 1 = Attack) và `y_multi` (mã 0 đến 12 theo `label_map`).
+4. Lưu `label_map.json` vào `data/preprocessing/` để API và giám sát dùng lại.
 
 ```python
-df["y_binary"] = (df["Label"] != "Benign").astype("int8")   # 0 = Benign, 1 = Attack
+labels_sorted = ["Benign"] + sorted(other_labels)            # Benign luôn là 0
+label_map = {name: i for i, name in enumerate(labels_sorted)}
 ```
-
-Với đa lớp: tạo `label_map = {tên_nhãn: số}` rồi lưu ra `artifacts/preprocessing/label_map.json`. Lớp quá hiếm (vài chục mẫu) → gộp hoặc loại, và ghi lại.
 
 ---
 
-## Bước 10. Chia tập (train / val / test), bước dễ sai nhất
+## Bước 10. Chia tập (train / val / test), bước dễ sai nhất *(cập nhật 28/10)*
 
 **Rò rỉ dữ liệu (data leakage)** là khi thông tin của tập test "lọt" vào lúc train, khiến kết quả đẹp giả tạo. Với dữ liệu mạng, chia ngẫu nhiên nghĩa là các luồng cùng một phiên tấn công nằm cả trong train và test → mô hình "nhớ" thay vì "hiểu".
 
-Hai phương án (chọn dựa trên **Biểu đồ 2**):
+Ba cách chia, và kết luận của nhóm:
 
-| Phương án | Ưu | Nhược |
-|---|---|---|
-| **A. Chia theo ngày** | Sát thực tế, thể hiện rõ Drift | Có thể thiếu loại tấn công ở tập train |
-| **B. Theo thời gian trong từng ngày** (đầu ngày → train, cuối ngày → test) | Mọi tập đều có đủ lớp | Ít thể hiện Drift hơn |
+| Cách chia | Ưu | Nhược | Kết luận |
+|---|---|---|---|
+| Ngẫu nhiên | Đơn giản | Rò rỉ giữa các luồng cùng phiên tấn công | Không dùng |
+| Cắt 80/10/10 theo thời gian **trên cả ngày** | Sát thực tế | Tấn công chỉ kéo dài vài giờ, nên val/test thiếu hầu hết loại tấn công (xem `QUYET_DINH.md`, Phụ lục 2) | Không dùng |
+| **Theo thời gian, trong từng nhóm (ngày, nhãn)** | Giữ thứ tự thời gian trong mỗi phiên tấn công mà tập nào cũng đủ lớp | Lớp rất nhỏ chỉ còn vài mẫu ở val/test | **Dùng (#3)** |
 
-Ví dụ phương án B:
+**Áp dụng vào dự án này:**
+
+1. **Chia theo giai đoạn (#2):** các ngày 14/02 đến 21/02 chia train/val/test; các ngày 22/02 đến 02/03 là `production_sim` (không chia), để mô phỏng dữ liệu vận hành và Drift. Ba nhóm tấn công mới (Web, Infiltration, Bot) chỉ xuất hiện ở giai đoạn sau, nên mô hình ban đầu chưa từng thấy chúng.
+2. **Sắp thứ tự theo thời gian, với giả định AM/PM (#4):** `Timestamp` chỉ có giờ 1 đến 12 (mất AM/PM). Giờ 1 đến 7 được hiểu là buổi chiều (cộng 12). Các dòng có cùng `Timestamp` giữ nguyên thứ tự gốc (sắp ổn định).
+3. **Trong từng nhóm (ngày, nhãn):** 80% dòng sớm nhất là train, 10% kế là val, 10% muộn nhất là test.
 
 ```python
-df = df.sort_values("Timestamp")
-parts = []
-for day, g in df.groupby("source_file"):
-    n = len(g); a, b = int(n * 0.70), int(n * 0.85)
-    parts.append((g.iloc[:a], g.iloc[a:b], g.iloc[b:]))
-train = pd.concat(p[0] for p in parts)
-val   = pd.concat(p[1] for p in parts)
-test  = pd.concat(p[2] for p in parts)
+for day in train_days:
+    for label in labels:
+        rows = order[(day_of_row == day) & (label_of_row == label) & kept]   # đã sắp theo thời gian
+        m = len(rows); n_val = n_test = max(1, round(0.1 * m))
+        split[rows[: m - n_val - n_test]] = TRAIN
+        split[rows[m - n_val - n_test : m - n_test]] = VAL
+        split[rows[m - n_test :]] = TEST
 ```
 
-Kiểm tra bắt buộc sau khi chia:
-- Ba tập **không giao nhau**.
-- Tập nào cũng có đủ các lớp cần thiết (in `value_counts`).
-- Ghi vào báo cáo kích thước và phân bố nhãn của từng tập.
+![Chia theo nhóm](../reports/data/figures/10_split_by_group.png)
 
-Các ngày **không dùng để train** → lưu thành `production_sim/` để mô phỏng dữ liệu vận hành và Drift sau này.
+**Kiểm tra bắt buộc sau khi chia** (đều có trong `tests/data/test_processed.py`):
+- Các tập **không giao nhau**, kể cả `production_sim`.
+- Trong mỗi nhóm: train sớm hơn val, val sớm hơn test.
+- Tập nào cũng có đủ các lớp cần thiết (in `value_counts`).
+- Ghi vào báo cáo kích thước và phân bố nhãn của từng tập (`reports/data/split_report.json`).
+
+> **Lưu ý thật sự quan trọng:** vì quyết định #1 làm FTP-BruteForce chỉ còn 53 dòng và SlowHTTPTest còn 55 dòng, hai nhóm này chia ra **43 / 5 / 5** và **43 / 6 / 6**. Chỉ số của hai lớp này trên val/test dựa trên 5 đến 6 mẫu, nên gần như không có ý nghĩa thống kê.
 
 ---
 
-## Bước 11. Tiền xử lý (học từ train, áp dụng cho tất cả)
+## Bước 11. Tiền xử lý: phần nào thuộc dữ liệu, phần nào thuộc mô hình *(cập nhật 28/10)*
 
-**Nguyên tắc:** bất cứ thứ gì "học" từ dữ liệu (trung bình, độ lệch chuẩn, danh sách đặc trưng) chỉ được học từ **train**.
+**Nguyên tắc:** bất cứ thứ gì "học" từ dữ liệu (trung bình, độ lệch chuẩn, trọng số lớp) chỉ được học từ **train**. Vì vậy các việc đó **không** làm trong pipeline dữ liệu, mà đặt trong pipeline của mô hình.
+
+**Pipeline dữ liệu làm (`preprocess.py`)**, không cần học từ dữ liệu:
+- Thêm hai cột cờ (#6): `fwd_win_missing = 1` khi `Init Fwd Win Byts == -1`, tương tự `bwd_win_missing`. Giá trị −1 gốc **giữ nguyên**. Lý do: −1 nghĩa là "không có cửa sổ TCP" (UDP, hoặc không có gói chiều về), chiếm 20% đến 37% số dòng; xóa đi sẽ mất gần hết vài loại tấn công (ví dụ DDoS LOIC-UDP có 100% dòng −1).
+- Chỉ xuất 72 đặc trưng (70 gốc + 2 cờ) cùng các cột nhãn. Các cột `meta_day`, `meta_time`, `meta_key` dùng để truy vết và kiểm tra, **không đưa vào mô hình**.
+
+**Mô hình làm (khi huấn luyện)**, vì cần học từ train:
+- **RobustScaler chỉ cho SVM** (#14), đặt **trong `Pipeline`** để chỉ `fit` trên train và tự áp dụng đúng cho val/test; XGBoost không cần scale.
+- **Trọng số lớp** (#13), không dùng SMOTE: XGBoost dùng `scale_pos_weight = số Benign / số Attack trên train` (khoảng 7,18 với dữ liệu hiện tại); SVM dùng `class_weight="balanced"`.
 
 ```python
+import json, pandas as pd
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import RobustScaler
-import joblib, json
+from sklearn.svm import SVC
 
-features = [c for c in train.columns if c not in ("Label", "y_binary", "source_file")]
-scaler = RobustScaler().fit(train[features])         # CHỈ fit trên train
-train[features] = scaler.transform(train[features])
-val[features]   = scaler.transform(val[features])    # val/test chỉ transform
-test[features]  = scaler.transform(test[features])
-
-joblib.dump(scaler, "artifacts/preprocessing/scaler.pkl")
-json.dump(features, open("artifacts/preprocessing/features.json", "w"))
+features = json.load(open("data/preprocessing/features.json", encoding="utf-8"))
+train = pd.read_parquet("data/processed/train.parquet", columns=features + ["y_binary"])
+spw = (train["y_binary"] == 0).sum() / (train["y_binary"] == 1).sum()     # cho XGBoost
+svm = make_pipeline(RobustScaler(), SVC(class_weight="balanced"))          # scaler nằm trong Pipeline
 ```
 
-- **Mất cân bằng lớp:** ưu tiên `class_weight` / `scale_pos_weight` (đơn giản, không tạo dữ liệu giả). Nếu undersample/SMOTE thì **chỉ trên train**, giữ nguyên val/test.
-- **Vì sao lưu `scaler.pkl`, `features.json`?** API khi nhận request mới phải biến đổi **y hệt** lúc train, nếu không sẽ bị *train–serve skew* (lệch giữa huấn luyện và phục vụ).
+- **Vì sao lưu `features.json`, `label_map.json`?** API khi nhận request mới phải dùng **đúng** danh sách và thứ tự đặc trưng như lúc train, nếu không sẽ bị *train–serve skew* (lệch giữa huấn luyện và phục vụ).
 
-Lưu `train/val/test.parquet` vào `data/processed/`.
+Dữ liệu cuối cùng nằm ở `data/processed/`: `train.parquet`, `val.parquet`, `test.parquet`, `production_sim.parquet`. Các file nhỏ dùng lại khi huấn luyện và phục vụ nằm ở `data/preprocessing/`.
 
 ---
 
@@ -491,7 +516,7 @@ Tối thiểu mỗi lần huấn luyện phải log vào MLflow:
 - `params.yaml` (các tham số dữ liệu)
 - Hash của dữ liệu đầu vào (từ `MANIFEST.json`)
 - Số dòng và phân bố nhãn của train/val/test
-- Artifact: `scaler.pkl`, `features.json`, `label_map.json`
+- Artifact: `features.json`, `label_map.json` (trong `data/preprocessing/`); scaler của SVM nằm trong `Pipeline` của mô hình nên được log cùng mô hình
 
 ```python
 import mlflow
@@ -505,20 +530,31 @@ Nâng cao: dùng **DVC** để gắn version dữ liệu với commit Git (`dvc 
 
 ---
 
-## Bước 13. Viết test cho code dữ liệu
+## Bước 13. Viết test cho code dữ liệu *(cập nhật 28/10)*
+
+**Áp dụng vào dự án này:** `tests/data/test_processed.py` có 9 test, chạy bằng `python -m pytest tests/data`. Mỗi test kiểm tra một quyết định của nhóm:
+
+| Test | Kiểm tra | Quyết định |
+|---|---|---|
+| `test_same_schema` | 4 file Parquet cùng schema, đúng thứ tự cột theo `features.json` | |
+| `test_no_leaky_or_dropped_columns` | Không còn `Timestamp`, IP, cổng nguồn, cột hằng số | #11 |
+| `test_no_missing_or_inf_in_features` | Mọi đặc trưng đều là số hữu hạn | #5 |
+| `test_window_flags_keep_minus_one` | Vẫn còn giá trị −1; cột cờ khớp đúng với −1 | #6 |
+| `test_days_per_split` | train/val/test chỉ có ngày đến 21/02; `production_sim` chỉ có ngày sau | #2 |
+| `test_group_split_ratio_and_time_order` | Mỗi nhóm (ngày, nhãn) chia 80/10/10; train sớm hơn val, val sớm hơn test | #3, #4 |
+| `test_dedup_on_features_and_label` | Không còn dòng trùng, không có dòng nào xuất hiện ở hai tập | #1 |
+| `test_labels_consistent` | `y_multi`, `y_binary` khớp `Label`; lớp Web đã gộp, nhãn gốc còn ở `Label_raw` | #9, #10 |
+| `test_every_train_label_in_every_split` | Val và test có đúng các nhãn như train | |
 
 ```python
-# tests/data/test_split.py
-def test_no_overlap(train, val, test):
-    assert set(train.index).isdisjoint(val.index)
-    assert set(train.index).isdisjoint(test.index)
-    assert set(val.index).isdisjoint(test.index)
-
-def test_time_order(train, val):
-    assert train["Timestamp"].max() <= val["Timestamp"].max()
+def test_dedup_on_features_and_label(meta):
+    keys = [np.sort(meta[n]["meta_key"].to_numpy()) for n in ALL]
+    for i in range(len(ALL)):
+        for j in range(i + 1, len(ALL)):
+            assert len(np.intersect1d(keys[i], keys[j])) == 0      # không có dòng nào ở hai tập
 ```
 
-Test nên kiểm tra tối thiểu: không còn `inf`, nhãn hợp lệ, ba tập không giao nhau, scaler không fit trên val/test. Chạy `pytest tests/data`.
+Nguyên tắc: **viết test theo từng quyết định**, để khi ai đó đổi `params.yaml` mà làm hỏng một quyết định thì test báo ngay.
 
 ---
 
@@ -548,6 +584,10 @@ Một báo cáo Data tốt có bố cục:
 | Sửa file trong `data/raw` | Không tái lập được | Raw bất biến, sửa bằng code |
 | Hard-code tham số trong code | Khó thay đổi, khó ghi lại | Đưa vào `params.yaml` |
 | Quên lưu scaler | API không tiền xử lý giống lúc train | Log artifact vào MLflow |
+| Loại trùng mà không xem hậu quả **theo từng lớp** | Hai lớp (FTP-BruteForce, SlowHTTPTest) chỉ còn 53 và 55 dòng | In số dòng từng nhãn trước và sau mỗi bước xóa; nếu một lớp mất hơn 90% thì hỏi lại quyết định |
+| Cắt 80/10/10 theo thời gian trên **cả ngày** | Val/test thiếu hầu hết loại tấn công (tấn công chỉ kéo dài vài giờ) | Chia trong từng nhóm (ngày, nhãn) |
+| Xóa dòng có giá trị −1 ở cột cửa sổ TCP | Mất gần hết vài loại tấn công, lệch giữa huấn luyện và vận hành | Giữ giá trị, thêm cột cờ |
+| Đưa cột `meta_*` hoặc cột nhãn vào mô hình | Rò rỉ nhãn | Chỉ lấy cột trong `features.json` |
 
 ## Phụ lục B. Checklist cho **bất kỳ** dự án nào (dùng lại sau này)
 
@@ -562,3 +602,5 @@ Một báo cáo Data tốt có bố cục:
 - [ ] Artifact tiền xử lý đã được lưu để API dùng lại?
 - [ ] Chạy lại từ đầu có ra kết quả giống hệt (cùng seed, cùng hash)?
 - [ ] Có test và có tài liệu (Data Card)?
+- [ ] Sau mỗi bước xóa dòng, đã in số dòng **từng nhãn** trước và sau chưa?
+- [ ] Mỗi tham số trong `params.yaml` có ghi quyết định nào của nhóm không?
