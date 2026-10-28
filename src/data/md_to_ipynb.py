@@ -1,17 +1,17 @@
 """Chuyển file Markdown thành notebook .ipynb để mở bằng Colab/Jupyter.
 Mỗi mục cấp 2 (##) là một ô văn bản; ảnh PNG cục bộ được nhúng base64.
-Dùng: python src/data/md_to_ipynb.py FILE.md [FILE2.md ...]  ->  colab/<tên>.ipynb (DATA.md -> DATA_report.ipynb)
+Dùng: python src/data/md_to_ipynb.py FILE.md [FILE2.md ...]  ->  notebooks/<tên>.ipynb (DATA.md -> DATA_report.ipynb)
 """
 import base64, re, sys
 from pathlib import Path
 import nbformat as nbf
 
-OUT = Path("colab")
+OUT = Path("notebooks")
 
 
 def convert(src):
     src = Path(src)
-    md = src.read_text()
+    md = src.read_text(encoding="utf-8")
 
     def embed(m):
         p = src.parent / m.group(2)

@@ -248,7 +248,8 @@ Căn cứ từ EDA: tấn công phân bố theo ngày (mục 2.3), file không s
 Lý do:
 - Ba nhóm tấn công mới (Web, Infiltration, Bot) chỉ xuất hiện ở giai đoạn sau, nên mô hình ban đầu **chưa từng thấy** chúng. Điều này tạo kịch bản Drift tự nhiên và thuyết phục cho Giai đoạn 6: Recall giảm trên dữ liệu mới, kích hoạt tái huấn luyện, rồi so sánh trước và sau.
 - Chia theo ngày thuần túy trong giai đoạn đầu sẽ khiến Val/Test chứa loại tấn công mà Train chưa thấy. Để tránh điều này, trong giai đoạn huấn luyện ban đầu nên **chia trong từng ngày** (mỗi tập có mặt mọi loại tấn công), sau khi đã loại trùng.
-- Vì thứ tự dòng và giờ không đáng tin cậy, cách chia trong ngày cần được thiết kế cẩn thận (ví dụ chia theo khối liên tiếp theo thứ tự dòng, hoặc theo giờ suy luận) và phải kiểm tra rò rỉ. **Cách chia cụ thể chưa chốt.**
+- **Cách chia đã chốt** (QUYET_DINH.md, #3 và #4): chia **theo thời gian, 80/10/10, trong từng nhóm (ngày, nhãn)**. Mỗi nhóm được sắp theo `Timestamp` (giả định AM/PM: giờ 1 đến 7 cộng 12; `Timestamp` trùng nhau thì giữ thứ tự dòng gốc), 80% đầu là Train, 10% tiếp là Val, 10% cuối là Test. Không cắt theo thời gian trên cả ngày vì tấn công dồn vào đầu ngày, khiến Val/Test thiếu hầu hết loại tấn công (số liệu ở QUYET_DINH.md, Phụ lục 2).
+- Loại dòng trùng trước khi chia, so trên các cột đặc trưng và bỏ qua `Timestamp` (QUYET_DINH.md, #1).
 
 Việc khác:
 - Ngày 20/02 có 7,37 triệu Benign. Nên lấy mẫu Benign của ngày này để không áp đảo tập train.
@@ -274,7 +275,7 @@ Việc khác:
 CIC-IDS-MLOps/
 ├── data/
 │   ├── raw/                      # 10 CSV + MANIFEST.json (không commit)
-│   ├── interim/                  # eda_sample.parquet (mẫu phân tầng 224.028 dòng)
+│   ├── interim/                  # eda_sample.parquet (mẫu phân tầng 224.028 dòng, không commit)
 │   └── processed/                # (chưa có) train / val / test / production_sim
 ├── reports/data/
 │   ├── eda_stats.json            # thống kê đầy đủ từng cột, từng ngày
@@ -286,16 +287,13 @@ CIC-IDS-MLOps/
 │   ├── eda_stats.py              # thống kê streaming, tạo mẫu phân tầng
 │   ├── eda_timestamps.py         # kiểm tra Timestamp
 │   ├── eda_plots.py              # vẽ biểu đồ
-│   ├── build_report_html.py      # docs/DATA.md -> docs/DATA_report.html
-│   └── md_to_ipynb.py            # Markdown -> notebook trong colab/
-├── docs/                         # file mở bằng trình xem gốc
+│   ├── build_report_html.py      # notebooks/DATA.md -> notebooks/DATA_report.html
+│   └── md_to_ipynb.py            # Markdown -> notebook trong notebooks/
+├── notebooks/
 │   ├── DATA.md                   # báo cáo này
-│   ├── DATA_report.html          # bản HTML, ảnh nhúng sẵn
-│   └── HUONG_DAN_DATA.md         # hướng dẫn từng bước để học
-├── colab/                        # file mở bằng Google Colab / Jupyter
-│   ├── DATA_report.ipynb
-│   ├── HUONG_DAN_DATA.ipynb
-│   └── README.ipynb
+│   ├── HUONG_DAN_DATA.md         # hướng dẫn từng bước để học
+│   ├── QUYET_DINH.md             # các điểm nhóm cần thống nhất
+│   └── *.html, *.ipynb           # (tạo bằng hai script trên) bản HTML và notebook, ảnh nhúng sẵn
 └── README.md                     # README gốc của dự án
 ```
 
@@ -323,7 +321,7 @@ python src/data/eda_plots.py
 
 # 4. Cập nhật bản HTML và notebook sau khi sửa file .md
 python src/data/build_report_html.py
-python src/data/md_to_ipynb.py docs/DATA.md docs/HUONG_DAN_DATA.md README.md
+python src/data/md_to_ipynb.py notebooks/DATA.md notebooks/HUONG_DAN_DATA.md README.md
 ```
 
 ---
@@ -349,7 +347,7 @@ python src/data/md_to_ipynb.py docs/DATA.md docs/HUONG_DAN_DATA.md README.md
 - [x] Tải đủ 10 file, kiểm tra dung lượng và tạo `MANIFEST.json`
 - [x] EDA: nhãn, theo ngày, giá trị lỗi, trùng lặp, tương quan, thời gian
 - [x] Phát hiện vấn đề dữ liệu (AM/PM, trùng lặp, file bị cắt, giá trị −1)
-- [ ] Nhóm xác nhận quyết định #9 (trùng lặp) và cách chia tập (mục 5)
+- [x] Nhóm xác nhận quyết định #9 (trùng lặp) và cách chia tập (mục 5), xem QUYET_DINH.md
 - [ ] `params.yaml`
 - [ ] `ingest.py`: chuẩn hóa schema, chuyển Parquet
 - [ ] `validate.py` và báo cáo
