@@ -1,0 +1,80 @@
+# Tham số huấn luyện, đánh giá và đăng ký mô hình (src/models/). Giải thích chi tiết: notebooks/MODEL.md
+
+data:
+  processed_dir: data/processed           # đầu ra của bước tiền xử lý dữ liệu
+  artifacts_dir: data/preprocessing       # features.json, label_map.json
+  target: y_binary                        # nhị phân Benign / Attack
+  seed: 42
+  benign_frac_by_day:                     # lấy mẫu Benign khi huấn luyện (#7, tỉ lệ chưa chốt); val/test giữ nguyên
+    "2018-02-20": 0.2
+
+reports_dir: reports/models
+
+mlflow:
+  tracking_uri: sqlite:///mlruns/mlflow.db   # ghi đè bằng biến môi trường MLFLOW_TRACKING_URI
+  artifact_root: mlruns/artifacts            # chỉ dùng với sqlite
+  experiment: cic-ids-binary
+  compare_experiment: cic-ids-model-comparison
+
+registry:
+  model_name: cic-ids-binary
+  champion_alias: champion                # bản API đang dùng
+  challenger_alias: challenger            # bản mới, chờ so sánh
+  previous_alias: previous                # champion trước đó, để rollback
+
+threshold:                                # chọn trên val: F1 lớn nhất trong các ngưỡng có FPR <= max_fpr
+  strategy: max_f1_at_fpr                 # max_f1_at_fpr | fixed
+  max_fpr: 0.01
+  fixed: 0.5
+
+feature_sets:                             # #12: có / không có Dst Port, Protocol
+  all: []
+  no_port_proto: [Dst Port, Protocol]
+
+models:                                   # max_train_rows: lấy mẫu phân tầng theo Label (null = toàn bộ)
+  lr:
+    max_train_rows: 500000
+    params: {C: 1.0, max_iter: 300}
+    search: {C: [0.01, 0.1, 1.0, 10.0]}
+  svm:                                    # LinearSVC (SVM kernel quá chậm với hàng triệu dòng)
+    max_train_rows: 500000
+    params: {C: 0.1}
+    search: {C: [0.01, 0.1, 1.0]}
+  rf:                                     # giới hạn độ sâu để mô hình không quá nặng
+    max_train_rows: 1500000
+    params: {n_estimators: 100, max_depth: 20, min_samples_leaf: 5, max_samples: 0.2, max_features: sqrt}
+    search: {max_depth: [12, 16, 20], min_samples_leaf: [5, 20], max_features: [sqrt, 0.3]}
+  xgb:                                    # mô hình chính
+    max_train_rows: null
+    params:
+      n_estimators: 600
+      learning_rate: 0.1
+      max_depth: 8
+      min_child_weight: 1
+      subsample: 0.8
+      colsample_bytree: 0.8
+      reg_lambda: 1.0
+      early_stopping_rounds: 30           # theo aucpr trên val
+    search:
+      max_depth: [4, 6, 8, 10, 12]
+      learning_rate: [0.05, 0.1, 0.2]
+      min_child_weight: [1, 5, 10]
+      subsample: [0.7, 0.8, 1.0]
+      colsample_bytree: [0.5, 0.8, 1.0]
+      reg_lambda: [0.1, 1.0, 10.0]
+
+tuning:                                   # random search trên tập con của train, chấm trên val
+  n_trials: 8
+  max_train_rows: 600000
+  metric: pr_auc
+  tie_tol: 0.00001                        # chênh lệch <= mức này coi như bằng, chọn lần thử ít lỗi hơn
+
+promotion:                                # tiêu chí Champion–Challenger, tính trên cùng một holdout
+  holdout: data/processed/test.parquet
+  min_support: 30                         # lớp ít mẫu hơn thì không xét riêng
+  max_fpr: 0.01
+  max_fpr_increase: 0.002
+  max_recall_drop: 0.02                   # cho từng lớp tấn công đã biết
+  min_recall_gain: 0.01                   # cho lớp mục tiêu (--target-labels)
+  max_metric_drop: {pr_auc: 0.005, macro_f1: 0.005}
+  max_latency_ratio: 2.0

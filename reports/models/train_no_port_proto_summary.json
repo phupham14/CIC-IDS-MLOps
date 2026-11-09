@@ -1,0 +1,100 @@
+{
+ "session": "20261103-124757",
+ "feature_set": "no_port_proto",
+ "tuned": true,
+ "best_model": "xgb",
+ "selection_metric": "val pr_auc",
+ "benign_frac_by_day": {
+  "2018-02-20": 0.2
+ },
+ "threshold_rule": {
+  "strategy": "max_f1_at_fpr",
+  "max_fpr": 0.01,
+  "fixed": 0.5
+ },
+ "models": {
+  "xgb": {
+   "run_id": "220b7688f4e04fe0b90d3fcc2bb9a306",
+   "params": {
+    "n_estimators": 600,
+    "learning_rate": 0.2,
+    "max_depth": 8,
+    "min_child_weight": 1,
+    "subsample": 0.7,
+    "colsample_bytree": 0.5,
+    "reg_lambda": 10.0,
+    "early_stopping_rounds": 30
+   },
+   "threshold": 0.9087565541267395,
+   "fit_time_s": 25.2,
+   "latency_ms_1000rows": 1.33,
+   "val": {
+    "accuracy": 0.999938105193662,
+    "precision": 0.9996063471830392,
+    "recall": 0.9998874961326796,
+    "f1": 0.999746901891674,
+    "macro_f1": 0.9998558216315521,
+    "roc_auc": 0.9999998204599186,
+    "pr_auc": 0.9999986828330965,
+    "fpr": 5.48456812290656e-05
+   },
+   "test": {
+    "accuracy": 0.998331132629108,
+    "precision": 0.999477767122117,
+    "recall": 0.9868651734903388,
+    "f1": 0.9931314274931597,
+    "macro_f1": 0.9960908018792629,
+    "roc_auc": 0.9999396629387761,
+    "pr_auc": 0.9997731307596124,
+    "fpr": 7.182172541901448e-05
+   },
+   "test_per_label": {
+    "Benign": {
+     "support": 765785,
+     "rate": 7.182172541901448e-05
+    },
+    "DDoS attack-HOIC": {
+     "support": 19886,
+     "rate": 0.961078145428945
+    },
+    "DDoS attack-LOIC-UDP": {
+     "support": 173,
+     "rate": 0.9942196531791907
+    },
+    "DDoS attacks-LOIC-HTTP": {
+     "support": 57536,
+     "rate": 0.9985400444938821
+    },
+    "DoS attacks-GoldenEye": {
+     "support": 4141,
+     "rate": 0.9997585124366095
+    },
+    "DoS attacks-Hulk": {
+     "support": 14520,
+     "rate": 1.0
+    },
+    "DoS attacks-SlowHTTPTest": {
+     "support": 6,
+     "rate": 0.8333333333333334
+    },
+    "DoS attacks-Slowloris": {
+     "support": 991,
+     "rate": 0.4571140262361251
+    },
+    "FTP-BruteForce": {
+     "support": 5,
+     "rate": 1.0
+    },
+    "SSH-BruteForce": {
+     "support": 9405,
+     "rate": 0.9997873471557682
+    }
+   }
+  }
+ },
+ "registered": {
+  "name": "cic-ids-binary",
+  "version": "2",
+  "alias": "challenger"
+ }
+}

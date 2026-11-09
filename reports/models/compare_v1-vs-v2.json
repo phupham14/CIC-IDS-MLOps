@@ -1,0 +1,289 @@
+{
+ "time": "2026-11-03 12:50:23",
+ "model_name": "cic-ids-binary",
+ "challenger": {
+  "version": "2",
+  "tags": {
+   "model_type": "xgb",
+   "feature_set": "no_port_proto",
+   "session": "20261103-124757",
+   "train_run_id": "220b7688f4e04fe0b90d3fcc2bb9a306"
+  },
+  "overall": {
+   "accuracy": 0.998331132629108,
+   "precision": 0.999477767122117,
+   "recall": 0.9868651734903388,
+   "f1": 0.9931314274931597,
+   "macro_f1": 0.9960908018792629,
+   "fpr": 7.182172541901448e-05,
+   "roc_auc": 0.9999396629387761,
+   "pr_auc": 0.9997731307596124,
+   "tn": 765730,
+   "fp": 55,
+   "fn": 1401,
+   "tp": 105262
+  },
+  "per_label": {
+   "Benign": {
+    "support": 765785,
+    "predicted_attack": 55,
+    "rate": 7.182172541901448e-05,
+    "metric": "fpr"
+   },
+   "DDoS attack-HOIC": {
+    "support": 19886,
+    "predicted_attack": 19112,
+    "rate": 0.961078145428945,
+    "metric": "recall"
+   },
+   "DDoS attack-LOIC-UDP": {
+    "support": 173,
+    "predicted_attack": 172,
+    "rate": 0.9942196531791907,
+    "metric": "recall"
+   },
+   "DDoS attacks-LOIC-HTTP": {
+    "support": 57536,
+    "predicted_attack": 57452,
+    "rate": 0.9985400444938821,
+    "metric": "recall"
+   },
+   "DoS attacks-GoldenEye": {
+    "support": 4141,
+    "predicted_attack": 4140,
+    "rate": 0.9997585124366095,
+    "metric": "recall"
+   },
+   "DoS attacks-Hulk": {
+    "support": 14520,
+    "predicted_attack": 14520,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-SlowHTTPTest": {
+    "support": 6,
+    "predicted_attack": 5,
+    "rate": 0.8333333333333334,
+    "metric": "recall"
+   },
+   "DoS attacks-Slowloris": {
+    "support": 991,
+    "predicted_attack": 453,
+    "rate": 0.4571140262361251,
+    "metric": "recall"
+   },
+   "FTP-BruteForce": {
+    "support": 5,
+    "predicted_attack": 5,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "SSH-BruteForce": {
+    "support": 9405,
+    "predicted_attack": 9403,
+    "rate": 0.9997873471557682,
+    "metric": "recall"
+   }
+  },
+  "threshold": 0.9087565541267395,
+  "latency_ms_1row": 5.5834308732301,
+  "latency_ms_1000rows": 8.19202302955091
+ },
+ "champion": {
+  "version": "1",
+  "tags": {
+   "model_type": "xgb",
+   "feature_set": "all",
+   "session": "20261103-124130",
+   "train_run_id": "632a661fab1744e1a56f5b3fc893dfc9",
+   "comparison": "vnone-vs-v1: accepted",
+   "promoted_at": "2026-11-03 12:47:50"
+  },
+  "overall": {
+   "accuracy": 0.9997913915786385,
+   "precision": 0.9999436582686186,
+   "recall": 0.9983499432793003,
+   "f1": 0.999146165249864,
+   "macro_f1": 0.9995136730645627,
+   "fpr": 7.835097318437943e-06,
+   "roc_auc": 0.9999918033556027,
+   "pr_auc": 0.9999484675744145,
+   "tn": 765779,
+   "fp": 6,
+   "fn": 176,
+   "tp": 106487
+  },
+  "per_label": {
+   "Benign": {
+    "support": 765785,
+    "predicted_attack": 6,
+    "rate": 7.835097318437943e-06,
+    "metric": "fpr"
+   },
+   "DDoS attack-HOIC": {
+    "support": 19886,
+    "predicted_attack": 19886,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DDoS attack-LOIC-UDP": {
+    "support": 173,
+    "predicted_attack": 173,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DDoS attacks-LOIC-HTTP": {
+    "support": 57536,
+    "predicted_attack": 57467,
+    "rate": 0.9988007508342603,
+    "metric": "recall"
+   },
+   "DoS attacks-GoldenEye": {
+    "support": 4141,
+    "predicted_attack": 4141,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-Hulk": {
+    "support": 14520,
+    "predicted_attack": 14520,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-SlowHTTPTest": {
+    "support": 6,
+    "predicted_attack": 6,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-Slowloris": {
+    "support": 991,
+    "predicted_attack": 884,
+    "rate": 0.8920282542885973,
+    "metric": "recall"
+   },
+   "FTP-BruteForce": {
+    "support": 5,
+    "predicted_attack": 5,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "SSH-BruteForce": {
+    "support": 9405,
+    "predicted_attack": 9405,
+    "rate": 1.0,
+    "metric": "recall"
+   }
+  },
+  "threshold": 0.9347630739212036,
+  "latency_ms_1row": 4.929414018988609,
+  "latency_ms_1000rows": 5.77809102833271
+ },
+ "holdouts": [
+  "data/processed/test.parquet"
+ ],
+ "target_labels": [],
+ "criteria": {
+  "holdout": "data/processed/test.parquet",
+  "min_support": 30,
+  "max_fpr": 0.01,
+  "max_fpr_increase": 0.002,
+  "max_recall_drop": 0.02,
+  "min_recall_gain": 0.01,
+  "max_metric_drop": {
+   "pr_auc": 0.005,
+   "macro_f1": 0.005
+  },
+  "max_latency_ratio": 2.0
+ },
+ "accepted": false,
+ "checks": [
+  {
+   "check": "fpr",
+   "passed": true,
+   "challenger": 7.182172541901448e-05,
+   "champion": 7.835097318437943e-06,
+   "limit": "<= 0.01"
+  },
+  {
+   "check": "fpr_increase",
+   "passed": true,
+   "challenger": 7.182172541901448e-05,
+   "champion": 7.835097318437943e-06,
+   "limit": "tăng <= 0.002"
+  },
+  {
+   "check": "pr_auc",
+   "passed": true,
+   "challenger": 0.9997731307596124,
+   "champion": 0.9999484675744145,
+   "limit": ">= champion - 0.005"
+  },
+  {
+   "check": "macro_f1",
+   "passed": true,
+   "challenger": 0.9960908018792629,
+   "champion": 0.9995136730645627,
+   "limit": ">= champion - 0.005"
+  },
+  {
+   "check": "recall[DDoS attack-HOIC]",
+   "passed": false,
+   "challenger": 0.961078145428945,
+   "champion": 1.0,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "recall[DDoS attack-LOIC-UDP]",
+   "passed": true,
+   "challenger": 0.9942196531791907,
+   "champion": 1.0,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "recall[DDoS attacks-LOIC-HTTP]",
+   "passed": true,
+   "challenger": 0.9985400444938821,
+   "champion": 0.9988007508342603,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "recall[DoS attacks-GoldenEye]",
+   "passed": true,
+   "challenger": 0.9997585124366095,
+   "champion": 1.0,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "recall[DoS attacks-Hulk]",
+   "passed": true,
+   "challenger": 1.0,
+   "champion": 1.0,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "recall[DoS attacks-Slowloris]",
+   "passed": false,
+   "challenger": 0.4571140262361251,
+   "champion": 0.8920282542885973,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "recall[SSH-BruteForce]",
+   "passed": true,
+   "challenger": 0.9997873471557682,
+   "champion": 1.0,
+   "limit": ">= champion - 0.02"
+  },
+  {
+   "check": "latency_ms_1000rows",
+   "passed": true,
+   "challenger": 8.19202302955091,
+   "champion": 5.77809102833271,
+   "limit": "<= 2.0 x champion"
+  }
+ ],
+ "notes": [
+  "Không xét riêng (ít hơn 30 mẫu): ['DoS attacks-SlowHTTPTest', 'FTP-BruteForce']"
+ ]
+}

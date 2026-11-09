@@ -1,0 +1,209 @@
+{
+ "model": {
+  "name": "cic-ids-binary",
+  "version": 2,
+  "tags": {
+   "model_type": "xgb",
+   "feature_set": "no_port_proto",
+   "session": "20261103-124757",
+   "train_run_id": "220b7688f4e04fe0b90d3fcc2bb9a306",
+   "comparison": "v1-vs-v2: rejected"
+  },
+  "threshold": 0.9087565541267395
+ },
+ "data": "data/processed/production_sim.parquet",
+ "overall": {
+  "overall": {
+   "accuracy": 0.910745830197535,
+   "precision": 0.24,
+   "recall": 0.00021072077039513656,
+   "f1": 0.000421071838364557,
+   "macro_f1": 0.4768542305686159,
+   "fpr": 6.536170306453504e-05,
+   "roc_auc": 0.7430809940729123,
+   "pr_auc": 0.5282681521763534,
+   "tn": 2906711,
+   "fp": 190,
+   "fn": 284677,
+   "tp": 60
+  },
+  "per_label": {
+   "Benign": {
+    "support": 2906901,
+    "predicted_attack": 190,
+    "rate": 6.536170306453504e-05,
+    "metric": "fpr"
+   },
+   "Bot": {
+    "support": 144535,
+    "predicted_attack": 26,
+    "rate": 0.0001798872245476874,
+    "metric": "recall"
+   },
+   "Infiltration": {
+    "support": 139341,
+    "predicted_attack": 31,
+    "rate": 0.00022247579678630125,
+    "metric": "recall"
+   },
+   "Web Attack": {
+    "support": 861,
+    "predicted_attack": 3,
+    "rate": 0.003484320557491289,
+    "metric": "recall"
+   }
+  }
+ },
+ "by_day": {
+  "2018-02-22": {
+   "overall": {
+    "accuracy": 0.9995817141785672,
+    "precision": 0.14285714285714285,
+    "recall": 0.005917159763313609,
+    "f1": 0.011363636363636364,
+    "macro_f1": 0.505577224600017,
+    "fpr": 1.4429511236380646e-05,
+    "roc_auc": 0.8818070712303644,
+    "pr_auc": 0.009551969298886577,
+    "tn": 831617,
+    "fp": 12,
+    "fn": 336,
+    "tp": 2
+   },
+   "per_label": {
+    "Benign": {
+     "support": 831629,
+     "predicted_attack": 12,
+     "rate": 1.4429511236380646e-05,
+     "metric": "fpr"
+    },
+    "Web Attack": {
+     "support": 338,
+     "predicted_attack": 2,
+     "rate": 0.005917159763313609,
+     "metric": "recall"
+    }
+   }
+  },
+  "2018-02-23": {
+   "overall": {
+    "accuracy": 0.9992620932684885,
+    "precision": 0.011764705882352941,
+    "recall": 0.0019120458891013384,
+    "f1": 0.003289473684210526,
+    "macro_f1": 0.5014601918460154,
+    "fpr": 0.00010234928154459687,
+    "roc_auc": 0.8662635553594025,
+    "pr_auc": 0.007852081785837768,
+    "tn": 820635,
+    "fp": 84,
+    "fn": 522,
+    "tp": 1
+   },
+   "per_label": {
+    "Benign": {
+     "support": 820719,
+     "predicted_attack": 84,
+     "rate": 0.00010234928154459687,
+     "metric": "fpr"
+    },
+    "Web Attack": {
+     "support": 523,
+     "predicted_attack": 1,
+     "rate": 0.0019120458891013384,
+     "metric": "recall"
+    }
+   }
+  },
+  "2018-02-28": {
+   "overall": {
+    "accuracy": 0.8704341557193207,
+    "precision": 0.17647058823529413,
+    "recall": 0.00019537291805734195,
+    "f1": 0.0003903137146481484,
+    "macro_f1": 0.4655589873759227,
+    "fpr": 0.0001356027420811631,
+    "roc_auc": 0.4878811137947835,
+    "pr_auc": 0.1300378225539686,
+    "tn": 412915,
+    "fp": 56,
+    "fn": 61409,
+    "tp": 12
+   },
+   "per_label": {
+    "Benign": {
+     "support": 412971,
+     "predicted_attack": 56,
+     "rate": 0.0001356027420811631,
+     "metric": "fpr"
+    },
+    "Infiltration": {
+     "support": 61421,
+     "predicted_attack": 12,
+     "rate": 0.00019537291805734195,
+     "metric": "recall"
+    }
+   }
+  },
+  "2018-03-01": {
+   "overall": {
+    "accuracy": 0.7106148487571574,
+    "precision": 0.38,
+    "recall": 0.00024383983572895276,
+    "f1": 0.000487366936001026,
+    "macro_f1": 0.4156515778049361,
+    "fpr": 0.00016197970551044507,
+    "roc_auc": 0.5069804806461558,
+    "pr_auc": 0.2893948032657465,
+    "tn": 191351,
+    "fp": 31,
+    "fn": 77901,
+    "tp": 19
+   },
+   "per_label": {
+    "Benign": {
+     "support": 191382,
+     "predicted_attack": 31,
+     "rate": 0.00016197970551044507,
+     "metric": "fpr"
+    },
+    "Infiltration": {
+     "support": 77920,
+     "predicted_attack": 19,
+     "rate": 0.00024383983572895276,
+     "metric": "recall"
+    }
+   }
+  },
+  "2018-03-02": {
+   "overall": {
+    "accuracy": 0.8181582540091981,
+    "precision": 0.7878787878787878,
+    "recall": 0.0001798872245476874,
+    "f1": 0.0003596923247191633,
+    "macro_f1": 0.4501709182212259,
+    "fpr": 1.0765918179021839e-05,
+    "roc_auc": 0.9949521747512257,
+    "pr_auc": 0.9758472283464814,
+    "tn": 650193,
+    "fp": 7,
+    "fn": 144509,
+    "tp": 26
+   },
+   "per_label": {
+    "Benign": {
+     "support": 650200,
+     "predicted_attack": 7,
+     "rate": 1.0765918179021839e-05,
+     "metric": "fpr"
+    },
+    "Bot": {
+     "support": 144535,
+     "predicted_attack": 26,
+     "rate": 0.0001798872245476874,
+     "metric": "recall"
+    }
+   }
+  }
+ }
+}
