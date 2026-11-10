@@ -1,0 +1,56 @@
+# Tham số giám sát Drift (src/monitoring/). Dùng lại data, mlflow, registry của models.yaml.
+# Chạy: python -m src.monitoring.scenarios   (tạo holdout, thống kê các kịch bản)
+#       python -m src.monitoring.drift --scenario s1_new_attacks   (giám sát champion, không tái huấn luyện)
+
+models_config: models.yaml
+reports_dir: reports/monitoring
+experiment: cic-ids-monitoring
+
+reference:                        # mốc so sánh của Evidently: mẫu từ train.parquet, cùng cách lấy mẫu Benign 20/02
+  rows: 50000                     # như khi huấn luyện (models.yaml, data.benign_frac_by_day)
+  labels: [Benign]                # chỉ Benign: đo thay đổi của lưu lượng bình thường, không lẫn tỉ lệ tấn công
+                                  # (reference trộn 25% tấn công làm mọi lô Benign đều "drift", kể cả lô từ test)
+
+calibration:                      # ngưỡng riêng từng cột, lấy từ các lô KHÔNG có drift (cùng giai đoạn với train)
+  source: val.parquet             # các lô Benign của val, cắt theo ngày như luồng production
+  labels: [Benign]
+  quantile: 0.99                  # ngưỡng cột = phân vị này của khoảng cách trên các lô hiệu chỉnh
+  min_threshold: 0.1              # không thấp hơn ngưỡng mặc định của Evidently (cột gần như hằng số)
+
+stream:
+  holdout_frac: 0.2               # 20% cuối (theo thời gian) của mỗi nhóm (ngày, nhãn) trong production_sim là holdout:
+                                  # không phát lại, không dùng để tái huấn luyện; cùng test.parquet làm holdout cho
+                                  # Champion–Challenger (MODEL.md, M9)
+  holdout_file: production_holdout.parquet   # ghi vào data.processed_dir
+  batch_size: 20000               # số luồng mỗi lô; lô không vượt qua ranh giới ngày
+
+drift:
+  method: wasserstein             # khoảng cách Wasserstein chuẩn hóa theo độ lệch chuẩn của reference
+  threshold: 0.1                  # ngưỡng chung, chỉ dùng khi không hiệu chỉnh (--no-calibrate)
+  drift_share: 0.3                # một lô bị coi là drift khi >= 30% số cột drift (#15, chưa chốt)
+  score_threshold: 0.1            # drift của phân phối điểm dự đoán (score); cũng được hiệu chỉnh như các cột
+  top_columns: 5                  # số cột drift mạnh nhất ghi vào báo cáo mỗi lô
+
+labels:
+  delay_batches: 1                # nhãn của lô k chỉ có sau khi đã xử lý xong lô k+1 (Kịch bản 1, mục 1.2)
+
+retrain:                          # điều kiện kích hoạt (Kịch bản 1, mục 1.4): theo hiệu năng khi nhãn đến;
+                                  # drift chỉ là cảnh báo, không tự kích hoạt (Kịch bản 2, mục 2.4)
+  min_support: 30                 # chỉ xét một lớp tấn công khi đã có ít nhất từng ấy mẫu có nhãn trong ngày (cộng dồn)
+  min_class_recall: 0.5           # kích hoạt khi recall của một lớp tấn công < ngưỡng
+  max_recall_drop: 0.1            # hoặc recall tổng thể giảm hơn mức này so với mốc trên test.parquet
+
+scenarios:                        # source: file trong processed_dir (mặc định: luồng phát lại của production_sim)
+  s0_in_distribution:             # Đối chứng: cùng giai đoạn với train, không được báo drift
+    description: Benign của test.parquet (ngày 14/02–21/02), cùng phân phối với train; bộ phát hiện không được báo drift
+    source: test.parquet
+    days: null
+    labels: [Benign]
+  s1_new_attacks:                # Kịch bản 1: tấn công mới (concept drift)
+    description: Phát lại production_sim theo thời gian; Web Attack, Infiltration, Bot là loại mô hình chưa thấy
+    days: null                    # null = mọi ngày
+    labels: null                  # null = mọi nhãn
+  s2_benign_shift:                # Kịch bản 2: Benign thay đổi, không có tấn công (data drift, không concept drift)
+    description: Chỉ Benign của các ngày production_sim (không dùng 20/02 vì đã thuộc giai đoạn huấn luyện)
+    days: null
+    labels: [Benign]
