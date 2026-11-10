@@ -1,0 +1,2274 @@
+{
+ "scenario": "s0_in_distribution",
+ "description": "Benign của test.parquet (ngày 14/02–21/02), cùng phân phối với train; bộ phát hiện không được báo drift",
+ "model": {
+  "name": "cic-ids-binary",
+  "version": "1",
+  "threshold": 0.9027984142303467,
+  "model_type": "xgb"
+ },
+ "baseline_test": {
+  "overall": {
+   "accuracy": 0.9998452629841549,
+   "precision": 0.9999342982110342,
+   "recall": 0.998799958748582,
+   "f1": 0.9993668065945921,
+   "macro_f1": 0.999639334356498,
+   "fpr": 9.140946871510934e-06,
+   "roc_auc": 0.9999985721880678,
+   "pr_auc": 0.9999899529399017,
+   "tn": 765778,
+   "fp": 7,
+   "fn": 128,
+   "tp": 106535
+  },
+  "per_label": {
+   "Benign": {
+    "support": 765785,
+    "predicted_attack": 7,
+    "rate": 9.140946871510934e-06,
+    "metric": "fpr"
+   },
+   "DDoS attack-HOIC": {
+    "support": 19886,
+    "predicted_attack": 19886,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DDoS attack-LOIC-UDP": {
+    "support": 173,
+    "predicted_attack": 172,
+    "rate": 0.9942196531791907,
+    "metric": "recall"
+   },
+   "DDoS attacks-LOIC-HTTP": {
+    "support": 57536,
+    "predicted_attack": 57463,
+    "rate": 0.9987312291434928,
+    "metric": "recall"
+   },
+   "DoS attacks-GoldenEye": {
+    "support": 4141,
+    "predicted_attack": 4141,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-Hulk": {
+    "support": 14520,
+    "predicted_attack": 14520,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-SlowHTTPTest": {
+    "support": 6,
+    "predicted_attack": 6,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-Slowloris": {
+    "support": 991,
+    "predicted_attack": 937,
+    "rate": 0.9455095862764884,
+    "metric": "recall"
+   },
+   "FTP-BruteForce": {
+    "support": 5,
+    "predicted_attack": 5,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "SSH-BruteForce": {
+    "support": 9405,
+    "predicted_attack": 9405,
+    "rate": 1.0,
+    "metric": "recall"
+   }
+  }
+ },
+ "calibration": {
+  "enabled": true,
+  "source": "val.parquet",
+  "labels": [
+   "Benign"
+  ],
+  "quantile": 0.99,
+  "batches": 38,
+  "drift_share_mean": 0.027046783625730993,
+  "drift_share_max": 0.4305555555555556,
+  "dataset_drift_batches": 1,
+  "score_drift_batches": 0,
+  "alert_rate_mean": 1.0526315789473684e-05,
+  "alert_rate_max": 0.0001,
+  "thresholds": {
+   "Dst Port": 1.3887,
+   "Protocol": 0.4936,
+   "Flow Duration": 0.4467,
+   "Tot Fwd Pkts": 0.1,
+   "Tot Bwd Pkts": 0.1,
+   "TotLen Fwd Pkts": 0.5616,
+   "TotLen Bwd Pkts": 0.1,
+   "Fwd Pkt Len Max": 1.4056,
+   "Fwd Pkt Len Min": 0.3975,
+   "Fwd Pkt Len Mean": 1.3774,
+   "Fwd Pkt Len Std": 1.5418,
+   "Bwd Pkt Len Max": 0.6847,
+   "Bwd Pkt Len Min": 0.4357,
+   "Bwd Pkt Len Mean": 0.5559,
+   "Bwd Pkt Len Std": 0.7752,
+   "Flow Byts/s": 0.1303,
+   "Flow Pkts/s": 0.1384,
+   "Flow IAT Mean": 0.2525,
+   "Flow IAT Std": 0.4687,
+   "Flow IAT Max": 0.4636,
+   "Flow IAT Min": 0.2134,
+   "Fwd IAT Tot": 0.4437,
+   "Fwd IAT Mean": 0.2995,
+   "Fwd IAT Std": 0.511,
+   "Fwd IAT Max": 0.4626,
+   "Fwd IAT Min": 0.218,
+   "Bwd IAT Tot": 0.3296,
+   "Bwd IAT Mean": 0.222,
+   "Bwd IAT Std": 0.2741,
+   "Bwd IAT Max": 0.2836,
+   "Bwd IAT Min": 0.1266,
+   "Fwd PSH Flags": 0.2048,
+   "Fwd URG Flags": 0.1,
+   "Fwd Header Len": 0.1,
+   "Bwd Header Len": 0.1,
+   "Fwd Pkts/s": 0.1273,
+   "Bwd Pkts/s": 0.1938,
+   "Pkt Len Min": 0.4325,
+   "Pkt Len Max": 0.9906,
+   "Pkt Len Mean": 0.7313,
+   "Pkt Len Std": 1.0416,
+   "Pkt Len Var": 0.8867,
+   "FIN Flag Cnt": 0.1,
+   "SYN Flag Cnt": 0.2048,
+   "RST Flag Cnt": 1.878,
+   "PSH Flag Cnt": 1.0892,
+   "ACK Flag Cnt": 1.4164,
+   "URG Flag Cnt": 0.2263,
+   "CWE Flag Count": 0.1,
+   "ECE Flag Cnt": 1.8779,
+   "Down/Up Ratio": 0.7016,
+   "Pkt Size Avg": 0.7616,
+   "Fwd Seg Size Avg": 1.3774,
+   "Bwd Seg Size Avg": 0.5559,
+   "Subflow Fwd Pkts": 0.1,
+   "Subflow Fwd Byts": 0.5616,
+   "Subflow Bwd Pkts": 0.1,
+   "Subflow Bwd Byts": 0.1,
+   "Init Fwd Win Byts": 2.5442,
+   "Init Bwd Win Byts": 1.3201,
+   "Fwd Act Data Pkts": 1.2653,
+   "Fwd Seg Size Min": 1.7421,
+   "Active Mean": 0.1133,
+   "Active Std": 0.1118,
+   "Active Max": 0.1281,
+   "Active Min": 0.1,
+   "Idle Mean": 0.303,
+   "Idle Std": 0.104,
+   "Idle Max": 0.3061,
+   "Idle Min": 0.2949,
+   "fwd_win_missing": 0.5103,
+   "bwd_win_missing": 0.6901,
+   "score": 0.1
+  }
+ },
+ "events": {
+  "first_drift_alert": {
+   "step": 36,
+   "batch": 36,
+   "day": "2018-02-21",
+   "drift_share": 0.4027777777777778
+  },
+  "first_retrain_trigger": null
+ },
+ "summary": {
+  "batches": 38,
+  "drift_batches": 1,
+  "score_drift_batches": 0,
+  "by_day": {
+   "2018-02-14": {
+    "batches": 3,
+    "drift_batches": 0,
+    "drift_share_mean": 0.0,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 2e-05
+   },
+   "2018-02-15": {
+    "batches": 4,
+    "drift_batches": 0,
+    "drift_share_mean": 0.0,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 4e-05
+   },
+   "2018-02-16": {
+    "batches": 2,
+    "drift_batches": 0,
+    "drift_share_mean": 0.07639,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 0.0
+   },
+   "2018-02-20": {
+    "batches": 27,
+    "drift_batches": 0,
+    "drift_share_mean": 0.01543,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 1e-05
+   },
+   "2018-02-21": {
+    "batches": 2,
+    "drift_batches": 1,
+    "drift_share_mean": 0.32639,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 0.0
+   }
+  }
+ },
+ "cumulative_by_label": {
+  "Benign": {
+   "support": 749705,
+   "rate": 9.337005888983e-06
+  }
+ },
+ "config": {
+  "reference": {
+   "rows": 50000,
+   "labels": [
+    "Benign"
+   ]
+  },
+  "calibration": {
+   "source": "val.parquet",
+   "labels": [
+    "Benign"
+   ],
+   "quantile": 0.99,
+   "min_threshold": 0.1
+  },
+  "stream": {
+   "holdout_frac": 0.2,
+   "holdout_file": "production_holdout.parquet",
+   "batch_size": 20000
+  },
+  "drift": {
+   "method": "wasserstein",
+   "threshold": 0.1,
+   "drift_share": 0.3,
+   "score_threshold": 0.1,
+   "top_columns": 5
+  },
+  "labels": {
+   "delay_batches": 1
+  },
+  "retrain": {
+   "min_support": 30,
+   "min_class_recall": 0.5,
+   "max_recall_drop": 0.1
+  }
+ },
+ "batches": [
+  {
+   "batch": 0,
+   "day": "2018-02-14",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.010749711732198526,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd IAT Min",
+     0.139,
+     0.218
+    ],
+    [
+     "Flow IAT Min",
+     0.1305,
+     0.2134
+    ],
+    [
+     "Flow IAT Mean",
+     0.1283,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1331,
+     0.2995
+    ],
+    [
+     "Fwd Header Len",
+     0.0438,
+     0.1
+    ]
+   ],
+   "seconds": 2.84
+  },
+  {
+   "batch": 1,
+   "day": "2018-02-14",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.008045053704535492,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.1678,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.165,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.162,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1645,
+     0.2995
+    ],
+    [
+     "Fwd Header Len",
+     0.0435,
+     0.1
+    ]
+   ],
+   "labeled_batch": 0,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.21
+  },
+  {
+   "batch": 2,
+   "day": "2018-02-14",
+   "rows": 17703,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01090026316582771,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.1387,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1357,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.1323,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1333,
+     0.2995
+    ],
+    [
+     "Down/Up Ratio",
+     0.301,
+     0.7016
+    ]
+   ],
+   "labeled_batch": 1,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.11
+  },
+  {
+   "batch": 3,
+   "day": "2018-02-15",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0001,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.010753337815458336,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Pkts/s",
+     0.0606,
+     0.1273
+    ],
+    [
+     "Flow Pkts/s",
+     0.0628,
+     0.1384
+    ],
+    [
+     "Flow IAT Min",
+     0.086,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.0869,
+     0.218
+    ],
+    [
+     "Down/Up Ratio",
+     0.2635,
+     0.7016
+    ]
+   ],
+   "labeled_batch": 2,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 17703,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.04
+  },
+  {
+   "batch": 4,
+   "day": "2018-02-15",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01902328450775551,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Pkts/s",
+     0.0797,
+     0.1273
+    ],
+    [
+     "Flow Pkts/s",
+     0.0793,
+     0.1384
+    ],
+    [
+     "Flow IAT Min",
+     0.0796,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.0773,
+     0.218
+    ],
+    [
+     "Bwd Pkt Len Max",
+     0.2401,
+     0.6847
+    ]
+   ],
+   "labeled_batch": 3,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0001,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0001
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.27
+  },
+  {
+   "batch": 5,
+   "day": "2018-02-15",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.009547199945469988,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Pkts/s",
+     0.0596,
+     0.1273
+    ],
+    [
+     "Flow IAT Min",
+     0.0942,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.0939,
+     0.218
+    ],
+    [
+     "Flow Pkts/s",
+     0.0596,
+     0.1384
+    ],
+    [
+     "Flow IAT Mean",
+     0.0994,
+     0.2525
+    ]
+   ],
+   "labeled_batch": 4,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.16
+  },
+  {
+   "batch": 6,
+   "day": "2018-02-15",
+   "rows": 17993,
+   "n_attack": 0,
+   "alert_rate": 5.557716889901629e-05,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.013873645596363908,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Pkts/s",
+     0.1255,
+     0.1273
+    ],
+    [
+     "Flow Pkts/s",
+     0.1237,
+     0.1384
+    ],
+    [
+     "Down/Up Ratio",
+     0.5529,
+     0.7016
+    ],
+    [
+     "Flow Byts/s",
+     0.0653,
+     0.1303
+    ],
+    [
+     "Bwd Pkt Len Min",
+     0.1871,
+     0.4357
+    ]
+   ],
+   "labeled_batch": 5,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.05
+  },
+  {
+   "batch": 7,
+   "day": "2018-02-16",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 6,
+   "drift_share": 0.08333333333333333,
+   "dataset_drift": false,
+   "score_drift": 0.022565699994417994,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Protocol",
+     0.4936,
+     0.4936
+    ],
+    [
+     "Fwd PSH Flags",
+     0.2048,
+     0.2048
+    ],
+    [
+     "SYN Flag Cnt",
+     0.2048,
+     0.2048
+    ],
+    [
+     "ACK Flag Cnt",
+     1.4164,
+     1.4164
+    ],
+    [
+     "fwd_win_missing",
+     0.5103,
+     0.5103
+    ]
+   ],
+   "labeled_batch": 6,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5.557716889901629e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 17993,
+     "rate": 5.557716889901629e-05
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.11
+  },
+  {
+   "batch": 8,
+   "day": "2018-02-16",
+   "rows": 24665,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 5,
+   "drift_share": 0.06944444444444445,
+   "dataset_drift": false,
+   "score_drift": 0.021299482998243364,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Protocol",
+     0.4936,
+     0.4936
+    ],
+    [
+     "Fwd Pkt Len Min",
+     0.3975,
+     0.3975
+    ],
+    [
+     "Bwd Pkt Len Min",
+     0.4357,
+     0.4357
+    ],
+    [
+     "Fwd PSH Flags",
+     0.2048,
+     0.2048
+    ],
+    [
+     "SYN Flag Cnt",
+     0.2048,
+     0.2048
+    ]
+   ],
+   "labeled_batch": 7,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.27
+  },
+  {
+   "batch": 9,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.010332343604485436,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.0972,
+     0.104
+    ],
+    [
+     "Active Mean",
+     0.0867,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.0762,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.0858,
+     0.1281
+    ],
+    [
+     "Bwd Pkt Len Max",
+     0.3452,
+     0.6847
+    ]
+   ],
+   "labeled_batch": 8,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 24665,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.62
+  },
+  {
+   "batch": 10,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.010744979819525144,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.0907,
+     0.104
+    ],
+    [
+     "Active Mean",
+     0.0871,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.0923,
+     0.1281
+    ],
+    [
+     "Active Min",
+     0.0675,
+     0.1
+    ],
+    [
+     "Active Std",
+     0.0725,
+     0.1118
+    ]
+   ],
+   "labeled_batch": 9,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.35
+  },
+  {
+   "batch": 11,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.009676468807134289,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.1153,
+     0.104
+    ],
+    [
+     "Active Mean",
+     0.1021,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.1092,
+     0.1281
+    ],
+    [
+     "Active Min",
+     0.0819,
+     0.1
+    ],
+    [
+     "Active Std",
+     0.0797,
+     0.1118
+    ]
+   ],
+   "labeled_batch": 10,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.07
+  },
+  {
+   "batch": 12,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.010386197298707328,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.0996,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.1088,
+     0.1281
+    ],
+    [
+     "Active Min",
+     0.0804,
+     0.1
+    ],
+    [
+     "Active Std",
+     0.0791,
+     0.1118
+    ],
+    [
+     "Idle Min",
+     0.2004,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 11,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.08
+  },
+  {
+   "batch": 13,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.012078437119543853,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Bwd Pkts/s",
+     0.1311,
+     0.1938
+    ],
+    [
+     "Idle Min",
+     0.196,
+     0.2949
+    ],
+    [
+     "Idle Mean",
+     0.1955,
+     0.303
+    ],
+    [
+     "Idle Max",
+     0.1925,
+     0.3061
+    ],
+    [
+     "Active Mean",
+     0.0704,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 12,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.19
+  },
+  {
+   "batch": 14,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.006643725371801796,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Min",
+     0.2357,
+     0.2949
+    ],
+    [
+     "Bwd Pkts/s",
+     0.1527,
+     0.1938
+    ],
+    [
+     "Fwd IAT Min",
+     0.1689,
+     0.218
+    ],
+    [
+     "Idle Mean",
+     0.2345,
+     0.303
+    ],
+    [
+     "Flow IAT Min",
+     0.1621,
+     0.2134
+    ]
+   ],
+   "labeled_batch": 13,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 1.96
+  },
+  {
+   "batch": 15,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01160138943113572,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Bwd IAT Min",
+     0.0901,
+     0.1266
+    ],
+    [
+     "Active Mean",
+     0.0702,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.0739,
+     0.1281
+    ],
+    [
+     "Idle Min",
+     0.1675,
+     0.2949
+    ],
+    [
+     "Idle Mean",
+     0.1672,
+     0.303
+    ]
+   ],
+   "labeled_batch": 14,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 1.96
+  },
+  {
+   "batch": 16,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.009352820548074531,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Std",
+     0.0787,
+     0.1118
+    ],
+    [
+     "Idle Min",
+     0.2033,
+     0.2949
+    ],
+    [
+     "Active Max",
+     0.0877,
+     0.1281
+    ],
+    [
+     "Idle Mean",
+     0.2064,
+     0.303
+    ],
+    [
+     "Idle Max",
+     0.2068,
+     0.3061
+    ]
+   ],
+   "labeled_batch": 15,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 1.84
+  },
+  {
+   "batch": 17,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.011266489868378598,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Min",
+     0.2277,
+     0.2949
+    ],
+    [
+     "Bwd IAT Min",
+     0.0975,
+     0.1266
+    ],
+    [
+     "Idle Mean",
+     0.2288,
+     0.303
+    ],
+    [
+     "Idle Max",
+     0.2268,
+     0.3061
+    ],
+    [
+     "Bwd Pkts/s",
+     0.126,
+     0.1938
+    ]
+   ],
+   "labeled_batch": 16,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.06
+  },
+  {
+   "batch": 18,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.010121317344478823,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Bwd IAT Min",
+     0.1038,
+     0.1266
+    ],
+    [
+     "Active Mean",
+     0.089,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.076,
+     0.1
+    ],
+    [
+     "Idle Min",
+     0.2173,
+     0.2949
+    ],
+    [
+     "Bwd IAT Mean",
+     0.1631,
+     0.222
+    ]
+   ],
+   "labeled_batch": 17,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.35
+  },
+  {
+   "batch": 19,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.015755989901417466,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Bwd IAT Min",
+     0.1116,
+     0.1266
+    ],
+    [
+     "Idle Min",
+     0.2192,
+     0.2949
+    ],
+    [
+     "Idle Mean",
+     0.2239,
+     0.303
+    ],
+    [
+     "Idle Max",
+     0.2257,
+     0.3061
+    ],
+    [
+     "Active Mean",
+     0.081,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 18,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 1.97
+  },
+  {
+   "batch": 20,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.011123172074473818,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Min",
+     0.2628,
+     0.2949
+    ],
+    [
+     "Idle Mean",
+     0.2674,
+     0.303
+    ],
+    [
+     "Idle Max",
+     0.2682,
+     0.3061
+    ],
+    [
+     "Active Std",
+     0.0876,
+     0.1118
+    ],
+    [
+     "Bwd IAT Mean",
+     0.1719,
+     0.222
+    ]
+   ],
+   "labeled_batch": 19,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 2.12
+  },
+  {
+   "batch": 21,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.008218506306863436,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Min",
+     0.2757,
+     0.2949
+    ],
+    [
+     "Idle Mean",
+     0.2817,
+     0.303
+    ],
+    [
+     "Idle Max",
+     0.2829,
+     0.3061
+    ],
+    [
+     "Active Mean",
+     0.0887,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.0977,
+     0.1281
+    ]
+   ],
+   "labeled_batch": 20,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.79
+  },
+  {
+   "batch": 22,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.011043900300195381,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Pkt Len Var",
+     0.6886,
+     0.8867
+    ],
+    [
+     "Bwd IAT Min",
+     0.0904,
+     0.1266
+    ],
+    [
+     "Active Std",
+     0.0789,
+     0.1118
+    ],
+    [
+     "Active Max",
+     0.0844,
+     0.1281
+    ],
+    [
+     "Active Mean",
+     0.0713,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 21,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.52
+  },
+  {
+   "batch": 23,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.018769078652410474,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.1497,
+     0.104
+    ],
+    [
+     "Active Mean",
+     0.0888,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.0733,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.0932,
+     0.1281
+    ],
+    [
+     "Idle Max",
+     0.1987,
+     0.3061
+    ]
+   ],
+   "labeled_batch": 22,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.22
+  },
+  {
+   "batch": 24,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01212182503239515,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Bwd IAT Min",
+     0.0864,
+     0.1266
+    ],
+    [
+     "Active Mean",
+     0.0756,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.0811,
+     0.1281
+    ],
+    [
+     "Active Std",
+     0.0676,
+     0.1118
+    ],
+    [
+     "Idle Std",
+     0.0585,
+     0.104
+    ]
+   ],
+   "labeled_batch": 23,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.06
+  },
+  {
+   "batch": 25,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.009711036103395703,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.0894,
+     0.104
+    ],
+    [
+     "Active Std",
+     0.0915,
+     0.1118
+    ],
+    [
+     "Bwd IAT Min",
+     0.098,
+     0.1266
+    ],
+    [
+     "Active Mean",
+     0.0862,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.0972,
+     0.1281
+    ]
+   ],
+   "labeled_batch": 24,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.43
+  },
+  {
+   "batch": 26,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.00938895359191623,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2631,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2593,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2686,
+     0.2525
+    ],
+    [
+     "Active Mean",
+     0.1183,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.0945,
+     0.1
+    ]
+   ],
+   "labeled_batch": 25,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.53
+  },
+  {
+   "batch": 27,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.013468481647774188,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2634,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2621,
+     0.218
+    ],
+    [
+     "Bwd IAT Min",
+     0.1433,
+     0.1266
+    ],
+    [
+     "Flow IAT Mean",
+     0.2676,
+     0.2525
+    ],
+    [
+     "Active Mean",
+     0.105,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 26,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.05
+  },
+  {
+   "batch": 28,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.019538004777548457,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.182,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1791,
+     0.218
+    ],
+    [
+     "Active Mean",
+     0.0855,
+     0.1133
+    ],
+    [
+     "Flow IAT Mean",
+     0.1826,
+     0.2525
+    ],
+    [
+     "Active Min",
+     0.0717,
+     0.1
+    ]
+   ],
+   "labeled_batch": 27,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.42
+  },
+  {
+   "batch": 29,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 2,
+   "drift_share": 0.027777777777777776,
+   "dataset_drift": false,
+   "score_drift": 0.011478967347960441,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2465,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2422,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.251,
+     0.2525
+    ],
+    [
+     "Active Mean",
+     0.107,
+     0.1133
+    ],
+    [
+     "Bwd IAT Min",
+     0.1114,
+     0.1266
+    ]
+   ],
+   "labeled_batch": 28,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.29
+  },
+  {
+   "batch": 30,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.007280170394350507,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2542,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2535,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2603,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.2652,
+     0.2995
+    ],
+    [
+     "Bwd IAT Min",
+     0.1118,
+     0.1266
+    ]
+   ],
+   "labeled_batch": 29,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.98
+  },
+  {
+   "batch": 31,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.007515025214391615,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.0806,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.0657,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.0822,
+     0.1281
+    ],
+    [
+     "Bwd IAT Min",
+     0.0801,
+     0.1266
+    ],
+    [
+     "Flow IAT Min",
+     0.1286,
+     0.2134
+    ]
+   ],
+   "labeled_batch": 30,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.07
+  },
+  {
+   "batch": 32,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 2,
+   "drift_share": 0.027777777777777776,
+   "dataset_drift": false,
+   "score_drift": 0.010337130212604084,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2256,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2255,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2312,
+     0.2525
+    ],
+    [
+     "Bwd IAT Min",
+     0.1152,
+     0.1266
+    ],
+    [
+     "Active Std",
+     0.0892,
+     0.1118
+    ]
+   ],
+   "labeled_batch": 31,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.12
+  },
+  {
+   "batch": 33,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 6,
+   "drift_share": 0.08333333333333333,
+   "dataset_drift": false,
+   "score_drift": 0.014229501082496184,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2449,
+     0.2134
+    ],
+    [
+     "Bwd IAT Min",
+     0.1437,
+     0.1266
+    ],
+    [
+     "Fwd IAT Min",
+     0.2459,
+     0.218
+    ],
+    [
+     "Active Mean",
+     0.1234,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.1017,
+     0.1
+    ]
+   ],
+   "labeled_batch": 32,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.65
+  },
+  {
+   "batch": 34,
+   "day": "2018-02-20",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01065665619461008,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.0916,
+     0.1133
+    ],
+    [
+     "Flow IAT Min",
+     0.1681,
+     0.2134
+    ],
+    [
+     "Bwd IAT Min",
+     0.0995,
+     0.1266
+    ],
+    [
+     "Fwd IAT Min",
+     0.1684,
+     0.218
+    ],
+    [
+     "Active Min",
+     0.0759,
+     0.1
+    ]
+   ],
+   "labeled_batch": 33,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.05
+  },
+  {
+   "batch": 35,
+   "day": "2018-02-20",
+   "rows": 29344,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.024988327325913988,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Down/Up Ratio",
+     3.4859,
+     0.7016
+    ],
+    [
+     "Idle Std",
+     0.154,
+     0.104
+    ],
+    [
+     "Subflow Fwd Pkts",
+     0.1411,
+     0.1
+    ],
+    [
+     "Tot Fwd Pkts",
+     0.1411,
+     0.1
+    ],
+    [
+     "Subflow Bwd Pkts",
+     0.1292,
+     0.1
+    ]
+   ],
+   "labeled_batch": 34,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.75
+  },
+  {
+   "batch": 36,
+   "day": "2018-02-21",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 29,
+   "drift_share": 0.4027777777777778,
+   "dataset_drift": true,
+   "score_drift": 0.020308013694271185,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow Byts/s",
+     0.1365,
+     0.1303
+    ],
+    [
+     "Dst Port",
+     1.402,
+     1.3887
+    ],
+    [
+     "Bwd Pkt Len Mean",
+     0.5581,
+     0.5559
+    ],
+    [
+     "Bwd Seg Size Avg",
+     0.5581,
+     0.5559
+    ],
+    [
+     "Bwd Pkt Len Std",
+     0.778,
+     0.7752
+    ]
+   ],
+   "labeled_batch": 35,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 29344,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.73
+  },
+  {
+   "batch": 37,
+   "day": "2018-02-21",
+   "rows": 16080,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 18,
+   "drift_share": 0.25,
+   "dataset_drift": false,
+   "score_drift": 0.018798079013978713,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Dst Port",
+     1.4614,
+     1.3887
+    ],
+    [
+     "bwd_win_missing",
+     0.6901,
+     0.6901
+    ],
+    [
+     "Down/Up Ratio",
+     0.7017,
+     0.7016
+    ],
+    [
+     "PSH Flag Cnt",
+     1.0892,
+     1.0892
+    ],
+    [
+     "Pkt Len Max",
+     0.9906,
+     0.9906
+    ]
+   ],
+   "labeled_batch": 36,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.55
+  }
+ ]
+}

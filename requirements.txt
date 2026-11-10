@@ -1,6 +1,6 @@
 # Data processing
 numpy>=1.26
-pandas>=2.2
+pandas>=2.2,<3              # evidently 0.7 chưa chạy với pandas 3 (lỗi khi import)
 pyarrow>=15.0
 pyyaml>=6.0                 # read params.yaml (src/data/preprocess.py)
 awscli>=1.32                # download CSE-CIC-IDS2018 from the public S3 bucket
@@ -19,7 +19,7 @@ uvicorn[standard]>=0.29
 pydantic>=2.6
 
 # Monitoring
-evidently>=0.7
+evidently>=0.7,<0.8         # src/monitoring dùng API Report/Dataset của 0.7
 prometheus-client>=0.20
 
 # Visualization & notebooks

@@ -1,0 +1,7728 @@
+{
+ "scenario": "s1_new_attacks",
+ "description": "Phát lại production_sim theo thời gian; Web Attack, Infiltration, Bot là loại mô hình chưa thấy",
+ "model": {
+  "name": "cic-ids-binary",
+  "version": "1",
+  "threshold": 0.9027984142303467,
+  "model_type": "xgb"
+ },
+ "baseline_test": {
+  "overall": {
+   "accuracy": 0.9998452629841549,
+   "precision": 0.9999342982110342,
+   "recall": 0.998799958748582,
+   "f1": 0.9993668065945921,
+   "macro_f1": 0.999639334356498,
+   "fpr": 9.140946871510934e-06,
+   "roc_auc": 0.9999985721880678,
+   "pr_auc": 0.9999899529399017,
+   "tn": 765778,
+   "fp": 7,
+   "fn": 128,
+   "tp": 106535
+  },
+  "per_label": {
+   "Benign": {
+    "support": 765785,
+    "predicted_attack": 7,
+    "rate": 9.140946871510934e-06,
+    "metric": "fpr"
+   },
+   "DDoS attack-HOIC": {
+    "support": 19886,
+    "predicted_attack": 19886,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DDoS attack-LOIC-UDP": {
+    "support": 173,
+    "predicted_attack": 172,
+    "rate": 0.9942196531791907,
+    "metric": "recall"
+   },
+   "DDoS attacks-LOIC-HTTP": {
+    "support": 57536,
+    "predicted_attack": 57463,
+    "rate": 0.9987312291434928,
+    "metric": "recall"
+   },
+   "DoS attacks-GoldenEye": {
+    "support": 4141,
+    "predicted_attack": 4141,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-Hulk": {
+    "support": 14520,
+    "predicted_attack": 14520,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-SlowHTTPTest": {
+    "support": 6,
+    "predicted_attack": 6,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "DoS attacks-Slowloris": {
+    "support": 991,
+    "predicted_attack": 937,
+    "rate": 0.9455095862764884,
+    "metric": "recall"
+   },
+   "FTP-BruteForce": {
+    "support": 5,
+    "predicted_attack": 5,
+    "rate": 1.0,
+    "metric": "recall"
+   },
+   "SSH-BruteForce": {
+    "support": 9405,
+    "predicted_attack": 9405,
+    "rate": 1.0,
+    "metric": "recall"
+   }
+  }
+ },
+ "calibration": {
+  "enabled": true,
+  "source": "val.parquet",
+  "labels": [
+   "Benign"
+  ],
+  "quantile": 0.99,
+  "batches": 38,
+  "drift_share_mean": 0.027046783625730993,
+  "drift_share_max": 0.4305555555555556,
+  "dataset_drift_batches": 1,
+  "score_drift_batches": 0,
+  "alert_rate_mean": 1.0526315789473684e-05,
+  "alert_rate_max": 0.0001,
+  "thresholds": {
+   "Dst Port": 1.3887,
+   "Protocol": 0.4936,
+   "Flow Duration": 0.4467,
+   "Tot Fwd Pkts": 0.1,
+   "Tot Bwd Pkts": 0.1,
+   "TotLen Fwd Pkts": 0.5616,
+   "TotLen Bwd Pkts": 0.1,
+   "Fwd Pkt Len Max": 1.4056,
+   "Fwd Pkt Len Min": 0.3975,
+   "Fwd Pkt Len Mean": 1.3774,
+   "Fwd Pkt Len Std": 1.5418,
+   "Bwd Pkt Len Max": 0.6847,
+   "Bwd Pkt Len Min": 0.4357,
+   "Bwd Pkt Len Mean": 0.5559,
+   "Bwd Pkt Len Std": 0.7752,
+   "Flow Byts/s": 0.1303,
+   "Flow Pkts/s": 0.1384,
+   "Flow IAT Mean": 0.2525,
+   "Flow IAT Std": 0.4687,
+   "Flow IAT Max": 0.4636,
+   "Flow IAT Min": 0.2134,
+   "Fwd IAT Tot": 0.4437,
+   "Fwd IAT Mean": 0.2995,
+   "Fwd IAT Std": 0.511,
+   "Fwd IAT Max": 0.4626,
+   "Fwd IAT Min": 0.218,
+   "Bwd IAT Tot": 0.3296,
+   "Bwd IAT Mean": 0.222,
+   "Bwd IAT Std": 0.2741,
+   "Bwd IAT Max": 0.2836,
+   "Bwd IAT Min": 0.1266,
+   "Fwd PSH Flags": 0.2048,
+   "Fwd URG Flags": 0.1,
+   "Fwd Header Len": 0.1,
+   "Bwd Header Len": 0.1,
+   "Fwd Pkts/s": 0.1273,
+   "Bwd Pkts/s": 0.1938,
+   "Pkt Len Min": 0.4325,
+   "Pkt Len Max": 0.9906,
+   "Pkt Len Mean": 0.7313,
+   "Pkt Len Std": 1.0416,
+   "Pkt Len Var": 0.8867,
+   "FIN Flag Cnt": 0.1,
+   "SYN Flag Cnt": 0.2048,
+   "RST Flag Cnt": 1.878,
+   "PSH Flag Cnt": 1.0892,
+   "ACK Flag Cnt": 1.4164,
+   "URG Flag Cnt": 0.2263,
+   "CWE Flag Count": 0.1,
+   "ECE Flag Cnt": 1.8779,
+   "Down/Up Ratio": 0.7016,
+   "Pkt Size Avg": 0.7616,
+   "Fwd Seg Size Avg": 1.3774,
+   "Bwd Seg Size Avg": 0.5559,
+   "Subflow Fwd Pkts": 0.1,
+   "Subflow Fwd Byts": 0.5616,
+   "Subflow Bwd Pkts": 0.1,
+   "Subflow Bwd Byts": 0.1,
+   "Init Fwd Win Byts": 2.5442,
+   "Init Bwd Win Byts": 1.3201,
+   "Fwd Act Data Pkts": 1.2653,
+   "Fwd Seg Size Min": 1.7421,
+   "Active Mean": 0.1133,
+   "Active Std": 0.1118,
+   "Active Max": 0.1281,
+   "Active Min": 0.1,
+   "Idle Mean": 0.303,
+   "Idle Std": 0.104,
+   "Idle Max": 0.3061,
+   "Idle Min": 0.2949,
+   "fwd_win_missing": 0.5103,
+   "bwd_win_missing": 0.6901,
+   "score": 0.1
+  }
+ },
+ "events": {
+  "first_drift_alert": null,
+  "first_retrain_trigger": {
+   "step": 10,
+   "labeled_batch": 9,
+   "day": "2018-02-22",
+   "reasons": [
+    "recall[Web Attack] = 0.000 < 0.5 (36 mẫu)",
+    "recall tổng thể = 0.000 < mốc 0.999 - 0.1"
+   ]
+  }
+ },
+ "summary": {
+  "batches": 128,
+  "drift_batches": 0,
+  "score_drift_batches": 19,
+  "by_day": {
+   "2018-02-22": {
+    "batches": 33,
+    "drift_batches": 0,
+    "drift_share_mean": 0.11911,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 1e-05
+   },
+   "2018-02-23": {
+    "batches": 33,
+    "drift_batches": 0,
+    "drift_share_mean": 0.12332,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 1e-05
+   },
+   "2018-02-28": {
+    "batches": 19,
+    "drift_batches": 0,
+    "drift_share_mean": 0.07018,
+    "score_drift_batches": 11,
+    "alert_rate_mean": 0.00256
+   },
+   "2018-03-01": {
+    "batches": 11,
+    "drift_batches": 0,
+    "drift_share_mean": 0.07702,
+    "score_drift_batches": 8,
+    "alert_rate_mean": 0.00229
+   },
+   "2018-03-02": {
+    "batches": 32,
+    "drift_batches": 0,
+    "drift_share_mean": 0.02604,
+    "score_drift_batches": 0,
+    "alert_rate_mean": 0.0
+   }
+  }
+ },
+ "cumulative_by_label": {
+  "Benign": {
+   "support": 2309733,
+   "rate": 0.0003667090525181915
+  },
+  "Bot": {
+   "support": 115628,
+   "rate": 0.0
+  },
+  "Infiltration": {
+   "support": 111473,
+   "rate": 0.005705417455347932
+  },
+  "Web Attack": {
+   "support": 688,
+   "rate": 0.011627906976744186
+  }
+ },
+ "config": {
+  "reference": {
+   "rows": 50000,
+   "labels": [
+    "Benign"
+   ]
+  },
+  "calibration": {
+   "source": "val.parquet",
+   "labels": [
+    "Benign"
+   ],
+   "quantile": 0.99,
+   "min_threshold": 0.1
+  },
+  "stream": {
+   "holdout_frac": 0.2,
+   "holdout_file": "production_holdout.parquet",
+   "batch_size": 20000
+  },
+  "drift": {
+   "method": "wasserstein",
+   "threshold": 0.1,
+   "drift_share": 0.3,
+   "score_threshold": 0.1,
+   "top_columns": 5
+  },
+  "labels": {
+   "delay_batches": 1
+  },
+  "retrain": {
+   "min_support": 30,
+   "min_class_recall": 0.5,
+   "max_recall_drop": 0.1
+  }
+ },
+ "batches": [
+  {
+   "batch": 0,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 20,
+   "drift_share": 0.2777777777777778,
+   "dataset_drift": false,
+   "score_drift": 0.010401875520588662,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Tot Bwd Pkts",
+     0.3348,
+     0.1
+    ],
+    [
+     "Subflow Bwd Pkts",
+     0.3348,
+     0.1
+    ],
+    [
+     "Subflow Bwd Byts",
+     0.3347,
+     0.1
+    ],
+    [
+     "TotLen Bwd Pkts",
+     0.3347,
+     0.1
+    ],
+    [
+     "Bwd Header Len",
+     0.3335,
+     0.1
+    ]
+   ],
+   "seconds": 3.8
+  },
+  {
+   "batch": 1,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.013003946130000908,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8519,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8427,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.845,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8191,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5325,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 0,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.78
+  },
+  {
+   "batch": 2,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 10,
+   "drift_share": 0.1388888888888889,
+   "dataset_drift": false,
+   "score_drift": 0.013302689768950207,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8861,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8759,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8778,
+     0.2525
+    ],
+    [
+     "Idle Std",
+     0.299,
+     0.104
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8447,
+     0.2995
+    ]
+   ],
+   "labeled_batch": 1,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.72
+  },
+  {
+   "batch": 3,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.0070330076687465225,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6231,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6167,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6252,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6083,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4782,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 2,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.88
+  },
+  {
+   "batch": 4,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.008957706595714425,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6372,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6301,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.641,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6175,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4554,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 3,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.73
+  },
+  {
+   "batch": 5,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.013500608438279809,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7036,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6942,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6999,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6757,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.489,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 4,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.81
+  },
+  {
+   "batch": 6,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.009653580458557276,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8056,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7959,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7987,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7798,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5989,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 5,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.22
+  },
+  {
+   "batch": 7,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.010165172338782074,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.9929,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.9791,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.972,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.9425,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6655,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 6,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 4.09
+  },
+  {
+   "batch": 8,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.008730789997856842,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0866,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0739,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0632,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     1.034,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7321,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 7,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.91
+  },
+  {
+   "batch": 9,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 36,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.04358358449286786,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.1118,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0977,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0857,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     1.0558,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7355,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 8,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": false,
+   "retrain_reasons": [],
+   "seconds": 3.72
+  },
+  {
+   "batch": 10,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 38,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.010359280178041328,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0495,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.038,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0261,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     1.0005,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7256,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 9,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19964,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 36,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.000 < 0.5 (36 mẫu)",
+    "recall tổng thể = 0.000 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.75
+  },
+  {
+   "batch": 11,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 30,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.014476880931419233,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7888,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7836,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7777,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7669,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5996,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 10,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19962,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 38,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.000 < 0.5 (74 mẫu)",
+    "recall tổng thể = 0.000 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.55
+  },
+  {
+   "batch": 12,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 30,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.014813066641103035,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8755,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8635,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8575,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8403,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6401,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 11,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19970,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 30,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.000 < 0.5 (104 mẫu)",
+    "recall tổng thể = 0.000 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.45
+  },
+  {
+   "batch": 13,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 34,
+   "alert_rate": 0.00015,
+   "n_drifted": 8,
+   "drift_share": 0.1111111111111111,
+   "dataset_drift": false,
+   "score_drift": 0.044677105579787865,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7259,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7195,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7136,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7042,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5481,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 12,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19970,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 30,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.000 < 0.5 (134 mẫu)",
+    "recall tổng thể = 0.000 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.94
+  },
+  {
+   "batch": 14,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 26,
+   "alert_rate": 5e-05,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.03243711813909976,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6803,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6771,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.674,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6698,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5435,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 13,
+   "recall": 0.08823529411764706,
+   "precision": 1.0,
+   "fpr": 0.0,
+   "f1": 0.16216216216216217,
+   "per_label": {
+    "Benign": {
+     "support": 19966,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 34,
+     "rate": 0.08823529411764706
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.018 < 0.5 (168 mẫu)",
+    "recall tổng thể = 0.018 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.61
+  },
+  {
+   "batch": 15,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 29,
+   "alert_rate": 5e-05,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.019113503142704893,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8712,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.863,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8569,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.844,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6536,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 14,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 5.006508460999299e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19974,
+     "rate": 5.006508460999299e-05
+    },
+    "Web Attack": {
+     "support": 26,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (194 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.56
+  },
+  {
+   "batch": 16,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 6,
+   "alert_rate": 5e-05,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.006068571813251303,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.9243,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.9182,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.9083,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.895,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6925,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 15,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 5.0072605277652595e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19971,
+     "rate": 5.0072605277652595e-05
+    },
+    "Web Attack": {
+     "support": 29,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.013 < 0.5 (223 mẫu)",
+    "recall tổng thể = 0.013 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.78
+  },
+  {
+   "batch": 17,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0001,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.012316754103679469,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.9644,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.9697,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.9538,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.944,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7067,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 16,
+   "recall": 0.16666666666666666,
+   "precision": 1.0,
+   "fpr": 0.0,
+   "f1": 0.2857142857142857,
+   "per_label": {
+    "Benign": {
+     "support": 19994,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 6,
+     "rate": 0.16666666666666666
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.59
+  },
+  {
+   "batch": 18,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.010113591718998468,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8612,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8656,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8499,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8431,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6692,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 17,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0001,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0001
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.66
+  },
+  {
+   "batch": 19,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.010107204448490578,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6586,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6529,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6519,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6482,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5362,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 18,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.23
+  },
+  {
+   "batch": 20,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.00996358516801572,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8725,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8651,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8588,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8455,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6462,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 19,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 1.99
+  },
+  {
+   "batch": 21,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.011493327760127466,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6262,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6207,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6192,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6127,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5097,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 20,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.61
+  },
+  {
+   "batch": 22,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.008303970066688121,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6196,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6144,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6125,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6075,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4833,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 21,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.0
+  },
+  {
+   "batch": 23,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.01121163714509884,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.652,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6443,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6397,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6272,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4164,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 22,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.71
+  },
+  {
+   "batch": 24,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.022348649734257365,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6086,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6005,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5945,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5829,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3763,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 23,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.35
+  },
+  {
+   "batch": 25,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.030831536640964545,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6336,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.626,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6181,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6051,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3688,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 24,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.46
+  },
+  {
+   "batch": 26,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.010499302921355987,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6769,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6694,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6641,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6531,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4515,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 25,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.82
+  },
+  {
+   "batch": 27,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 8,
+   "drift_share": 0.1111111111111111,
+   "dataset_drift": false,
+   "score_drift": 0.009226092213434477,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.665,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6601,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6563,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6498,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5181,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 26,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.92
+  },
+  {
+   "batch": 28,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 22,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.03016493118308986,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.5791,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5739,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5751,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5734,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4692,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 27,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.017 < 0.5 (229 mẫu)",
+    "recall tổng thể = 0.017 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.91
+  },
+  {
+   "batch": 29,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 19,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.015844318971139842,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8601,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8506,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8448,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8265,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5734,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 28,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19978,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 22,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.016 < 0.5 (251 mẫu)",
+    "recall tổng thể = 0.016 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.35
+  },
+  {
+   "batch": 30,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.011345506973691698,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8166,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8051,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7991,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7807,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5309,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 29,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19981,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 19,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.0
+  },
+  {
+   "batch": 31,
+   "day": "2018-02-22",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.008613846556979035,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8114,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8006,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7935,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7732,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5023,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 30,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.6
+  },
+  {
+   "batch": 32,
+   "day": "2018-02-22",
+   "rows": 25573,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.011720719819571165,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6294,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.621,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6167,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6032,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3862,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 31,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.96
+  },
+  {
+   "batch": 33,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 17,
+   "drift_share": 0.2361111111111111,
+   "dataset_drift": false,
+   "score_drift": 0.019410926973274775,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Tot Bwd Pkts",
+     0.4973,
+     0.1
+    ],
+    [
+     "Subflow Bwd Pkts",
+     0.4973,
+     0.1
+    ],
+    [
+     "Bwd Header Len",
+     0.4965,
+     0.1
+    ],
+    [
+     "TotLen Bwd Pkts",
+     0.4871,
+     0.1
+    ],
+    [
+     "Subflow Bwd Byts",
+     0.4871,
+     0.1
+    ]
+   ],
+   "labeled_batch": 32,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 25573,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.41
+  },
+  {
+   "batch": 34,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 15,
+   "drift_share": 0.20833333333333334,
+   "dataset_drift": false,
+   "score_drift": 0.023803775306045005,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.575,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5806,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5747,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5754,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4179,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 33,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.92
+  },
+  {
+   "batch": 35,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 10,
+   "drift_share": 0.1388888888888889,
+   "dataset_drift": false,
+   "score_drift": 0.05490250782270482,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0235,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.018,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0143,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.981,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.685,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 34,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.67
+  },
+  {
+   "batch": 36,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.05405916720559871,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.9999,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.9917,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.9926,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.9552,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6984,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 35,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.76
+  },
+  {
+   "batch": 37,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.01306663808288676,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0329,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0332,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0274,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.9955,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7087,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 36,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.97
+  },
+  {
+   "batch": 38,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 1,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.008219859094383877,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0837,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0718,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0739,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     1.0353,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7794,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 37,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (270 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.1
+  },
+  {
+   "batch": 39,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.010776370597248359,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0214,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.011,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0084,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.9771,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7266,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 38,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19999,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 1,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (271 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.2
+  },
+  {
+   "batch": 40,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.015021469224953765,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.088,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0731,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0664,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     1.0367,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7482,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 39,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (271 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.1
+  },
+  {
+   "batch": 41,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 1,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.00946899884747415,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.91,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8998,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8908,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8698,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6432,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 40,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (271 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.88
+  },
+  {
+   "batch": 42,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 42,
+   "alert_rate": 5e-05,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.012314353612933579,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0221,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0115,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.9753,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.697,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 41,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19999,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 1,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.015 < 0.5 (272 mẫu)",
+    "recall tổng thể = 0.015 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.0
+  },
+  {
+   "batch": 43,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 57,
+   "alert_rate": 5e-05,
+   "n_drifted": 14,
+   "drift_share": 0.19444444444444445,
+   "dataset_drift": false,
+   "score_drift": 0.015468153554792504,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8227,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8125,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.811,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8141,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5437,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 42,
+   "recall": 0.023809523809523808,
+   "precision": 1.0,
+   "fpr": 0.0,
+   "f1": 0.046511627906976744,
+   "per_label": {
+    "Benign": {
+     "support": 19958,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 42,
+     "rate": 0.023809523809523808
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.016 < 0.5 (314 mẫu)",
+    "recall tổng thể = 0.016 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.57
+  },
+  {
+   "batch": 44,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 69,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.010877050930009935,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     1.0521,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     1.0409,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     1.0352,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     1.0144,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.7553,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 43,
+   "recall": 0.017543859649122806,
+   "precision": 1.0,
+   "fpr": 0.0,
+   "f1": 0.034482758620689655,
+   "per_label": {
+    "Benign": {
+     "support": 19943,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 57,
+     "rate": 0.017543859649122806
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.016 < 0.5 (371 mẫu)",
+    "recall tổng thể = 0.016 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.09
+  },
+  {
+   "batch": 45,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 67,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.021436325159637826,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6066,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6001,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5983,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.589,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4429,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 44,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19931,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 69,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.014 < 0.5 (440 mẫu)",
+    "recall tổng thể = 0.014 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.1
+  },
+  {
+   "batch": 46,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 71,
+   "alert_rate": 5e-05,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.018841147817315867,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6364,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6289,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6256,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6129,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4528,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 45,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19933,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 67,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (507 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.44
+  },
+  {
+   "batch": 47,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 22,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.021609840945257263,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.5568,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5596,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.556,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5554,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4117,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 46,
+   "recall": 0.014084507042253521,
+   "precision": 1.0,
+   "fpr": 0.0,
+   "f1": 0.027777777777777776,
+   "per_label": {
+    "Benign": {
+     "support": 19929,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 71,
+     "rate": 0.014084507042253521
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (578 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.3
+  },
+  {
+   "batch": 48,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.009075035164694382,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.4267,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.427,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.4284,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.4318,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3659,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 47,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19978,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 22,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.7
+  },
+  {
+   "batch": 49,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.027766848143083476,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.5466,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5404,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5421,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5362,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4254,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 48,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.72
+  },
+  {
+   "batch": 50,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 12,
+   "drift_share": 0.16666666666666666,
+   "dataset_drift": false,
+   "score_drift": 0.013107717292118296,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8451,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8434,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8313,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8158,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.6068,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 49,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.4
+  },
+  {
+   "batch": 51,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0001,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.015263881058279563,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7409,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7321,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7309,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.718,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5675,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 50,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.55
+  },
+  {
+   "batch": 52,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.014575006014676291,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7239,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7183,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7134,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7049,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5428,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 51,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0001,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0001
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.57
+  },
+  {
+   "batch": 53,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.014544448651306522,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8383,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8267,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8202,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8042,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5961,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 52,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.14
+  },
+  {
+   "batch": 54,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.015367178612455033,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7877,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7803,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7738,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7613,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5809,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 53,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.57
+  },
+  {
+   "batch": 55,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.012560716520116071,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6728,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6678,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6607,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6509,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4809,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 54,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.26
+  },
+  {
+   "batch": 56,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.013951154683282367,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6358,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6389,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6285,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6231,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4208,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 55,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.45
+  },
+  {
+   "batch": 57,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 29,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.032528889567031066,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.591,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5873,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5851,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5789,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4284,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 56,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (600 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.59
+  },
+  {
+   "batch": 58,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 32,
+   "alert_rate": 5e-05,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.07911632790773761,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.5513,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5465,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5451,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5386,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3726,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 57,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19971,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 29,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.011 < 0.5 (629 mẫu)",
+    "recall tổng thể = 0.011 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.57
+  },
+  {
+   "batch": 59,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 27,
+   "alert_rate": 5e-05,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.051976170241054075,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.4704,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.4657,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.4653,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.4618,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3634,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 58,
+   "recall": 0.03125,
+   "precision": 1.0,
+   "fpr": 0.0,
+   "f1": 0.06060606060606061,
+   "per_label": {
+    "Benign": {
+     "support": 19968,
+     "rate": 0.0
+    },
+    "Web Attack": {
+     "support": 32,
+     "rate": 0.03125
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (661 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.01
+  },
+  {
+   "batch": 60,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.02194841390629816,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.583,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.5769,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.5736,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.5652,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3937,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 59,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 5.006759124818505e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19973,
+     "rate": 5.006759124818505e-05
+    },
+    "Web Attack": {
+     "support": 27,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.48
+  },
+  {
+   "batch": 61,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.017921454858673597,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.6989,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.6898,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.6856,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6693,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4343,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 60,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.75
+  },
+  {
+   "batch": 62,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 8,
+   "drift_share": 0.1111111111111111,
+   "dataset_drift": false,
+   "score_drift": 0.02032307143264561,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7116,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7045,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7005,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.6869,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4662,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 61,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.92
+  },
+  {
+   "batch": 63,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.015421523133774978,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.9433,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.9506,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.9277,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.9138,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5924,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 62,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.44
+  },
+  {
+   "batch": 64,
+   "day": "2018-02-23",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.04353481482517115,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.7261,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.7205,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.7153,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.7053,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.4882,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 63,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.34
+  },
+  {
+   "batch": 65,
+   "day": "2018-02-23",
+   "rows": 16993,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.015091292984136575,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.8543,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.8458,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.8396,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.8244,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.5906,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 64,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.46
+  },
+  {
+   "batch": 66,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 14,
+   "drift_share": 0.19444444444444445,
+   "dataset_drift": false,
+   "score_drift": 0.010655754748967764,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Header Len",
+     0.1585,
+     0.1
+    ],
+    [
+     "Active Mean",
+     0.1777,
+     0.1133
+    ],
+    [
+     "Tot Fwd Pkts",
+     0.1552,
+     0.1
+    ],
+    [
+     "Subflow Fwd Pkts",
+     0.1552,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.193,
+     0.1281
+    ]
+   ],
+   "labeled_batch": 65,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16993,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.65
+  },
+  {
+   "batch": 67,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0001,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.03470299625891516,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.1929,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.1579,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.2002,
+     0.1281
+    ],
+    [
+     "Active Std",
+     0.1432,
+     0.1118
+    ],
+    [
+     "Fwd Pkt Len Min",
+     0.3882,
+     0.3975
+    ]
+   ],
+   "labeled_batch": 66,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.96
+  },
+  {
+   "batch": 68,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0001,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.09874269572418537,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.1148,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.0962,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.1156,
+     0.1281
+    ],
+    [
+     "Bwd Pkt Len Max",
+     0.5478,
+     0.6847
+    ],
+    [
+     "Flow IAT Min",
+     0.1582,
+     0.2134
+    ]
+   ],
+   "labeled_batch": 67,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0001,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0001
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.55
+  },
+  {
+   "batch": 69,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0001,
+   "n_drifted": 2,
+   "drift_share": 0.027777777777777776,
+   "dataset_drift": false,
+   "score_drift": 0.1529196989914728,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "Active Min",
+     0.1084,
+     0.1
+    ],
+    [
+     "Active Mean",
+     0.121,
+     0.1133
+    ],
+    [
+     "Pkt Len Min",
+     0.4145,
+     0.4325
+    ],
+    [
+     "Fwd Pkt Len Min",
+     0.3771,
+     0.3975
+    ],
+    [
+     "Active Max",
+     0.1186,
+     0.1281
+    ]
+   ],
+   "labeled_batch": 68,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0001,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0001
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.43
+  },
+  {
+   "batch": 70,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 5,
+   "drift_share": 0.06944444444444445,
+   "dataset_drift": false,
+   "score_drift": 0.009935035247137392,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd PSH Flags",
+     0.2313,
+     0.2048
+    ],
+    [
+     "SYN Flag Cnt",
+     0.2313,
+     0.2048
+    ],
+    [
+     "Active Mean",
+     0.1246,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.1024,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.1293,
+     0.1281
+    ]
+   ],
+   "labeled_batch": 69,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0001,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0001
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.25
+  },
+  {
+   "batch": 71,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.03902161998588213,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Max",
+     0.1439,
+     0.1281
+    ],
+    [
+     "Active Mean",
+     0.1241,
+     0.1133
+    ],
+    [
+     "Active Std",
+     0.1144,
+     0.1118
+    ],
+    [
+     "Fwd PSH Flags",
+     0.201,
+     0.2048
+    ],
+    [
+     "SYN Flag Cnt",
+     0.201,
+     0.2048
+    ]
+   ],
+   "labeled_batch": 70,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.94
+  },
+  {
+   "batch": 72,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0021,
+   "n_drifted": 11,
+   "drift_share": 0.1527777777777778,
+   "dataset_drift": false,
+   "score_drift": 0.46381230788959227,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     2.95,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     2.95,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.2047,
+     0.1281
+    ],
+    [
+     "Active Std",
+     0.1698,
+     0.1118
+    ],
+    [
+     "Active Mean",
+     0.1622,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 71,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 6.37
+  },
+  {
+   "batch": 73,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 8030,
+   "alert_rate": 0.00755,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 1.7763212922321612,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     12.15,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     12.15,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     4.9222,
+     0.1938
+    ],
+    [
+     "Flow Pkts/s",
+     0.6994,
+     0.1384
+    ],
+    [
+     "Fwd Pkts/s",
+     0.3572,
+     0.1273
+    ]
+   ],
+   "labeled_batch": 72,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0021,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0021
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.012 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.0
+  },
+  {
+   "batch": 74,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 7458,
+   "alert_rate": 0.0061,
+   "n_drifted": 6,
+   "drift_share": 0.08333333333333333,
+   "dataset_drift": false,
+   "score_drift": 1.7575181114699387,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     10.0,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     10.0,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     2.0484,
+     0.1938
+    ],
+    [
+     "Flow Pkts/s",
+     0.2697,
+     0.1384
+    ],
+    [
+     "Idle Std",
+     0.1357,
+     0.104
+    ]
+   ],
+   "labeled_batch": 73,
+   "recall": 0.005977584059775841,
+   "precision": 0.31788079470198677,
+   "fpr": 0.00860484544695071,
+   "f1": 0.011734506784011734,
+   "per_label": {
+    "Benign": {
+     "support": 11970,
+     "rate": 0.00860484544695071
+    },
+    "Infiltration": {
+     "support": 8030,
+     "rate": 0.005977584059775841
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (8030 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.65
+  },
+  {
+   "batch": 75,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 8230,
+   "alert_rate": 0.00425,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 1.1301333822563295,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     6.55,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     6.55,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.4261,
+     0.1938
+    ],
+    [
+     "Active Min",
+     0.0881,
+     0.1
+    ],
+    [
+     "Active Mean",
+     0.083,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 74,
+   "recall": 0.004022526146419952,
+   "precision": 0.2459016393442623,
+   "fpr": 0.0073353532132036355,
+   "f1": 0.0079155672823219,
+   "per_label": {
+    "Benign": {
+     "support": 12542,
+     "rate": 0.0073353532132036355
+    },
+    "Infiltration": {
+     "support": 7458,
+     "rate": 0.004022526146419952
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.005 < 0.5 (15488 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.45
+  },
+  {
+   "batch": 76,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 7727,
+   "alert_rate": 0.00135,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.5856644444749058,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     4.05,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     4.05,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.5783,
+     0.1938
+    ],
+    [
+     "Active Min",
+     0.0906,
+     0.1
+    ],
+    [
+     "Active Mean",
+     0.0994,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 75,
+   "recall": 0.0031591737545565005,
+   "precision": 0.3058823529411765,
+   "fpr": 0.005012744265080714,
+   "f1": 0.006253758268190018,
+   "per_label": {
+    "Benign": {
+     "support": 11770,
+     "rate": 0.005012744265080714
+    },
+    "Infiltration": {
+     "support": 8230,
+     "rate": 0.0031591737545565005
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (23718 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.0
+  },
+  {
+   "batch": 77,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 7715,
+   "alert_rate": 0.00705,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 1.6401099528932308,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     8.05,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     8.05,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.636,
+     0.1938
+    ],
+    [
+     "Flow Pkts/s",
+     0.1446,
+     0.1384
+    ],
+    [
+     "SYN Flag Cnt",
+     0.2028,
+     0.2048
+    ]
+   ],
+   "labeled_batch": 76,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.002199951112197507,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 12273,
+     "rate": 0.002199951112197507
+    },
+    "Infiltration": {
+     "support": 7727,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.003 < 0.5 (31445 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.52
+  },
+  {
+   "batch": 78,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.00115,
+   "n_drifted": 5,
+   "drift_share": 0.06944444444444445,
+   "dataset_drift": false,
+   "score_drift": 0.36527525407948597,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     1.0,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     1.0,
+     0.1
+    ],
+    [
+     "Active Mean",
+     0.1299,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.1072,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.1324,
+     0.1281
+    ]
+   ],
+   "labeled_batch": 77,
+   "recall": 0.005443940375891122,
+   "precision": 0.2978723404255319,
+   "fpr": 0.00805860805860806,
+   "f1": 0.010692464358452138,
+   "per_label": {
+    "Benign": {
+     "support": 12285,
+     "rate": 0.00805860805860806
+    },
+    "Infiltration": {
+     "support": 7715,
+     "rate": 0.005443940375891122
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (39160 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.85
+  },
+  {
+   "batch": 79,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.012879710148390627,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.1176,
+     0.1133
+    ],
+    [
+     "Active Std",
+     0.1114,
+     0.1118
+    ],
+    [
+     "Active Max",
+     0.1255,
+     0.1281
+    ],
+    [
+     "Active Min",
+     0.0839,
+     0.1
+    ],
+    [
+     "Idle Std",
+     0.0777,
+     0.104
+    ]
+   ],
+   "labeled_batch": 78,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.00115,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.00115
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (39160 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.73
+  },
+  {
+   "batch": 80,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 2,
+   "drift_share": 0.027777777777777776,
+   "dataset_drift": false,
+   "score_drift": 0.011437590065216477,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.1244,
+     0.1133
+    ],
+    [
+     "Active Min",
+     0.1096,
+     0.1
+    ],
+    [
+     "Active Max",
+     0.124,
+     0.1281
+    ],
+    [
+     "Fwd Pkt Len Min",
+     0.3113,
+     0.3975
+    ],
+    [
+     "SYN Flag Cnt",
+     0.1575,
+     0.2048
+    ]
+   ],
+   "labeled_batch": 79,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (39160 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.31
+  },
+  {
+   "batch": 81,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 6203,
+   "alert_rate": 0.0078,
+   "n_drifted": 5,
+   "drift_share": 0.06944444444444445,
+   "dataset_drift": false,
+   "score_drift": 1.832227684304755,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     11.8,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     11.8,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.7789,
+     0.1938
+    ],
+    [
+     "TotLen Fwd Pkts",
+     1.1775,
+     0.5616
+    ],
+    [
+     "Subflow Fwd Byts",
+     1.1775,
+     0.5616
+    ]
+   ],
+   "labeled_batch": 80,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (39160 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.19
+  },
+  {
+   "batch": 82,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 3774,
+   "alert_rate": 0.00465,
+   "n_drifted": 6,
+   "drift_share": 0.08333333333333333,
+   "dataset_drift": false,
+   "score_drift": 1.4320090554240472,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     7.2,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     7.2,
+     0.1
+    ],
+    [
+     "TotLen Fwd Pkts",
+     2.394,
+     0.5616
+    ],
+    [
+     "Subflow Fwd Byts",
+     2.394,
+     0.5616
+    ],
+    [
+     "Bwd Pkts/s",
+     0.6363,
+     0.1938
+    ]
+   ],
+   "labeled_batch": 81,
+   "recall": 0.007738191197807513,
+   "precision": 0.3076923076923077,
+   "fpr": 0.007827788649706457,
+   "f1": 0.015096713319704356,
+   "per_label": {
+    "Benign": {
+     "support": 13797,
+     "rate": 0.007827788649706457
+    },
+    "Infiltration": {
+     "support": 6203,
+     "rate": 0.007738191197807513
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (45363 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.71
+  },
+  {
+   "batch": 83,
+   "day": "2018-02-28",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0062,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 1.6250409341436778,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     8.5,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     8.5,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.4969,
+     0.1938
+    ],
+    [
+     "Idle Std",
+     0.104,
+     0.104
+    ],
+    [
+     "Active Mean",
+     0.1002,
+     0.1133
+    ]
+   ],
+   "labeled_batch": 82,
+   "recall": 0.003179650238473768,
+   "precision": 0.12903225806451613,
+   "fpr": 0.0049919881671391594,
+   "f1": 0.0062063615205585725,
+   "per_label": {
+    "Benign": {
+     "support": 16226,
+     "rate": 0.0049919881671391594
+    },
+    "Infiltration": {
+     "support": 3774,
+     "rate": 0.003179650238473768
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (49137 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.98
+  },
+  {
+   "batch": 84,
+   "day": "2018-02-28",
+   "rows": 19514,
+   "n_attack": 0,
+   "alert_rate": 0.00010249051962693452,
+   "n_drifted": 11,
+   "drift_share": 0.1527777777777778,
+   "dataset_drift": false,
+   "score_drift": 0.02281140014212454,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "TotLen Fwd Pkts",
+     7.4296,
+     0.5616
+    ],
+    [
+     "Subflow Fwd Byts",
+     7.4296,
+     0.5616
+    ],
+    [
+     "Fwd Act Data Pkts",
+     1.964,
+     1.2653
+    ],
+    [
+     "Tot Fwd Pkts",
+     0.1323,
+     0.1
+    ],
+    [
+     "Subflow Fwd Pkts",
+     0.1323,
+     0.1
+    ]
+   ],
+   "labeled_batch": 83,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0062,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0062
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (49137 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.87
+  },
+  {
+   "batch": 85,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.00015,
+   "n_drifted": 9,
+   "drift_share": 0.125,
+   "dataset_drift": false,
+   "score_drift": 0.023809947658738756,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.1937,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.2161,
+     0.1281
+    ],
+    [
+     "Active Std",
+     0.1803,
+     0.1118
+    ],
+    [
+     "Active Min",
+     0.141,
+     0.1
+    ],
+    [
+     "Fwd Header Len",
+     0.1089,
+     0.1
+    ]
+   ],
+   "labeled_batch": 84,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.00010249051962693452,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19514,
+     "rate": 0.00010249051962693452
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (49137 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.35
+  },
+  {
+   "batch": 86,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.00025,
+   "n_drifted": 12,
+   "drift_share": 0.16666666666666666,
+   "dataset_drift": false,
+   "score_drift": 0.105953923958166,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "Active Mean",
+     0.1666,
+     0.1133
+    ],
+    [
+     "Active Max",
+     0.1759,
+     0.1281
+    ],
+    [
+     "Active Std",
+     0.1461,
+     0.1118
+    ],
+    [
+     "Active Min",
+     0.1245,
+     0.1
+    ],
+    [
+     "Fwd PSH Flags",
+     0.2166,
+     0.2048
+    ]
+   ],
+   "labeled_batch": 85,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.00015,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.00015
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (49137 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.36
+  },
+  {
+   "batch": 87,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 6111,
+   "alert_rate": 0.00155,
+   "n_drifted": 6,
+   "drift_share": 0.08333333333333333,
+   "dataset_drift": false,
+   "score_drift": 0.3560456598856412,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     2.15,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     2.15,
+     0.1
+    ],
+    [
+     "TotLen Fwd Pkts",
+     1.0071,
+     0.5616
+    ],
+    [
+     "Subflow Fwd Byts",
+     1.0071,
+     0.5616
+    ],
+    [
+     "Bwd Pkts/s",
+     0.2593,
+     0.1938
+    ]
+   ],
+   "labeled_batch": 86,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.00025,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.00025
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (49137 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.34
+  },
+  {
+   "batch": 88,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 16303,
+   "alert_rate": 0.00805,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 2.355896672702725,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     12.2,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     12.2,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     1.1564,
+     0.1938
+    ],
+    [
+     "Flow Pkts/s",
+     0.1467,
+     0.1384
+    ],
+    [
+     "Active Min",
+     0.0849,
+     0.1
+    ]
+   ],
+   "labeled_batch": 87,
+   "recall": 0.004909180166912126,
+   "precision": 0.967741935483871,
+   "fpr": 7.199942400460797e-05,
+   "f1": 0.00976880494952784,
+   "per_label": {
+    "Benign": {
+     "support": 13889,
+     "rate": 7.199942400460797e-05
+    },
+    "Infiltration": {
+     "support": 6111,
+     "rate": 0.004909180166912126
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.004 < 0.5 (55248 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.72
+  },
+  {
+   "batch": 89,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 9928,
+   "alert_rate": 0.00575,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 1.6671536687329256,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     7.35,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     7.35,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.5868,
+     0.1938
+    ],
+    [
+     "Idle Std",
+     0.0844,
+     0.104
+    ],
+    [
+     "Active Min",
+     0.0691,
+     0.1
+    ]
+   ],
+   "labeled_batch": 88,
+   "recall": 0.009384775808133473,
+   "precision": 0.9503105590062112,
+   "fpr": 0.0021639166892074655,
+   "f1": 0.01858600583090379,
+   "per_label": {
+    "Benign": {
+     "support": 3697,
+     "rate": 0.0021639166892074655
+    },
+    "Infiltration": {
+     "support": 16303,
+     "rate": 0.009384775808133473
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.005 < 0.5 (71551 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.96
+  },
+  {
+   "batch": 90,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 5e-05,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.02496313678255625,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd IAT Min",
+     0.2263,
+     0.218
+    ],
+    [
+     "Idle Min",
+     0.306,
+     0.2949
+    ],
+    [
+     "Idle Max",
+     0.3164,
+     0.3061
+    ],
+    [
+     "Idle Mean",
+     0.3118,
+     0.303
+    ],
+    [
+     "Flow IAT Min",
+     0.2058,
+     0.2134
+    ]
+   ],
+   "labeled_batch": 89,
+   "recall": 0.01017324738114424,
+   "precision": 0.8782608695652174,
+   "fpr": 0.0013899920571882446,
+   "f1": 0.02011351189883501,
+   "per_label": {
+    "Benign": {
+     "support": 10072,
+     "rate": 0.0013899920571882446
+    },
+    "Infiltration": {
+     "support": 9928,
+     "rate": 0.01017324738114424
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (81479 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.59
+  },
+  {
+   "batch": 91,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 7,
+   "drift_share": 0.09722222222222222,
+   "dataset_drift": false,
+   "score_drift": 0.03273172029324813,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.3863,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.3824,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.3925,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.388,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.3619,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 90,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 5e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 5e-05
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (81479 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.79
+  },
+  {
+   "batch": 92,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0008,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.1538902060456455,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.1132,
+     0.104
+    ],
+    [
+     "Fwd Pkt Len Min",
+     0.397,
+     0.3975
+    ],
+    [
+     "Pkt Len Min",
+     0.4151,
+     0.4325
+    ],
+    [
+     "SYN Flag Cnt",
+     0.1937,
+     0.2048
+    ],
+    [
+     "Fwd PSH Flags",
+     0.1937,
+     0.2048
+    ]
+   ],
+   "labeled_batch": 91,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (81479 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.28
+  },
+  {
+   "batch": 93,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 13047,
+   "alert_rate": 0.00145,
+   "n_drifted": 8,
+   "drift_share": 0.1111111111111111,
+   "dataset_drift": false,
+   "score_drift": 0.3241389946742348,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     2.05,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     2.05,
+     0.1
+    ],
+    [
+     "TotLen Fwd Pkts",
+     0.8517,
+     0.5616
+    ],
+    [
+     "Subflow Fwd Byts",
+     0.8517,
+     0.5616
+    ],
+    [
+     "Bwd Pkts/s",
+     0.275,
+     0.1938
+    ]
+   ],
+   "labeled_batch": 92,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0008,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0008
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (81479 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.79
+  },
+  {
+   "batch": 94,
+   "day": "2018-03-01",
+   "rows": 20000,
+   "n_attack": 15711,
+   "alert_rate": 0.00635,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 1.8552775929532928,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     8.2,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     8.2,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.5774,
+     0.1938
+    ],
+    [
+     "Idle Std",
+     0.0902,
+     0.104
+    ],
+    [
+     "Active Min",
+     0.075,
+     0.1
+    ]
+   ],
+   "labeled_batch": 93,
+   "recall": 0.002146087223116425,
+   "precision": 0.9655172413793104,
+   "fpr": 0.00014382281029771322,
+   "f1": 0.004282655246252677,
+   "per_label": {
+    "Benign": {
+     "support": 6953,
+     "rate": 0.00014382281029771322
+    },
+    "Infiltration": {
+     "support": 13047,
+     "rate": 0.002146087223116425
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.005 < 0.5 (94526 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.22
+  },
+  {
+   "batch": 95,
+   "day": "2018-03-01",
+   "rows": 15442,
+   "n_attack": 1236,
+   "alert_rate": 0.0008418598627120839,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.3527100811889063,
+   "score_drifted": true,
+   "top_columns": [
+    [
+     "CWE Flag Count",
+     1.2304,
+     0.1
+    ],
+    [
+     "Fwd URG Flags",
+     1.2304,
+     0.1
+    ],
+    [
+     "Bwd Pkts/s",
+     0.2452,
+     0.1938
+    ],
+    [
+     "Idle Std",
+     0.1148,
+     0.104
+    ],
+    [
+     "Fwd Pkt Len Min",
+     0.3753,
+     0.3975
+    ]
+   ],
+   "labeled_batch": 94,
+   "recall": 0.007510661320094201,
+   "precision": 0.9291338582677166,
+   "fpr": 0.002098391233387736,
+   "f1": 0.014900871322136633,
+   "per_label": {
+    "Benign": {
+     "support": 4289,
+     "rate": 0.002098391233387736
+    },
+    "Infiltration": {
+     "support": 15711,
+     "rate": 0.007510661320094201
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (110237 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.29
+  },
+  {
+   "batch": 96,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.013033152192606742,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "URG Flag Cnt",
+     0.4311,
+     0.2263
+    ],
+    [
+     "FIN Flag Cnt",
+     0.1279,
+     0.1
+    ],
+    [
+     "Bwd Pkt Len Mean",
+     0.5611,
+     0.5559
+    ],
+    [
+     "Bwd Seg Size Avg",
+     0.5611,
+     0.5559
+    ],
+    [
+     "Pkt Len Mean",
+     0.5919,
+     0.7313
+    ]
+   ],
+   "labeled_batch": 95,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0009151062931155849,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 14206,
+     "rate": 0.0009151062931155849
+    },
+    "Infiltration": {
+     "support": 1236,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.17
+  },
+  {
+   "batch": 97,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 5,
+   "drift_share": 0.06944444444444445,
+   "dataset_drift": false,
+   "score_drift": 0.009939823285266351,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Bwd Header Len",
+     0.1362,
+     0.1
+    ],
+    [
+     "Tot Bwd Pkts",
+     0.1358,
+     0.1
+    ],
+    [
+     "Subflow Bwd Pkts",
+     0.1358,
+     0.1
+    ],
+    [
+     "TotLen Bwd Pkts",
+     0.1329,
+     0.1
+    ],
+    [
+     "Subflow Bwd Byts",
+     0.1328,
+     0.1
+    ]
+   ],
+   "labeled_batch": 96,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.51
+  },
+  {
+   "batch": 98,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.01162239710900978,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Idle Std",
+     0.1374,
+     0.104
+    ],
+    [
+     "Flow IAT Min",
+     0.1913,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1922,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.1952,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.188,
+     0.2995
+    ]
+   ],
+   "labeled_batch": 97,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.61
+  },
+  {
+   "batch": 99,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.026960417502322604,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.1626,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1603,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.1689,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1595,
+     0.2995
+    ],
+    [
+     "Bwd Pkts/s",
+     0.0871,
+     0.1938
+    ]
+   ],
+   "labeled_batch": 98,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.33
+  },
+  {
+   "batch": 100,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01377505861052445,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd IAT Min",
+     0.1322,
+     0.218
+    ],
+    [
+     "Flow IAT Min",
+     0.1219,
+     0.2134
+    ],
+    [
+     "Tot Fwd Pkts",
+     0.0535,
+     0.1
+    ],
+    [
+     "Subflow Fwd Pkts",
+     0.0535,
+     0.1
+    ],
+    [
+     "Flow IAT Mean",
+     0.1295,
+     0.2525
+    ]
+   ],
+   "labeled_batch": 99,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.84
+  },
+  {
+   "batch": 101,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.016466931340487923,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.3839,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.3793,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.3811,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.3671,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.2528,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 100,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.35
+  },
+  {
+   "batch": 102,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 591,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.015160324130426055,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.3945,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.3963,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.3865,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.379,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.2432,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 101,
+   "recall": NaN,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 20000,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.48
+  },
+  {
+   "batch": 103,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 1592,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.009334080907665385,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd IAT Min",
+     0.1953,
+     0.218
+    ],
+    [
+     "Flow IAT Min",
+     0.1911,
+     0.2134
+    ],
+    [
+     "Flow IAT Mean",
+     0.1897,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1901,
+     0.2995
+    ],
+    [
+     "Fwd Header Len",
+     0.0503,
+     0.1
+    ]
+   ],
+   "labeled_batch": 102,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 19409,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 591,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (591 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.79
+  },
+  {
+   "batch": 104,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 4330,
+   "alert_rate": 0.0,
+   "n_drifted": 1,
+   "drift_share": 0.013888888888888888,
+   "dataset_drift": false,
+   "score_drift": 0.008853271845072553,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Header Len",
+     0.1452,
+     0.1
+    ],
+    [
+     "Flow IAT Min",
+     0.1529,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1505,
+     0.218
+    ],
+    [
+     "Tot Fwd Pkts",
+     0.0665,
+     0.1
+    ],
+    [
+     "Subflow Fwd Pkts",
+     0.0665,
+     0.1
+    ]
+   ],
+   "labeled_batch": 103,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 18408,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 1592,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (2183 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.006 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.73
+  },
+  {
+   "batch": 105,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 5576,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.012576843489280412,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd Header Len",
+     0.2852,
+     0.1
+    ],
+    [
+     "Tot Fwd Pkts",
+     0.118,
+     0.1
+    ],
+    [
+     "Subflow Fwd Pkts",
+     0.118,
+     0.1
+    ],
+    [
+     "Down/Up Ratio",
+     0.7032,
+     0.7016
+    ],
+    [
+     "URG Flag Cnt",
+     0.2258,
+     0.2263
+    ]
+   ],
+   "labeled_batch": 104,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 15670,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 4330,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (6513 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.53
+  },
+  {
+   "batch": 106,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3723,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.007852249371013168,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.1222,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1192,
+     0.218
+    ],
+    [
+     "Down/Up Ratio",
+     0.3651,
+     0.7016
+    ],
+    [
+     "Flow IAT Mean",
+     0.1214,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1237,
+     0.2995
+    ]
+   ],
+   "labeled_batch": 105,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 14424,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 5576,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (12089 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.45
+  },
+  {
+   "batch": 107,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 10427,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01518668689325121,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Down/Up Ratio",
+     0.6353,
+     0.7016
+    ],
+    [
+     "Flow Pkts/s",
+     0.082,
+     0.1384
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0752,
+     0.1273
+    ],
+    [
+     "Bwd Pkt Len Mean",
+     0.3279,
+     0.5559
+    ],
+    [
+     "Bwd Seg Size Avg",
+     0.3279,
+     0.5559
+    ]
+   ],
+   "labeled_batch": 106,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16277,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3723,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (15812 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.53
+  },
+  {
+   "batch": 108,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 8098,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01009350108240895,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Down/Up Ratio",
+     0.6388,
+     0.7016
+    ],
+    [
+     "Bwd IAT Min",
+     0.0562,
+     0.1266
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0561,
+     0.1273
+    ],
+    [
+     "Idle Std",
+     0.0452,
+     0.104
+    ],
+    [
+     "Flow Pkts/s",
+     0.0597,
+     0.1384
+    ]
+   ],
+   "labeled_batch": 107,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 9573,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 10427,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (26239 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.005 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.16
+  },
+  {
+   "batch": 109,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 9050,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01657766708091624,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Down/Up Ratio",
+     0.6314,
+     0.7016
+    ],
+    [
+     "Bwd Pkts/s",
+     0.1201,
+     0.1938
+    ],
+    [
+     "URG Flag Cnt",
+     0.1373,
+     0.2263
+    ],
+    [
+     "Flow Pkts/s",
+     0.0729,
+     0.1384
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0666,
+     0.1273
+    ]
+   ],
+   "labeled_batch": 108,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 11902,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 8098,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (34337 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.57
+  },
+  {
+   "batch": 110,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 8694,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01049290790379274,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Down/Up Ratio",
+     0.5097,
+     0.7016
+    ],
+    [
+     "Bwd Pkt Len Mean",
+     0.3213,
+     0.5559
+    ],
+    [
+     "Bwd Seg Size Avg",
+     0.3213,
+     0.5559
+    ],
+    [
+     "Pkt Size Avg",
+     0.3606,
+     0.7616
+    ],
+    [
+     "Bwd IAT Std",
+     0.1295,
+     0.2741
+    ]
+   ],
+   "labeled_batch": 109,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 10950,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 9050,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (43387 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.4
+  },
+  {
+   "batch": 111,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3479,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.015498749991788257,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.1974,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1928,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.1897,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1866,
+     0.2995
+    ],
+    [
+     "Bwd IAT Min",
+     0.058,
+     0.1266
+    ]
+   ],
+   "labeled_batch": 110,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 11306,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 8694,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (52081 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.34
+  },
+  {
+   "batch": 112,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3794,
+   "alert_rate": 0.0,
+   "n_drifted": 2,
+   "drift_share": 0.027777777777777776,
+   "dataset_drift": false,
+   "score_drift": 0.017154474759922187,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2401,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2384,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2302,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.2243,
+     0.2995
+    ],
+    [
+     "Down/Up Ratio",
+     0.2603,
+     0.7016
+    ]
+   ],
+   "labeled_batch": 111,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16521,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3479,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (55560 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.88
+  },
+  {
+   "batch": 113,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3623,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.00727553350138998,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2019,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1998,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.193,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1865,
+     0.2995
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0563,
+     0.1273
+    ]
+   ],
+   "labeled_batch": 112,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16206,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3794,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (59354 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.13
+  },
+  {
+   "batch": 114,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3526,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.01561305399404891,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.165,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1651,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.1597,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1602,
+     0.2995
+    ],
+    [
+     "Bwd IAT Min",
+     0.0474,
+     0.1266
+    ]
+   ],
+   "labeled_batch": 113,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16377,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3623,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (62977 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 4.2
+  },
+  {
+   "batch": 115,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 4422,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.014408498843685816,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd IAT Min",
+     0.3713,
+     0.218
+    ],
+    [
+     "Flow IAT Min",
+     0.3527,
+     0.2134
+    ],
+    [
+     "Flow IAT Mean",
+     0.342,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.3404,
+     0.2995
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0828,
+     0.1273
+    ]
+   ],
+   "labeled_batch": 114,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16474,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3526,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (66503 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.68
+  },
+  {
+   "batch": 116,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3862,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.013775531474376455,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.3135,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.3161,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.3003,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.2931,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.1652,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 115,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 15578,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 4422,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (70925 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.004 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.12
+  },
+  {
+   "batch": 117,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 4640,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.017630454531365077,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.4225,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.4252,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.4029,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.3902,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.2065,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 116,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16138,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3862,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (74787 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.43
+  },
+  {
+   "batch": 118,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3846,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.01607118778483388,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.3739,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.3799,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.3591,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.3524,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.2066,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 117,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 15360,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 4640,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (79427 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.12
+  },
+  {
+   "batch": 119,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3169,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.011750227406659142,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2812,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.279,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2713,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.266,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.169,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 118,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16154,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3846,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (83273 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.91
+  },
+  {
+   "batch": 120,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3570,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.01718869055588219,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2794,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2797,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2683,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.2641,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.1503,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 119,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16831,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3169,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (86442 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.15
+  },
+  {
+   "batch": 121,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 4123,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.012921394523847047,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2694,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2672,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2532,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.2444,
+     0.2995
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0653,
+     0.1273
+    ]
+   ],
+   "labeled_batch": 120,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16430,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3570,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (90012 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.85
+  },
+  {
+   "batch": 122,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 7518,
+   "alert_rate": 5e-05,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.0105930122402289,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.1485,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.1458,
+     0.218
+    ],
+    [
+     "Fwd Pkts/s",
+     0.0842,
+     0.1273
+    ],
+    [
+     "Flow Pkts/s",
+     0.0903,
+     0.1384
+    ],
+    [
+     "Down/Up Ratio",
+     0.4284,
+     0.7016
+    ]
+   ],
+   "labeled_batch": 121,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 15877,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 4123,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (94135 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.3
+  },
+  {
+   "batch": 123,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 4310,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.017751185187723256,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Fwd IAT Min",
+     0.156,
+     0.218
+    ],
+    [
+     "Flow IAT Min",
+     0.1488,
+     0.2134
+    ],
+    [
+     "Flow IAT Mean",
+     0.1439,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.145,
+     0.2995
+    ],
+    [
+     "Fwd Pkts/s",
+     0.06,
+     0.1273
+    ]
+   ],
+   "labeled_batch": 122,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 8.01153661272232e-05,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 12482,
+     "rate": 8.01153661272232e-05
+    },
+    "Bot": {
+     "support": 7518,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (101653 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.24
+  },
+  {
+   "batch": 124,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 3624,
+   "alert_rate": 0.0,
+   "n_drifted": 0,
+   "drift_share": 0.0,
+   "dataset_drift": false,
+   "score_drift": 0.012339876820605685,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2012,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2042,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.1933,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.1915,
+     0.2995
+    ],
+    [
+     "URG Flag Cnt",
+     0.098,
+     0.2263
+    ]
+   ],
+   "labeled_batch": 123,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 15690,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 4310,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (105963 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.16
+  },
+  {
+   "batch": 125,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 4123,
+   "alert_rate": 0.0,
+   "n_drifted": 3,
+   "drift_share": 0.041666666666666664,
+   "dataset_drift": false,
+   "score_drift": 0.01714577675733962,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.2923,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.2918,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.2785,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.2705,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.1419,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 124,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 16376,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 3624,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (109587 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.96
+  },
+  {
+   "batch": 126,
+   "day": "2018-03-02",
+   "rows": 20000,
+   "n_attack": 1918,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.010972846212515099,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.3569,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.3605,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.346,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.3424,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.2009,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 125,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 15877,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 4123,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (113710 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 3.22
+  },
+  {
+   "batch": 127,
+   "day": "2018-03-02",
+   "rows": 15788,
+   "n_attack": 0,
+   "alert_rate": 0.0,
+   "n_drifted": 4,
+   "drift_share": 0.05555555555555555,
+   "dataset_drift": false,
+   "score_drift": 0.011670728238370558,
+   "score_drifted": false,
+   "top_columns": [
+    [
+     "Flow IAT Min",
+     0.4228,
+     0.2134
+    ],
+    [
+     "Fwd IAT Min",
+     0.4248,
+     0.218
+    ],
+    [
+     "Flow IAT Mean",
+     0.4158,
+     0.2525
+    ],
+    [
+     "Fwd IAT Mean",
+     0.413,
+     0.2995
+    ],
+    [
+     "Idle Min",
+     0.2874,
+     0.2949
+    ]
+   ],
+   "labeled_batch": 126,
+   "recall": 0.0,
+   "precision": 0.0,
+   "fpr": 0.0,
+   "f1": 0.0,
+   "per_label": {
+    "Benign": {
+     "support": 18082,
+     "rate": 0.0
+    },
+    "Bot": {
+     "support": 1918,
+     "rate": 0.0
+    }
+   },
+   "retrain_trigger": true,
+   "retrain_reasons": [
+    "recall[Bot] = 0.000 < 0.5 (115628 mẫu)",
+    "recall[Infiltration] = 0.006 < 0.5 (111473 mẫu)",
+    "recall[Web Attack] = 0.012 < 0.5 (688 mẫu)",
+    "recall tổng thể = 0.003 < mốc 0.999 - 0.1"
+   ],
+   "seconds": 2.84
+  }
+ ]
+}

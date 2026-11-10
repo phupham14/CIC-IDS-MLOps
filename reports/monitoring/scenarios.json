@@ -1,0 +1,95 @@
+{
+ "holdout_frac": 0.2,
+ "batch_size": 20000,
+ "stream": {
+  "rows": 2553310,
+  "by_day": {
+   "2018-02-22": {
+    "Benign": 665303,
+    "Web Attack": 270
+   },
+   "2018-02-23": {
+    "Benign": 656575,
+    "Web Attack": 418
+   },
+   "2018-02-28": {
+    "Benign": 330377,
+    "Infiltration": 49137
+   },
+   "2018-03-01": {
+    "Benign": 153106,
+    "Infiltration": 62336
+   },
+   "2018-03-02": {
+    "Benign": 520160,
+    "Bot": 115628
+   }
+  }
+ },
+ "holdout": {
+  "rows": 638328,
+  "by_day": {
+   "2018-02-22": {
+    "Benign": 166326,
+    "Web Attack": 68
+   },
+   "2018-02-23": {
+    "Benign": 164144,
+    "Web Attack": 105
+   },
+   "2018-02-28": {
+    "Benign": 82594,
+    "Infiltration": 12284
+   },
+   "2018-03-01": {
+    "Benign": 38276,
+    "Infiltration": 15584
+   },
+   "2018-03-02": {
+    "Benign": 130040,
+    "Bot": 28907
+   }
+  }
+ },
+ "scenarios": {
+  "s0_in_distribution": {
+   "description": "Benign của test.parquet (ngày 14/02–21/02), cùng phân phối với train; bộ phát hiện không được báo drift",
+   "source": "test.parquet",
+   "batches": 38,
+   "rows": 765785,
+   "batches_by_day": {
+    "2018-02-14": 3,
+    "2018-02-15": 4,
+    "2018-02-16": 2,
+    "2018-02-20": 27,
+    "2018-02-21": 2
+   }
+  },
+  "s1_new_attacks": {
+   "description": "Phát lại production_sim theo thời gian; Web Attack, Infiltration, Bot là loại mô hình chưa thấy",
+   "source": "production_sim",
+   "batches": 128,
+   "rows": 2553310,
+   "batches_by_day": {
+    "2018-02-22": 33,
+    "2018-02-23": 33,
+    "2018-02-28": 19,
+    "2018-03-01": 11,
+    "2018-03-02": 32
+   }
+  },
+  "s2_benign_shift": {
+   "description": "Chỉ Benign của các ngày production_sim (không dùng 20/02 vì đã thuộc giai đoạn huấn luyện)",
+   "source": "production_sim",
+   "batches": 117,
+   "rows": 2325521,
+   "batches_by_day": {
+    "2018-02-22": 33,
+    "2018-02-23": 33,
+    "2018-02-28": 17,
+    "2018-03-01": 8,
+    "2018-03-02": 26
+   }
+  }
+ }
+}
