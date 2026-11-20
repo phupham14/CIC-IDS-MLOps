@@ -1,0 +1,230 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "enable": true,
+        "expr": "changes(ids_model_info[1m]) > 0",
+        "iconColor": "purple",
+        "name": "Model Version Change",
+        "titleFormat": "Model v{{version}} ({{model_type}})"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "id": 1,
+      "title": "1. Lưu lượng Request (req/s) & Trạng thái",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(ids_requests_total[1m])",
+          "legendFormat": "status={{status}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "id": 2,
+      "title": "2. Độ trễ suy luận (Latency p50 / p95)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(ids_inference_latency_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p50",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(ids_inference_latency_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p95",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "id": 3,
+      "title": "3. Tỉ lệ dự đoán Attack theo thời gian",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(ids_predictions_total{label=\"Attack\"}[1m])) by (model_version) / clamp_min(sum(rate(ids_predictions_total[1m])) by (model_version), 1e-9)",
+          "legendFormat": "API Attack Rate (v{{model_version}})",
+          "refId": "A"
+        },
+        {
+          "expr": "ids_alert_rate",
+          "legendFormat": "Batch Alert Rate ({{scenario}}, v{{model_version}})",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.3 }
+            ]
+          },
+          "custom": {
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "id": 4,
+      "title": "4. Tỉ lệ cột đặc trưng Drift (ids_drift_share, ngưỡng 0.3)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "ids_drift_share",
+          "legendFormat": "drift_share ({{scenario}}, v{{model_version}})",
+          "refId": "A"
+        },
+        {
+          "expr": "ids_score_drift",
+          "legendFormat": "score_drift ({{scenario}}, v{{model_version}})",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 0.5 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 16, "x": 0, "y": 16 },
+      "id": 5,
+      "title": "5. Recall cộng dồn theo lớp tấn công (ids_recall)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "ids_recall",
+          "legendFormat": "{{label}} (v{{model_version}})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 16 },
+      "id": 6,
+      "title": "6. Phiên bản Model & Trạng thái Retrain",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "ids_model_info",
+          "legendFormat": "Model v{{version}} ({{model_type}}, thr={{threshold}})",
+          "refId": "A"
+        },
+        {
+          "expr": "ids_retrain_trigger",
+          "legendFormat": "Retrain Trigger ({{scenario}})",
+          "refId": "B"
+        },
+        {
+          "expr": "ids_retrain_total",
+          "legendFormat": "Retrain Total",
+          "refId": "C"
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": ["cic-ids", "mlops"],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "CIC-IDS-2018 MLOps Monitoring",
+  "uid": "cic-ids-overview",
+  "version": 1
+}
