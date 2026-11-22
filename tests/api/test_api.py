@@ -13,7 +13,7 @@ import pytest
 import yaml
 
 from src.api.app import create_app
-from src.api.replay import replay_batches
+from src.api.replay import make_timestamps, replay_batches
 from src.models import estimators as E
 from src.models import registry as R
 from src.models import train as T
@@ -211,3 +211,18 @@ def test_replay_batches_delays_labels_by_one_batch(api_env, tmp_path):
     assert set(lab0_df.columns) >= {"request_id", "Label"}
     assert set(lab0_df["request_id"]).issubset(set(pred_df["request_id"]))
 
+
+
+def test_timestamps_use_real_time_or_never_overlap_within_a_day(api_env):
+    _, _, _, df = api_env
+    sp = to_split(df.iloc[:4].assign(meta_day="2018-02-22"), FEATURES)
+    t = pd.to_datetime(["2018-02-22 10:00:00", "2018-02-22 10:00:01", "2018-02-22 10:00:01", "2018-02-22 23:59:59"])
+    stamps, off = make_timestamps(Batch(30, "2018-02-22", sp, t.to_numpy()))
+    assert stamps == ["2018-02-22T10:00:00.000Z", "2018-02-22T10:00:01.000Z",
+                      "2018-02-22T10:00:01.000Z", "2018-02-22T23:59:59.000Z"] and off == 0
+
+    # Không có time: lô 0 và lô 24 cùng ngày từng bị trùng giờ (batch_id % 24); giờ đây nối tiếp nhau
+    s0, off = make_timestamps(Batch(0, "2018-02-22", sp))
+    s24, _ = make_timestamps(Batch(24, "2018-02-22", sp), off)
+    assert not set(s0) & set(s24) and max(s0) < min(s24)
+    assert all(s.startswith("2018-02-22T") for s in s0 + s24)
