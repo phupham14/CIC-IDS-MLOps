@@ -27,6 +27,9 @@ data/processed/*
 mlruns/
 mlartifacts/
 
+# Prediction & label logs (runtime volume)
+logs/
+
 # Airflow
 pipelines/airflow/logs/
 
