@@ -11,6 +11,7 @@ import argparse
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -28,6 +29,7 @@ class Batch:
     id: int
     day: str
     data: D.Split
+    time: Optional[np.ndarray] = None        # meta_time của từng dòng (datetime64), đã sắp tăng dần
 
     def __len__(self):
         return len(self.data)
@@ -88,7 +90,8 @@ def make_batches(df, features, batch_size):
         if len(bounds) > 2 and bounds[-1] - bounds[-2] < batch_size // 2:
             del bounds[-2]
         for a, b in zip(bounds[:-1], bounds[1:]):
-            batches.append(Batch(len(batches), str(day), to_split(g.iloc[a:b], features)))
+            part = g.iloc[a:b]
+            batches.append(Batch(len(batches), str(day), to_split(part, features), part["meta_time"].to_numpy()))
     return batches
 
 

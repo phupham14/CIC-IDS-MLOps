@@ -64,6 +64,10 @@ def test_batches_stay_within_one_day_and_cover_the_stream(production):
     for b in batches:
         assert set(b.data.day) == {b.day} and 500 <= len(b) < 1500
         assert list(b.data.X.columns) == FEATURES
+        assert len(b.time) == len(b) and (pd.Series(b.time).diff().dropna() >= pd.Timedelta(0)).all()
+        assert (pd.Series(b.time).dt.strftime("%Y-%m-%d") == b.day).all()
+    times = np.concatenate([b.time for b in batches])                  # các lô nối tiếp nhau theo thời gian
+    assert (pd.Series(times).diff().dropna() >= pd.Timedelta(0)).all()
 
 
 def test_benign_scenario_keeps_only_benign(production):

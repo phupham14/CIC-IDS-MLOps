@@ -4,7 +4,7 @@ Theo INTERFACE.md (mục 3 & Phân việc bước 5):
   1. Đọc các lô của kịch bản (mặc định s1_new_attacks từ production_sim.parquet, đã tách 20% holdout
      theo đúng src/monitoring/scenarios.py).
   2. Gửi các luồng mạng (70 cột đặc trưng gốc) tới POST /predict/batch kèm request_id và timestamp
-     theo ngày của lô (meta_day), rồi gọi POST /flush để API ghi ngay file Parquet vào
+     thật của luồng (meta_time, coi là UTC), rồi gọi POST /flush để API ghi ngay file Parquet vào
      logs/predictions/date=YYYY-MM-DD/part-*.parquet.
   3. Giả lập nhãn đến trễ (labels.delay_batches, mặc định chậm 1 lô): sau khi gửi xong lô k+1 mới
      ghi nhãn thật của lô k vào logs/labels/date=YYYY-MM-DD/batch-<id>.parquet (gồm request_id, Label).
@@ -28,15 +28,20 @@ from src.models.train import log
 from src.monitoring import scenarios as S
 
 
-def make_timestamps(day_str: str, batch_id: int, n_rows: int) -> list[str]:
-    """Tạo chuỗi timestamp UTC thuộc đúng ngày `day_str` của lô để API phân thư mục date=YYYY-MM-DD."""
-    base = datetime.strptime(day_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
-    hour_offset = batch_id % 24
-    start = base + timedelta(hours=hour_offset)
-    return [
-        (start + timedelta(milliseconds=i)).isoformat(timespec="milliseconds").replace("+00:00", "Z")
-        for i in range(n_rows)
-    ]
+def make_timestamps(batch, day_offset_ms=0):
+    """Timestamp UTC (ISO 8601, đuôi Z) cho từng dòng của lô.
+
+    Dùng meta_time thật của luồng (Batch.time). Lô không có thời gian (vd tạo tay trong test) thì sinh giờ giả
+    tăng dần trong ngày, bắt đầu từ day_offset_ms, để các lô cùng ngày không bao giờ trùng nhau.
+    Trả về (danh sách timestamp, offset cho lô tiếp theo cùng ngày)."""
+    n = len(batch)
+    if batch.time is not None:
+        ts = pd.to_datetime(pd.Series(batch.time)).dt.tz_localize(None)
+        return ts.dt.strftime("%Y-%m-%dT%H:%M:%S.%f").str[:-3].add("Z").tolist(), day_offset_ms
+    base = datetime.strptime(batch.day, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    stamps = [(base + timedelta(milliseconds=day_offset_ms + i)).isoformat(timespec="milliseconds")
+              .replace("+00:00", "Z") for i in range(n)]
+    return stamps, day_offset_ms + n
 
 
 def write_label_batch(labels_dir: Path, batch_id: int, day_str: str, request_ids: list[str], labels, y_binary=None):
@@ -61,6 +66,7 @@ def replay_batches(batches, raw_features: list[str], client, api_url: str = "",
     """Phát lại danh sách các Batch qua HTTP client (httpx.Client hoặc FastAPI TestClient)."""
     base_url = api_url.rstrip("/")
     pending_labels = []
+    day_offsets = {}                                   # giờ giả tiếp theo của từng ngày (chỉ khi lô không có time)
     stats = {
         "batches_sent": 0,
         "rows_sent": 0,
@@ -72,7 +78,7 @@ def replay_batches(batches, raw_features: list[str], client, api_url: str = "",
         t0 = time.perf_counter()
         n = len(b)
         req_ids = [str(uuid.uuid4()) for _ in range(n)]
-        timestamps = make_timestamps(b.day, b.id, n)
+        timestamps, day_offsets[b.day] = make_timestamps(b, day_offsets.get(b.day, 0))
 
         X_raw = b.data.X[raw_features]
         batch_attacks = 0
