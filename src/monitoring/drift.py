@@ -16,10 +16,13 @@ Kết quả: reports/monitoring/<kịch bản>_<phiên bản>.json, .csv, .png v
 """
 import argparse
 import json
+import os
 import tempfile
 import time
 from collections import defaultdict
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Callable
 
 import matplotlib
 
@@ -37,6 +40,7 @@ from src.models import metrics as M
 from src.models import registry as R
 from src.models.train import log
 from src.monitoring import scenarios as S
+from src.monitoring.push import Pusher
 
 
 class DriftDetector:
@@ -124,8 +128,24 @@ def check_retrain(cum, baseline_recall, cfg):
     return reasons
 
 
-def monitor(batches, score_fn, threshold, detector, cfg, baseline_recall, html_dir=None):
-    """Chạy qua các lô theo thứ tự; trả về một dòng cho mỗi lô và các mốc sự kiện (cảnh báo drift, kích hoạt retrain)."""
+def evaluate_labeled(y, scores, labels, threshold, cum, baseline_recall, retrain_cfg):
+    """Hiệu năng của một lô vừa có nhãn; cộng dồn vào cum và kiểm tra điều kiện retrain. Trả về các trường của dòng."""
+    res = M.evaluate(np.asarray(y), np.asarray(scores, dtype=np.float64), np.asarray(labels, dtype=object), threshold)
+    o = res["overall"]
+    for lab, v in res["per_label"].items():
+        cum[lab][0] += v["support"]
+        cum[lab][1] += v["predicted_attack"]
+    reasons = check_retrain(cum, baseline_recall, retrain_cfg)
+    return {"recall": o["recall"], "precision": o["precision"], "fpr": o["fpr"], "f1": o["f1"],
+            "per_label": {k: {"support": v["support"], "rate": v["rate"]} for k, v in res["per_label"].items()},
+            "cum_recall": {k: hit / n for k, (n, hit) in sorted(cum.items()) if n and k != M.BENIGN},
+            "retrain_trigger": bool(reasons), "retrain_reasons": reasons}
+
+
+def monitor(batches, score_fn, threshold, detector, cfg, baseline_recall, html_dir=None, on_row=None):
+    """Chạy qua các lô theo thứ tự; trả về một dòng cho mỗi lô và các mốc sự kiện (cảnh báo drift, kích hoạt retrain).
+
+    on_row(row): gọi sau mỗi lô (vd đẩy chỉ số lên Pushgateway)."""
     delay = cfg["labels"]["delay_batches"]
     rows, pending, cum = [], [], defaultdict(lambda: [0, 0])
     events = {"first_drift_alert": None, "first_retrain_trigger": None}
@@ -146,15 +166,9 @@ def monitor(batches, score_fn, threshold, detector, cfg, baseline_recall, html_d
         # nhãn của lô (step - delay) đến sau khi xử lý xong lô hiện tại
         if len(pending) > delay:
             lb, ls = pending.pop(0)
-            res = M.evaluate(lb.data.y, ls, lb.data.label, threshold)
-            o = res["overall"]
-            for lab, v in res["per_label"].items():
-                cum[lab][0] += v["support"]
-                cum[lab][1] += v["predicted_attack"]
-            reasons = check_retrain(cum, baseline_recall, cfg["retrain"])
-            row.update(labeled_batch=lb.id, recall=o["recall"], precision=o["precision"], fpr=o["fpr"], f1=o["f1"],
-                       per_label={k: {"support": v["support"], "rate": v["rate"]} for k, v in res["per_label"].items()},
-                       retrain_trigger=bool(reasons), retrain_reasons=reasons)
+            row["labeled_batch"] = lb.id
+            row.update(evaluate_labeled(lb.data.y, ls, lb.data.label, threshold, cum, baseline_recall, cfg["retrain"]))
+            reasons = row["retrain_reasons"]
             if reasons and events["first_retrain_trigger"] is None:
                 events["first_retrain_trigger"] = {"step": step, "labeled_batch": lb.id, "day": lb.day,
                                                    "reasons": reasons}
@@ -163,6 +177,8 @@ def monitor(batches, score_fn, threshold, detector, cfg, baseline_recall, html_d
                                            "drift_share": drift["drift_share"]}
         row["seconds"] = round(time.time() - t0, 2)
         rows.append(row)
+        if on_row is not None:
+            on_row(row)
         log(f"lô {b.id:3d} {b.day} | drift {drift['drift_share']:.2f}{' !' if drift['dataset_drift'] else '  '} "
             f"score {drift['score_drift']:.3f} | cảnh báo {row['alert_rate']:.4f}"
             + (f" | nhãn lô {row['labeled_batch']}: recall {row['recall']:.3f} fpr {row['fpr']:.5f}"
@@ -217,39 +233,42 @@ def plot(rows, drift_share, score_threshold, title, path):
     plt.close(fig)
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--config", default="monitoring.yaml")
-    ap.add_argument("--scenario", required=True, help="tên trong scenarios của monitoring.yaml")
-    ap.add_argument("--model", default="champion", help="số phiên bản hoặc alias trong Model Registry")
-    ap.add_argument("--no-calibrate", action="store_true", help="dùng ngưỡng chung drift.threshold cho mọi cột")
-    ap.add_argument("--smoke", action="store_true")
-    args = ap.parse_args()
-    cfg = S.load_cfg(args.config, args.smoke)
-    mcfg = cfg["models"]
-    R.setup(mcfg, cfg["experiment"])
-    name = mcfg["registry"]["model_name"]
-    mv = R.get_version(name, args.model)
-    assert mv is not None, f"Không tìm thấy '{args.model}' của {name}"
-    model = mlflow.pyfunc.load_model(R.model_uri(name, mv.version))
-    thr = float(model.metadata.metadata["threshold"])
-    score_fn = lambda X: model.predict(X)["score"].to_numpy()               # noqa: E731
-    features = D.load_features(mcfg["data"]["artifacts_dir"])
+@dataclass
+class ModelHandle:
+    name: str
+    version: str
+    model_type: str
+    threshold: float
+    score_fn: Callable
 
-    log(f"Mô hình {name} v{mv.version} ({model.metadata.metadata['model_type']}), ngưỡng {thr:.4f}")
+
+def load_model(cfg, ref="champion"):
+    """Nạp một phiên bản (số hoặc alias) từ Model Registry; score_fn(X) trả về điểm Attack."""
+    name = cfg["models"]["registry"]["model_name"]
+    mv = R.get_version(name, ref)
+    assert mv is not None, f"Không tìm thấy '{ref}' của {name}"
+    model = mlflow.pyfunc.load_model(R.model_uri(name, mv.version))
+    meta = model.metadata.metadata
+    return ModelHandle(name, str(mv.version), meta["model_type"], float(meta["threshold"]),
+                       lambda X: model.predict(X)["score"].to_numpy())
+
+
+def baseline_on_test(cfg, features, model):
+    y_te, s_te, lab_te, _ = D.score_file(S.processed_dir(cfg) / "test.parquet", features, model.score_fn)
+    return M.evaluate(y_te, s_te, lab_te, model.threshold)
+
+
+def build_detector(cfg, features, model, calibrate=True):
+    """Reference (Benign từ train) + hiệu chỉnh ngưỡng từng cột trên val. Trả về (detector, thông tin hiệu chỉnh)."""
     ref = S.reference(cfg, features)
-    y_te, s_te, lab_te, _ = D.score_file(S.processed_dir(cfg) / "test.parquet", features, score_fn)
-    baseline = M.evaluate(y_te, s_te, lab_te, thr)
-    log(f"Reference {len(ref):,} dòng ({describe_labels(ref.label)}); "
-        f"mốc recall trên test {baseline['overall']['recall']:.4f}")
-    detector = DriftDetector(ref.X, score_fn(ref.X), cfg["drift"])
-    calib = {"enabled": not args.no_calibrate}
-    if not args.no_calibrate:
+    detector = DriftDetector(ref.X, model.score_fn(ref.X), cfg["drift"])
+    calib = {"enabled": calibrate, "reference_rows": len(ref), "reference_labels": describe_labels(ref.label)}
+    if calibrate:
         c = cfg["calibration"]
         cb = S.calibration_batches(cfg, features)
-        dist = detector.calibrate(cb, score_fn, c["quantile"], c["min_threshold"])
+        dist = detector.calibrate(cb, model.score_fn, c["quantile"], c["min_threshold"])
         share, drifted, score_drifted = detector.flags(dist)
-        alert = [float((score_fn(b.data.X) >= thr).mean()) for b in cb]
+        alert = [float((model.score_fn(b.data.X) >= model.threshold).mean()) for b in cb]
         calib.update(source=c["source"], labels=c.get("labels"), quantile=c["quantile"], batches=len(cb),
                      drift_share_mean=float(share.mean()), drift_share_max=float(share.max()),
                      dataset_drift_batches=int(drifted.sum()), score_drift_batches=int(score_drifted.sum()),
@@ -257,38 +276,76 @@ def main():
                      thresholds=detector.threshold_map())
         log(f"Hiệu chỉnh trên {len(cb)} lô {c['source']}: tỉ lệ cột drift TB {share.mean():.3f} (max {share.max():.3f}), "
             f"ngưỡng score {detector.thresholds[-1]:.4f}, tỉ lệ cảnh báo TB {np.mean(alert):.5f}")
+    return detector, calib
+
+
+def make_pusher(cfg, url=None, grouping_key=None):
+    """Pusher nếu có URL (--push-url > biến môi trường PUSHGATEWAY_URL > push.url trong monitoring.yaml)."""
+    p = cfg.get("push") or {}
+    url = url or os.environ.get("PUSHGATEWAY_URL") or p.get("url")
+    if not url:
+        return None
+    log(f"Đẩy chỉ số lên Pushgateway {url} (job {p.get('job', 'ids_monitoring')}, nhóm {grouping_key})")
+    return Pusher(url, p.get("job", "ids_monitoring"), grouping_key, p.get("pause_sec", 0.0))
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--config", default="monitoring.yaml")
+    ap.add_argument("--scenario", required=True, help="tên trong scenarios của monitoring.yaml")
+    ap.add_argument("--model", default="champion", help="số phiên bản hoặc alias trong Model Registry")
+    ap.add_argument("--no-calibrate", action="store_true", help="dùng ngưỡng chung drift.threshold cho mọi cột")
+    ap.add_argument("--push-url", help="Pushgateway, vd http://localhost:9091 (mặc định: push.url / PUSHGATEWAY_URL)")
+    ap.add_argument("--smoke", action="store_true")
+    args = ap.parse_args()
+    cfg = S.load_cfg(args.config, args.smoke)
+    mcfg = cfg["models"]
+    R.setup(mcfg, cfg["experiment"])
+    features = D.load_features(mcfg["data"]["artifacts_dir"])
+    model = load_model(cfg, args.model)
+    name, thr, score_fn = model.name, model.threshold, model.score_fn
+
+    log(f"Mô hình {name} v{model.version} ({model.model_type}), ngưỡng {thr:.4f}")
+    baseline = baseline_on_test(cfg, features, model)
+    log(f"Mốc recall trên test {baseline['overall']['recall']:.4f}")
+    detector, calib = build_detector(cfg, features, model, calibrate=not args.no_calibrate)
+    log(f"Reference {calib['reference_rows']:,} dòng ({calib['reference_labels']})")
     batches = S.scenario_batches(cfg, args.scenario, features)
     log(f"{args.scenario}: {len(batches)} lô")
+    pusher = make_pusher(cfg, args.push_url, {"scenario": args.scenario})
+    on_row = (lambda row: pusher.push(row, model.version)) if pusher else None
 
-    tag = f"{args.scenario}_v{mv.version}" + ("_uncalibrated" if args.no_calibrate else "")
+    tag = f"{args.scenario}_v{model.version}" + ("_uncalibrated" if args.no_calibrate else "")
     out = Path(cfg["reports_dir"])
     out.mkdir(parents=True, exist_ok=True)
     with mlflow.start_run(run_name=tag), tempfile.TemporaryDirectory() as tmp:
-        mlflow.set_tags({"scenario": args.scenario, "model_version": mv.version, "stage": "monitoring"})
-        mlflow.log_params({"model": f"{name}/{mv.version}", "threshold": thr, "batches": len(batches),
-                           "reference_rows": len(ref), "reference_labels": cfg["reference"].get("labels"),
+        mlflow.set_tags({"scenario": args.scenario, "model_version": model.version, "stage": "monitoring"})
+        mlflow.log_params({"model": f"{name}/{model.version}", "threshold": thr, "batches": len(batches),
+                           "reference_rows": calib["reference_rows"], "reference_labels": cfg["reference"].get("labels"),
                            "calibrated": calib["enabled"], "batch_size": cfg["stream"]["batch_size"],
                            "label_delay_batches": cfg["labels"]["delay_batches"],
                            **{f"drift_{k}": v for k, v in cfg["drift"].items()},
                            **{f"retrain_{k}": v for k, v in cfg["retrain"].items()}})
-        rows, events, cum = monitor(batches, score_fn, thr, detector, cfg, baseline["overall"]["recall"], tmp)
+        rows, events, cum = monitor(batches, score_fn, thr, detector, cfg, baseline["overall"]["recall"], tmp,
+                                    on_row=on_row)
         for r in rows:
             mlflow.log_metrics({k: r[k] for k in ("drift_share", "score_drift", "alert_rate") if k in r}
                                | {k: r[k] for k in ("recall", "fpr") if k in r and np.isfinite(r[k])},
                                step=r["batch"])
         report = {"scenario": args.scenario, "description": cfg["scenarios"][args.scenario]["description"],
-                  "model": {"name": name, "version": str(mv.version), "threshold": thr,
-                            "model_type": model.metadata.metadata["model_type"]},
+                  "model": {"name": name, "version": str(model.version), "threshold": thr,
+                            "model_type": model.model_type},
                   "baseline_test": baseline, "calibration": calib, "events": events,
                   "summary": summarize(rows), "cumulative_by_label": cum,
                   "config": {k: cfg[k] for k in ("reference", "calibration", "stream", "drift", "labels", "retrain")},
                   "batches": rows}
         (out / f"{tag}.json").write_text(json.dumps(report, indent=1, ensure_ascii=False, default=float),
                                          encoding="utf-8")
-        flat = pd.DataFrame(rows).drop(columns=["per_label", "top_columns", "retrain_reasons"], errors="ignore")
+        flat = pd.DataFrame(rows).drop(columns=["per_label", "cum_recall", "top_columns", "retrain_reasons"],
+                                       errors="ignore")
         flat.to_csv(out / f"{tag}.csv", index=False)
         plot(rows, cfg["drift"]["drift_share"], float(detector.thresholds[-1]),
-             f"{name} v{mv.version} – {args.scenario}" + ("" if calib["enabled"] else " (chưa hiệu chỉnh)"),
+             f"{name} v{model.version} – {args.scenario}" + ("" if calib["enabled"] else " (chưa hiệu chỉnh)"),
              out / f"{tag}.png")
         for f in (f"{tag}.json", f"{tag}.csv", f"{tag}.png"):
             mlflow.log_artifact(str(out / f))

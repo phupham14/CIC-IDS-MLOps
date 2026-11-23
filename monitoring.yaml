@@ -40,6 +40,19 @@ retrain:                          # điều kiện kích hoạt (Kịch bản 1,
   min_class_recall: 0.5           # kích hoạt khi recall của một lớp tấn công < ngưỡng
   max_recall_drop: 0.1            # hoặc recall tổng thể giảm hơn mức này so với mốc trên test.parquet
 
+live:                             # giám sát trực tiếp từ log của API (src/monitoring/live.py, INTERFACE.md mục 3)
+  predictions_dir: logs/predictions   # API ghi: date=YYYY-MM-DD/part-*.parquet
+  labels_dir: logs/labels             # nhãn đến trễ (replay.py ghi): request_id, Label
+  state_dir: logs/monitoring          # trạng thái để chạy tiếp: file đã đọc, bộ đệm, lô chờ nhãn, rows.jsonl
+  interval_sec: 30                    # --follow: mỗi lượt cách nhau từng ấy giây
+  min_label_frac: 1.0                 # một lô chỉ được đánh giá khi đã có nhãn của tỉ lệ dòng này
+
+push:                             # Prometheus Pushgateway (INTERFACE.md mục 4)
+  url: null                       # vd http://localhost:9091; null = không push. Ghi đè: --push-url, PUSHGATEWAY_URL
+  job: ids_monitoring
+  pause_sec: 0                    # nghỉ sau mỗi lần push; đặt >= scrape_interval của Prometheus (10s) khi muốn
+                                  # Grafana thấy từng lô lúc phát lại nhanh
+
 scenarios:                        # source: file trong processed_dir (mặc định: luồng phát lại của production_sim)
   s0_in_distribution:             # Đối chứng: cùng giai đoạn với train, không được báo drift
     description: Benign của test.parquet (ngày 14/02–21/02), cùng phân phối với train; bộ phát hiện không được báo drift
