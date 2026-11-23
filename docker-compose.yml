@@ -11,14 +11,13 @@ services:
       - MLFLOW_SERVER_ALLOWED_HOSTS=*
       - MLFLOW_SERVER_DISABLE_SECURITY_MIDDLEWARE=true
     volumes:
-      - ./mlruns:/mlruns
+      - ./mlflow_server:/mlflow
     command: >
       mlflow server
       --host 0.0.0.0
       --port 5000
-      --backend-store-uri sqlite:////mlruns/mlflow.db
-      --default-artifact-root mlflow-artifacts:/
-      --artifacts-destination /mlruns/artifacts
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --artifacts-destination /mlflow/artifacts
       --serve-artifacts
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]

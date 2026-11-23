@@ -36,13 +36,15 @@ docker compose ps
 
 | Dịch vụ | Container | Cổng | Địa chỉ truy cập | Ghi chú |
 |---|---|---|---|---|
-| **MLflow Server** | `cic-ids-mlflow` | `5000` | http://localhost:5000 | SQLite backend + `--serve-artifacts` trên volume `./mlruns` |
+| **MLflow Server** | `cic-ids-mlflow` | `5000` | http://localhost:5000 | SQLite backend + `--serve-artifacts` trên volume riêng `./mlflow_server:/mlflow` |
 | **FastAPI Serving** | `cic-ids-api` | `8000` | http://localhost:8000/docs | Swagger UI, tự nạp `cic-ids-binary@champion` |
 | **Pushgateway** | `cic-ids-pushgateway` | `9091` | http://localhost:9091 | Nhận chỉ số drift/recall theo lô từ `drift.py` (TV4) |
 | **Prometheus** | `cic-ids-prometheus` | `9090` | http://localhost:9090 | Scrape `api:8000/metrics` và `pushgateway:9091` mỗi 10s |
 | **Grafana** | `cic-ids-grafana` | `3000` | http://localhost:3000 | Tài khoản: `admin` / `admin` (đã nạp sẵn Dashboard & Alerts) |
 
 ### 1.3. Đăng ký mô hình `@champion` lên MLflow Server
+
+> **Lưu ý quan trọng:** MLflow Server trong Docker dùng thư mục riêng `./mlflow_server` (mount vào `/mlflow`), **không dùng lại thư mục `mlruns/` local** (vì `mlruns/mlflow.db` khi train offline lưu đường dẫn tuyệt đối của máy host như `D:/...`, container Linux sẽ không đọc được). Do đó, sau khi bật Docker Compose, bạn cần đặt `MLFLOW_TRACKING_URI=http://localhost:5000` rồi mới chạy train và promote `@champion`.
 
 Trỏ biến môi trường `MLFLOW_TRACKING_URI` vào MLflow Server trước khi huấn luyện hoặc đăng ký mô hình:
 

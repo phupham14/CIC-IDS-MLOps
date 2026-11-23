@@ -48,7 +48,7 @@ groups:
               to: 0
             datasourceUid: prometheus
             model:
-              expr: max(ids_dataset_drift) or vector(0)
+              expr: ((max(ids_dataset_drift) or vector(0)) >= bool 1) + ((max(ids_alert_rate) or vector(0)) > bool 0.0001)
               instant: true
               refId: A
           - refId: C
@@ -65,7 +65,7 @@ groups:
                     params: [0.5]
         for: 0s
         annotations:
-          summary: "Cảnh báo vàng: Phát hiện Data Drift (ids_dataset_drift == 1)"
+          summary: "Cảnh báo vàng: Phát hiện Data Drift (ids_dataset_drift == 1) hoặc Alert Rate vượt 10 lần mốc val (> 0.0001)"
           description: "Chỉ cảnh báo theo dõi, không tự động kích hoạt retrain (xem Kịch bản 2)."
         labels:
           severity: warning

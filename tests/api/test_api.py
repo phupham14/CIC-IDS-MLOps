@@ -175,6 +175,7 @@ def test_reload_switches_champion_without_restart_and_exposes_metrics(api_env):
     assert "ids_score_bucket" in text
     assert "ids_inference_latency_seconds" in text
     assert 'ids_model_info{model_type="xgb",threshold="0.650000",version="2"} 1.0' in text
+    assert "ids_model_version 2.0" in text
 
 
 def test_replay_batches_delays_labels_by_one_batch(api_env, tmp_path):

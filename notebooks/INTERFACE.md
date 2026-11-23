@@ -26,11 +26,11 @@
 
 Hiện mỗi người dùng `sqlite:///mlruns/mlflow.db` trên máy mình, nên API không thấy model do TV2 hoặc TV4 đăng ký.
 
-- [ ] TV3 thêm service `mlflow` vào `docker-compose.yml`:
-  - backend store: Postgres hoặc sqlite trên volume;
-  - artifact store: volume hoặc MinIO;
+- [x] TV3 thêm service `mlflow` vào `docker-compose.yml`:
+  - backend store: sqlite trên volume riêng `./mlflow_server:/mlflow` (`sqlite:////mlflow/mlflow.db`, không dùng lại `mlruns/` local);
+  - artifact store: `/mlflow/artifacts` kèm `--serve-artifacts`;
   - cổng `5000`.
-- [ ] Mọi thành phần (train, API, monitoring, Airflow) trỏ tới server này qua biến môi trường `MLFLOW_TRACKING_URI=http://mlflow:5000`. `models.yaml` đã hỗ trợ ghi đè bằng biến này nên **không cần sửa code**.
+- [x] Mọi thành phần (train, API, monitoring, Airflow) trỏ tới server này qua biến môi trường `MLFLOW_TRACKING_URI=http://mlflow:5000` (hoặc `http://localhost:5000` từ máy host). `models.yaml` đã hỗ trợ ghi đè bằng biến này nên **không cần sửa code**.
 
 ## 2. Model và cách nạp
 
@@ -46,15 +46,15 @@ Hiện mỗi người dùng `sqlite:///mlruns/mlflow.db` trên máy mình, nên 
 | Ngưỡng | Nằm sẵn trong model, xem `model.metadata.metadata["threshold"]`. **API không tự đặt ngưỡng**, để API và giám sát luôn khớp nhau |
 | Phiên bản | Lấy qua `MlflowClient().get_model_version_by_alias(...)`. API ghi phiên bản này vào log (mục 3) và hiển thị ở `GET /model` |
 
-- [ ] **Đổi model không cần khởi động lại API.** Mỗi 60 giây, API kiểm tra alias `@champion` trỏ tới phiên bản nào. Nếu phiên bản khác bản đang chạy thì API nạp lại model. Có thể thêm `POST /reload` để Airflow gọi ngay sau khi promote.
+- [x] **Đổi model không cần khởi động lại API.** Mỗi 60 giây, API kiểm tra alias `@champion` trỏ tới phiên bản nào. Nếu phiên bản khác bản đang chạy thì API nạp lại model. Đã thêm `POST /reload` để Airflow gọi ngay sau khi promote.
 
 ## 3. Log prediction (API ghi, TV4 đọc)
 
 Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. Bên giám sát chỉ cần đổi nguồn dữ liệu, còn cách cắt lô và kiểm tra giữ nguyên.
 
-- [ ] **Vị trí:** volume chung `logs/predictions/`, mỗi ngày (UTC) một thư mục: `logs/predictions/date=YYYY-MM-DD/part-<giờ>.parquet`.
-- [ ] **Định dạng:** Parquet, ghi theo đợt (ví dụ mỗi 1.000 request hoặc mỗi 60 giây, tùy điều kiện nào đến trước). Không ghi từng dòng vì quá chậm.
-- [ ] **Các cột:**
+- [x] **Vị trí:** volume chung `logs/predictions/`, mỗi ngày (UTC) một thư mục: `logs/predictions/date=YYYY-MM-DD/part-<giờ>h-<MMSS>-<seq>.parquet`.
+- [x] **Định dạng:** Parquet, ghi theo đợt (ví dụ mỗi 1.000 request hoặc mỗi 60 giây, tùy điều kiện nào đến trước; hỗ trợ `POST /flush`). Không ghi từng dòng vì quá chậm.
+- [x] **Các cột:**
 
 | Cột | Kiểu | Ghi chú |
 |---|---|---|
@@ -66,7 +66,7 @@ Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. B
 | `prediction` | int8 | 0/1 |
 | `latency_ms` | float32 | Không bắt buộc |
 
-- [ ] **Nhãn** (giả lập việc analyst xác nhận sau): file riêng `logs/labels/date=YYYY-MM-DD/*.parquet` gồm `request_id, Label`. Khi demo, script phát lại dữ liệu gửi request lên API và ghi nhãn thật vào đây, chậm một lô so với request.
+- [x] **Nhãn** (giả lập việc analyst xác nhận sau): file riêng `logs/labels/date=YYYY-MM-DD/*.parquet` gồm `request_id, Label`. Khi demo, script `python -m src.api.replay` phát lại dữ liệu gửi request lên API và ghi nhãn thật vào đây, chậm một lô so với request.
 
 ## 4. Chỉ số trên Prometheus / Grafana
 
@@ -79,6 +79,7 @@ Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. B
 | `ids_score` | Histogram (bucket 0.1 … 1.0) | `model_version` |
 | `ids_inference_latency_seconds` | Histogram | – |
 | `ids_model_info` | Gauge (= 1) | `version`, `model_type`, `threshold` |
+| `ids_model_version` | Gauge (= số version) | – (dùng cho annotation `changes(ids_model_version[1m]) > 0`) |
 
 **Giám sát (TV4)** push qua **Pushgateway**:
 - [x] TV3 thêm service `pushgateway` vào compose, cổng `9091` (PR #5).
@@ -104,15 +105,15 @@ Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. B
 | `ids_monitor_labeled_batch` | Gauge | Số thứ tự lô có nhãn gần nhất (nhãn đến trễ) |
 | `ids_retrain_total` | Counter | Số lần đã retrain hoặc promote (chưa có, sẽ thêm cùng `simulate.py`) |
 
-- [ ] **Grafana (TV3 dựng, TV4 góp ý):**
+- [x] **Grafana (TV3 dựng, TV4 góp ý):**
   - Panel lưu lượng và latency.
   - Panel tỉ lệ Attack theo thời gian.
   - Panel drift (`ids_drift_share` kèm đường ngưỡng).
   - Panel recall theo lớp.
-  - Đánh dấu thời điểm đổi `model_version`.
-- [ ] **Cảnh báo Grafana:**
+  - Đánh dấu thời điểm đổi `model_version` (`changes(ids_model_version[1m]) > 0`).
+- [x] **Cảnh báo Grafana:**
   - `ids_retrain_trigger == 1` → cảnh báo đỏ.
-  - `ids_dataset_drift == 1` hoặc `ids_alert_rate` vượt 10 lần mốc val → cảnh báo vàng. Chỉ để báo, **không tự retrain** (xem Kịch bản 2).
+  - `ids_dataset_drift == 1` hoặc `ids_alert_rate` vượt 10 lần mốc val (`> 0.0001`) → cảnh báo vàng. Chỉ để báo, **không tự retrain** (xem Kịch bản 2).
 
 ---
 
@@ -120,15 +121,18 @@ Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. B
 
 | Bước | Ai | Việc | Phụ thuộc |
 |---|---|---|---|
-| 1 | TV3 | `docker-compose.yml`: `mlflow`, `pushgateway`, `prometheus`, `grafana` | – |
-| 2 | TV3 | API `/predict`, `/model`, `/metrics`, `/reload` và ghi log theo mục 3 | Model `@champion` (đã có) |
+| 1 | TV3 | `docker-compose.yml`: `mlflow`, `pushgateway`, `prometheus`, `grafana` (**Đã xong**) | – |
+| 2 | TV3 | API `/predict`, `/predict/batch`, `/model`, `/metrics`, `/reload` và ghi log theo mục 3 (**Đã xong**) | Model `@champion` (đã có) |
 | 2 | TV4 | `simulate.py`: vòng retrain offline trên `production_sim` | – (song song với TV3) |
 | 3 | TV4 | `drift.py` đọc thêm nguồn `logs/predictions` và push lên Pushgateway | Bước 1, 2 |
 | 4 | TV4 | DAG Airflow: giám sát định kỳ → retrain → so sánh → promote → `POST /reload` | Bước 1–3 |
-| 5 | Cả hai | Demo end-to-end: script phát lại `production_sim` gửi tới API | Tất cả |
+| 5 | Cả hai | Demo end-to-end: script `python -m src.api.replay` phát lại `production_sim` gửi tới API | Tất cả |
 
-## Câu hỏi cần TV3 trả lời
+## Câu hỏi cần TV3 trả lời (Đã chốt)
 
 1. Dùng Postgres cho MLflow hay sqlite trên volume là đủ cho phạm vi bài tập lớn?
+   → **Đã chốt:** Dùng **SQLite trên volume riêng `./mlflow_server:/mlflow`** (`--backend-store-uri sqlite:////mlflow/mlflow.db --artifacts-destination /mlflow/artifacts --serve-artifacts`), tách biệt với `mlruns/` local.
 2. API nhận **một luồng mỗi request** hay **nhiều luồng mỗi request**? Khi demo phát lại hàng triệu dòng thì nên có `POST /predict/batch`.
-3. API tự nạp lại model định kỳ (mỗi 60 giây) hay chỉ nạp khi gọi `/reload`?
+   → **Đã chốt:** Hỗ trợ cả hai (`POST /predict` và `POST /predict/batch`).
+3. API tự nạp lại model định kỳ (mỗi 60 giây) hay chỉ nạp khi gọi `/reload`?**
+   → **Đã chốt:** Hỗ trợ cả hai (tự kiểm tra mỗi 60 giây và có `POST /reload`).

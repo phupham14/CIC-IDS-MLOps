@@ -63,6 +63,11 @@ MODEL_INFO = Gauge(
     ["version", "model_type", "threshold"],
     registry=REGISTRY,
 )
+MODEL_VERSION = Gauge(
+    "ids_model_version",
+    "Phiên bản số của mô hình đang phục vụ (dùng để phát hiện thời điểm đổi model)",
+    registry=REGISTRY,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -142,6 +147,10 @@ class ModelManager:
                 model_type=self.model_type,
                 threshold=f"{self.threshold:.6f}",
             ).set(1)
+            try:
+                MODEL_VERSION.set(float(self.version))
+            except (TypeError, ValueError):
+                pass
 
         return {
             "reloaded": True,

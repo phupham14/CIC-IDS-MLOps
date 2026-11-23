@@ -26,6 +26,7 @@ data/processed/*
 # MLflow
 mlruns/
 mlartifacts/
+mlflow_server/
 
 # Prediction & label logs (runtime volume)
 logs/

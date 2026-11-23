@@ -19,10 +19,10 @@
           "uid": "prometheus"
         },
         "enable": true,
-        "expr": "changes(ids_model_info[1m]) > 0",
+        "expr": "changes(ids_model_version[1m]) > 0",
         "iconColor": "purple",
         "name": "Model Version Change",
-        "titleFormat": "Model v{{version}} ({{model_type}})"
+        "titleFormat": "Model version changed"
       }
     ]
   },
