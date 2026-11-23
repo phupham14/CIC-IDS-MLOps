@@ -81,8 +81,15 @@ Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. B
 | `ids_model_info` | Gauge (= 1) | `version`, `model_type`, `threshold` |
 
 **Giám sát (TV4)** push qua **Pushgateway**:
-- [ ] TV3 thêm service `pushgateway` vào compose, cổng `9091`.
-- Mỗi lô push một lần; job `ids_monitoring`; nhãn chung `scenario`, `model_version`.
+- [x] TV3 thêm service `pushgateway` vào compose, cổng `9091` (PR #5).
+- [x] Mỗi lô push một lần; job `ids_monitoring`; grouping key `scenario` (`live` khi đọc log API, hoặc tên kịch bản
+  khi chạy offline); mọi gauge có nhãn `model_version`. Khi đổi mô hình, chuỗi số liệu của phiên bản cũ bị xóa.
+- Cách chạy (`src/monitoring/live.py`, `src/monitoring/push.py`):
+  - Đọc log của API: `python -m src.monitoring.live --push-url http://localhost:9091 --follow`.
+    Chạy một lượt rồi dừng (cho Airflow) thì bỏ `--follow`.
+  - Phát lại offline không cần API: `python -m src.monitoring.drift --scenario s1_new_attacks --push-url http://localhost:9091`.
+  - Đặt `push.pause_sec` ≥ 10 trong `monitoring.yaml` (bằng `scrape_interval` của Prometheus) để Grafana thấy từng lô
+    khi phát lại nhanh.
 
 | Tên | Loại | Ý nghĩa |
 |---|---|---|
@@ -93,7 +100,9 @@ Thành phần giám sát dùng log này **thay cho `production_sim.parquet`**. B
 | `ids_recall` | Gauge, nhãn `label` | Recall cộng dồn theo lớp tấn công, khi đã có nhãn |
 | `ids_fpr` | Gauge | FPR của lô đã có nhãn gần nhất |
 | `ids_retrain_trigger` | Gauge (0/1) | Điều kiện retrain đang kích hoạt |
-| `ids_retrain_total` | Counter | Số lần đã retrain hoặc promote |
+| `ids_monitor_batch` | Gauge | Số thứ tự lô vừa giám sát |
+| `ids_monitor_labeled_batch` | Gauge | Số thứ tự lô có nhãn gần nhất (nhãn đến trễ) |
+| `ids_retrain_total` | Counter | Số lần đã retrain hoặc promote (chưa có, sẽ thêm cùng `simulate.py`) |
 
 - [ ] **Grafana (TV3 dựng, TV4 góp ý):**
   - Panel lưu lượng và latency.
